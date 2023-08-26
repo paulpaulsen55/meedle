@@ -1,5 +1,8 @@
 <script>
 	import '../app.css';
+	import '../map.css';
 </script>
 
-<slot />
+<div class="bg-magnum-300 h-screen">
+	<slot />
+</div>

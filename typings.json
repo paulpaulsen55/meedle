@@ -1,0 +1,5 @@
+{
+	"globalDependencies": {
+		"mapbox-gl": "registry:dt/mapbox-gl#0.30.0+20170316144853"
+	}
+}
