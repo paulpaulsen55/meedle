@@ -7,12 +7,17 @@
 	$: if (map) {
 		map.setCenter([long, lat]);
 		marker.setLngLat([long, lat]);
+		map.setStyle(getStyleMode());
 	}
+
+	const getStyleMode = () => {
+		return `mapbox://styles/mapbox/${localStorage.theme === 'dark' ? 'dark' : 'light'}-v9`;
+	};
 
 	let mapElement: HTMLElement;
 	let map: mapboxgl.Map | null = null;
 	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-	let mapStyle = 'mapbox://styles/mapbox/light-v9';
+	let mapStyle = getStyleMode();
 	let viewState = {
 		zoom: 2,
 		pitch: 0,
@@ -38,6 +43,7 @@
 		});
 		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
 		marker.addTo(map);
+		
 	}
 </script>
 
