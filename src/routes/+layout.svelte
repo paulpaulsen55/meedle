@@ -3,6 +3,6 @@
 	import '../map.css';
 </script>
 
-<div class="bg-magnum-300 h-screen">
+<div class="bg-neutral-900 h-screen">
 	<slot />
 </div>
