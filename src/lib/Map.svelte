@@ -20,7 +20,7 @@
 				m.setPopup(new mapboxgl.Popup().setHTML(`<h1>${lat}, ${long}</h1><h2>${feature.properties.name}</h2>`));
 				featureArray.push(m);
 			});
-			featureArray.forEach((marker) => marker.addTo(map));
+			featureArray.forEach((marker) => marker.addTo(map!));
 		}
 	}
 

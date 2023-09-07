@@ -13,7 +13,7 @@
 	>
 		starten
 	</a>
-	<div class="fixed bottom-0 left-0 text-neutral-500 flex flex-wrap justify-center gap-5 overflow-hidden mb-5">
+	<div class="fixed bottom-0 left-0 mb-5">
 		<PlusGrid rows={5} sinFactor={0.05} />
 	</div>
 </div>
