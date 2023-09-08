@@ -10,7 +10,6 @@
 		map.setZoom(5);
 		marker.setLngLat([long, lat]);
 		map.setStyle(getStyle());
-		console.log(feature);
 
 		if (feature.features) {
 			featureArray.forEach((marker) => marker.remove());

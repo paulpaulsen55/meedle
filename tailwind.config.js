@@ -6,6 +6,9 @@ export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	darkMode: 'class',
 	theme: {
+		fontFamily: {
+			lexend: ['Lexend', 'sans-serif'],
+		},
 		container: {
 			center: true,
 			padding: '2rem',
