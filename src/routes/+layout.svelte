@@ -1,5 +1,12 @@
 <script>
 	import '../app.css';
+	import '../map.css';
+	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 </script>
 
-<slot />
+<div class="bg-magnum-400 dark:bg-neutral-900 h-screen font-lexend">
+	<div class="absolute top-0 right-0">
+		<ThemeSwitch />
+	</div>
+	<slot />
+</div>
