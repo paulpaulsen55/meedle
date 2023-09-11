@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
 
-	export let lat: number, long: number, feature: any = {};
+	export let lat: number, long: number, feature: any = {}, orgPositions: any = {};
 	let featureArray: mapboxgl.Marker[] = [];
 
 	$: if (map != null) {
@@ -32,12 +32,15 @@
 	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 	let mapStyle = getStyle();
 	let viewState = {
-		zoom: 2,
+		zoom: 5,
 		pitch: 0,
 		bearing: 0
 	};
 	let marker =  new mapboxgl.Marker({ color: '#FF0000' }).setLngLat([long, lat]);
 	marker.setPopup(new mapboxgl.Popup().setHTML(`<h1>${lat}, ${long}</h1>`));
+
+	let markerPos1 =  new mapboxgl.Marker({ color: '#9900ff' }).setLngLat([orgPositions.long1, orgPositions.lat1]);
+	let markerPos2 =  new mapboxgl.Marker({ color: '#9900ff' }).setLngLat([orgPositions.long2, orgPositions.lat2]);
 
 	onMount(() => {
 		createMap();
@@ -56,7 +59,8 @@
 		});
 		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
 		marker.addTo(map);
-		
+		markerPos1.addTo(map);
+		markerPos2.addTo(map);	
 	}
 </script>
 
