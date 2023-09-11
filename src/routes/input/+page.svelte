@@ -1,38 +1,32 @@
 <script lang="ts">
 	import Map from '$lib/Map.svelte';
-	import mapboxgl from 'mapbox-gl';
-	import { SearchBoxCore } from '@mapbox/search-js-core';
-
-	let location1: String,
-		location2: String,
-		avgLongitude: number,
-		avgLatitude: number,
-		orgPositions: any,
+	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
+	import { SearchBoxCore, SessionToken, type SearchBoxCategoryResponse } from '@mapbox/search-js-core';
+	import type { Coordinate } from '../../app';
+	
+	let location1: String = 'tuxer steig 6',
+		location2: String = 'Rheinbabenallee 47',
+		average: Coordinate,
+		locations: Array<Coordinate>,
 		category = 'food_and_drink',
-		feature: any;
+		feature: SearchBoxCategoryResponse;
 
 	async function handleSubmit() {
-		const geoResponse1 = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location1}.json?access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`)
-		const data1 = await geoResponse1.json();		
-		const geoResponse2 = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location2}.json?access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`)
-		const data2 = await geoResponse2.json();
+		const point1 = await pointToCoordinates(location1); 
+		const point2 = await pointToCoordinates(location2);
+		locations = [point1, point2];
 
-		if (data1.features && data2.features) {
-			orgPositions = {long1: data1.features[0].center[0], lat1: data1.features[0].center[1], long2:data2.features[0].center[0], lat2: data2.features[0].center[1]};
-			avgLongitude = (Number(data1.features[0].center[0]) + Number(data2.features[0].center[0])) / 2;
-			avgLatitude = (Number(data1.features[0].center[1]) + Number(data2.features[0].center[1])) / 2;
+		average = {
+			lng: (point1.lng + point2.lng) / 2,
+			lat: (point1.lat + point2.lat) / 2
 		}
-
-		console.log(avgLatitude, avgLongitude);
-
-		const response = await fetch(
-			`https://api.mapbox.com/search/searchbox/v1/category/${category}?proximity=${avgLongitude},${avgLatitude}&origin=${avgLongitude},${avgLatitude}&access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`
-		);
-		feature = await response.json();
+		feature = await pointToFeatures(category, average);
 	}
+	
 	async function searchBox1() {
-		// const search = new SearchBoxCore({ accessToken: import.meta.env.VITE_MAPBOX_TOKEN});
-		// const result = await search.suggest('Washington D.C.', { import.meta.env.VITE_MAPBOX_TOKEN });
+		const search = new SearchBoxCore({ accessToken: import.meta.env.VITE_MAPBOX_TOKEN});
+		const sessionToken = new SessionToken();
+		const result = await search.suggest('Washington D.C.', { sessionToken });
 	}
 	
 </script>
@@ -75,7 +69,7 @@
 				bind:value={category}
 				type="text"
 				id="category"
-				class="input-number"
+				class="input"
 			/>
 		</div>
 	</div>
@@ -86,7 +80,7 @@
 	>
 		Calculate Middle Point
 	</button>
-	{#if avgLatitude && avgLongitude}
-		<Map bind:lat={avgLatitude} bind:long={avgLongitude} bind:feature={feature} bind:orgPositions={orgPositions} />
+	{#if average}
+		<Map bind:middle={average} bind:feat={feature} bind:locations={locations} />
 	{/if}
 </form>

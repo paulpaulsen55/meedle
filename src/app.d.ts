@@ -8,5 +8,9 @@ declare global {
 		// interface Platform {}
 	}
 }
-
 export {};
+
+export type Coordinate = {
+	lng: number;
+	lat: number;
+};

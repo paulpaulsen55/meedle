@@ -1,46 +1,50 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
+	import type { Coordinate } from '../app';
+	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 
-	export let lat: number, long: number, feature: any = {}, orgPositions: any = {};
-	let featureArray: mapboxgl.Marker[] = [];
+	export let middle: Coordinate, feat: SearchBoxCategoryResponse, locations: Array<Coordinate>;
+	let featureMarkers: mapboxgl.Marker[] = [];
+	let locationMarkers: mapboxgl.Marker[] = [];
 
 	$: if (map != null) {
-		map.setCenter([long, lat]);
+		map.setCenter(middle);
 		map.setZoom(5);
-		marker.setLngLat([long, lat]);
-		map.setStyle(getStyle());
+		marker.setLngLat(middle);
 
-		if (feature.features) {
-			featureArray.forEach((marker) => marker.remove());
-			featureArray = [];
-			feature.features.forEach((feature: any) => {
+		// add all peoples locations to the map
+		locationMarkers.forEach((marker) => marker.remove());
+		locationMarkers = [];
+		locations.forEach((location) => {
+			locationMarkers.push(new mapboxgl.Marker({ color: '#9900ff' }).setLngLat(location));
+		});
+		locationMarkers.forEach((marker) => marker.addTo(map!));
+
+		// add the features to the map
+		if (feat) {
+			featureMarkers.forEach((marker) => marker.remove());
+			featureMarkers = [];
+			feat.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#030ffc' }).setLngLat(feature.geometry.coordinates)
-				m.setPopup(new mapboxgl.Popup().setHTML(`<h1>${lat}, ${long}</h1><h2>${feature.properties.name}</h2>`));
-				featureArray.push(m);
+				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.properties.name}</p>`));
+				featureMarkers.push(m);
 			});
-			featureArray.forEach((marker) => marker.addTo(map!));
+			featureMarkers.forEach((marker) => marker.addTo(map!));
 		}
 	}
-
-	const getStyle = () => {
-		return `mapbox://styles/mapbox/${localStorage.theme === 'dark' ? 'dark' : 'light'}-v9`;
-	};
 
 	let mapElement: HTMLElement;
 	let map: mapboxgl.Map | null = null;
 	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-	let mapStyle = getStyle();
+	let mapStyle = 'mapbox://styles/mapbox/dark-v9';
 	let viewState = {
 		zoom: 5,
 		pitch: 0,
 		bearing: 0
 	};
-	let marker =  new mapboxgl.Marker({ color: '#FF0000' }).setLngLat([long, lat]);
-	marker.setPopup(new mapboxgl.Popup().setHTML(`<h1>${lat}, ${long}</h1>`));
-
-	let markerPos1 =  new mapboxgl.Marker({ color: '#9900ff' }).setLngLat([orgPositions.long1, orgPositions.lat1]);
-	let markerPos2 =  new mapboxgl.Marker({ color: '#9900ff' }).setLngLat([orgPositions.long2, orgPositions.lat2]);
+	let marker =  new mapboxgl.Marker({ color: '#FF0000' }).setLngLat(middle);
+	marker.setPopup(new mapboxgl.Popup().setHTML(`<h1>${middle}</h1>`));
 
 	onMount(() => {
 		createMap();
@@ -52,24 +56,22 @@
 			container: mapElement,
 			interactive: true,
 			style: mapStyle,
-			center: [lat, long],
+			center: middle,
 			zoom: viewState.zoom,
 			pitch: viewState.pitch,
 			bearing: viewState.bearing
 		});
 		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
 		marker.addTo(map);
-		markerPos1.addTo(map);
-		markerPos2.addTo(map);	
 	}
 </script>
 
 <div class="grid grid-flow-col">
 	<div id="map" bind:this={mapElement} />
 	<div>
-		{#if feature.features}
-			{#each feature.features as f}
-				<p class="dark:text-white">{f.properties.name}</p>
+		{#if feat}
+			{#each feat.features as f}
+				<p class="">{f.properties.name}</p>
 			 {/each}
 		{/if}
 	</div>
