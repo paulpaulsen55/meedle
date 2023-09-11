@@ -26,7 +26,7 @@
 			featureMarkers.forEach((marker) => marker.remove());
 			featureMarkers = [];
 			feat.features.forEach((feature: any) => {
-				let m = new mapboxgl.Marker({ color: '#030ffc' }).setLngLat(feature.geometry.coordinates)
+				let m = new mapboxgl.Marker({ color: '#030ffc' }).setLngLat(feature.geometry.coordinates);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.properties.name}</p>`));
 				featureMarkers.push(m);
 			});
@@ -43,7 +43,7 @@
 		pitch: 0,
 		bearing: 0
 	};
-	let marker =  new mapboxgl.Marker({ color: '#FF0000' }).setLngLat(middle);
+	let marker = new mapboxgl.Marker({ color: '#FF0000' }).setLngLat(middle);
 	marker.setPopup(new mapboxgl.Popup().setHTML(`<h1>${middle}</h1>`));
 
 	onMount(() => {
@@ -71,8 +71,8 @@
 	<div>
 		{#if feat}
 			{#each feat.features as f}
-				<p class="">{f.properties.name}</p>
-			 {/each}
+				<p class="text-white">{f.properties.name}</p>
+			{/each}
 		{/if}
 	</div>
 </div>
