@@ -5,18 +5,18 @@
 @tailwind utilities;
 
 @layer components {
-  .button-white {
-    @apply inline-flex items-center justify-center rounded-xl bg-white px-4 py-3 font-medium leading-none text-magnum-700 shadow hover:opacity-75;
-  }
+	.button-white {
+		@apply inline-flex items-center justify-center rounded-xl bg-white px-4 py-3 font-medium leading-none text-magnum-700 shadow hover:opacity-75;
+	}
 
-  .button-magnum {
-    @apply mt-4 rounded-xl bg-magnum-200 dark:bg-magnum-400 px-4 py-2 font-semibold text-magnum-900 transition hover:opacity-75 active:translate-y-0.5;
-  }
-  .input-label{
-    @apply mb-0.5 font-medium text-magnum-700 dark:text-magnum-300;
-  }
+	.button-magnum {
+		@apply mt-4 rounded-xl bg-magnum-400 px-4 py-2 font-semibold text-magnum-900 transition hover:opacity-75 active:translate-y-0.5;
+	}
+	.input-label {
+		@apply mb-0.5 font-medium text-magnum-300;
+	}
 
-  .input{
-    @apply h-10 w-[240px] rounded-md px-3 py-2 text-black border border-magnum-300 dark:border-magnum-700 focus:outline-none focus:ring-1 focus:ring-magnum-500 focus:border-magnum-500 dark:focus:ring-magnum-500 dark:focus:border-magnum-500;
-  }
+	.input {
+		@apply h-10 w-[240px] rounded-md px-3 py-2 text-black border border-magnum-700 focus:outline-none focus:ring-1 focus:ring-magnum-500 focus:border-magnum-500;
+	}
 }

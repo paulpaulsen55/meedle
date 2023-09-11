@@ -6,7 +6,7 @@ export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		fontFamily: {
-			lexend: ['Lexend', 'sans-serif'],
+			lexend: ['Lexend', 'sans-serif']
 		},
 		container: {
 			center: true,
