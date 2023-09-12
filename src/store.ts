@@ -4,4 +4,3 @@ export const locations = writable({
 	location1: '',
 	location2: ''
 });
-

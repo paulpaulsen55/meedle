@@ -31,7 +31,7 @@
 			.then(() =>
 				markerPosition.set({ x: innerWidth / 2 + 55, y: 100, r: -10, s: 1 }, { duration: 350 })
 			)
-			.then(() => goto('/loading'));
+			.then(() => goto('/map'));
 	}
 </script>
 
@@ -46,23 +46,13 @@
 				<label for="location1" class="input-label" data-melt-part="root">
 					<span>Location 1</span>
 				</label>
-				<input
-					bind:value={location1}
-					type="text"
-					id="location1"
-					class="input"
-				/>
+				<input bind:value={location1} type="text" id="location1" class="input" />
 			</div>
 			<div class="flex flex-col items-start justify-center relative">
 				<label for="location2" class="input-label" data-melt-part="root">
 					<span>Location 2</span>
 				</label>
-				<input
-					bind:value={location2}
-					type="text"
-					id="location2"
-					class="input"
-				/>
+				<input bind:value={location2} type="text" id="location2" class="input" />
 			</div>
 		</div>
 		<button
