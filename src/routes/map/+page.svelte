@@ -2,7 +2,6 @@
 	import Map from '$lib/Map.svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
 	import {
-		SearchBoxCore,
 		SessionToken,
 		AddressAutofillCore,
 		type SearchBoxCategoryResponse,
@@ -10,9 +9,14 @@
 	} from '@mapbox/search-js-core';
 	import type { Coordinate } from '../../app';
 	import AddressSugestion from '$lib/AddressSugestion.svelte';
+    import { locations as lol } from '../../store';
+	import type { Unsubscriber } from 'svelte/store';
 
-	let location1: string = 'tuxer steig 6',
-		location2: string = 'Rheinbabenallee 47',
+	let loc = {location1: '', location2: ''};
+	const unsubscribe: Unsubscriber = lol.subscribe((value) => (loc = value));
+
+	let location1 = loc.location1,
+		location2 = loc.location2,
 		average: Coordinate,
 		locations: Array<Coordinate>,
 		category = 'food_and_drink',
@@ -71,7 +75,12 @@
 				id="location1"
 				class="input"
 			/>
-			<AddressSugestion bind:autofill={suggestions1} on:message={(event) => {location1 = event.detail.text}} />
+			<AddressSugestion
+				bind:autofill={suggestions1}
+				on:message={(event) => {
+					location1 = event.detail.text;
+				}}
+			/>
 		</div>
 		<div class="flex flex-col items-start justify-center relative">
 			<label for="location2" class="input-label" data-melt-part="root">
@@ -89,7 +98,12 @@
 				id="location2"
 				class="input"
 			/>
-			<AddressSugestion bind:autofill={suggestions2} on:message={(event) => {location2 = event.detail.text}} />
+			<AddressSugestion
+				bind:autofill={suggestions2}
+				on:message={(event) => {
+					location2 = event.detail.text;
+				}}
+			/>
 		</div>
 	</div>
 	<div class="space-x-3 flex">
