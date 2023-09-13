@@ -7,7 +7,7 @@
 	export let data;
 </script>
 
-<div class="bg-neutral-900 h-screen font-lexend overflow-hidden">
+<div class="bg-neutral-900 h-screen font-lexend text-white overflow-hidden">
 	{#key data.currentPath}
 		<PageTransition>
 			<slot />

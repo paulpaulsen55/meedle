@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Map from './Map.svelte';
+	import Map from '$lib/Map.svelte';
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 	import type { Coordinate } from '../../app';
 	import AddressInput from '$lib/AddressInput.svelte';
+	import Accordion from '$lib/Accordion.svelte';
 	import { locations as lol } from '../../store';
 	import type { Unsubscriber } from 'svelte/store';
 	import { onMount } from 'svelte';
@@ -37,25 +38,25 @@
 	onMount(() => (location1 && location2 ? handleSubmit() : null));
 </script>
 
-<form
-	on:submit|preventDefault={handleSubmit}
-	action="/api"
-	class="grid place-content-center gap-3 h-full"
->
-	<div class="space-x-3 flex">
-		<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
-		<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
-	</div>
-	<div class="space-x-3 flex">
-		<div class="flex flex-col items-start justify-center">
-			<label for="category" class="input-label" data-melt-part="root">
-				<span>category</span>
-			</label>
+<div class="fixed bottom-0 left-0 w-96 h-40 dotted-bg p-2"></div>
+<form on:submit|preventDefault={handleSubmit} action="/api" class="flex">
+	<aside class="w-96 p-6 space-y-5 relative">
+		<div class="">
+			<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
+			<p>between</p>
+			<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
+		</div>
+		<div class="">
 			<input bind:value={category} type="text" id="category" class="input" />
 		</div>
-	</div>
+		<button type="submit" class="button-white w-fit"> Calculate Middle Point </button>
 
-	<button type="submit" class="button-white w-fit"> Calculate Middle Point </button>
+		{#if features}
+			<Accordion bind:features={features.features} />
+		{/if}
+
+	</aside>
+
 	{#if average}
 		<Map bind:middle={average} bind:feat={features} bind:locations={points} />
 	{/if}

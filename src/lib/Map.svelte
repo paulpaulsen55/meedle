@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
-	import type { Coordinate } from '../../app';
+	import type { Coordinate } from '../app';
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 
 	export let middle: Coordinate, feat: SearchBoxCategoryResponse, locations: Array<Coordinate>;
@@ -11,22 +11,26 @@
 	$: if (map != null) {
 		map.setCenter(middle);
 		map.setZoom(5);
-		marker.setLngLat(middle);
 
 		// add all peoples locations to the map
 		locationMarkers.forEach((marker) => marker.remove());
 		locationMarkers = [];
 		locations.forEach((location) => {
-			locationMarkers.push(new mapboxgl.Marker({ color: '#9900ff' }).setLngLat(location));
+			locationMarkers.push(new mapboxgl.Marker({ color: '#003DD0' }).setLngLat(location));
 		});
 		locationMarkers.forEach((marker) => marker.addTo(map!));
+		const factor = 0.01;
+		map.fitBounds([
+			[ locations[0].lng+factor, locations[0].lat-factor ],
+			[ locations[1].lng-factor, locations[1].lat+factor ]
+		]);
 
 		// add the features to the map
 		if (feat) {
 			featureMarkers.forEach((marker) => marker.remove());
 			featureMarkers = [];
 			feat.features.forEach((feature: any) => {
-				let m = new mapboxgl.Marker({ color: '#030ffc' }).setLngLat(feature.geometry.coordinates);
+				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.properties.name}</p>`));
 				featureMarkers.push(m);
 			});
@@ -43,8 +47,6 @@
 		pitch: 0,
 		bearing: 0
 	};
-	let marker = new mapboxgl.Marker({ color: '#FF0000' }).setLngLat(middle);
-	marker.setPopup(new mapboxgl.Popup().setHTML(`<h1>${middle}</h1>`));
 
 	onMount(() => {
 		createMap();
@@ -62,24 +64,14 @@
 			bearing: viewState.bearing
 		});
 		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
-		marker.addTo(map);
 	}
 </script>
 
-<div class="grid grid-flow-col">
-	<div id="map" bind:this={mapElement} />
-	<div>
-		{#if feat}
-			{#each feat.features as f}
-				<p class="text-white">{f.properties.name}</p>
-			{/each}
-		{/if}
-	</div>
-</div>
+<div id="map" bind:this={mapElement} />
 
 <style>
 	#map {
-		height: 30rem;
-		width: 30rem;
+		height: 100vh;
+		width: calc(100vw - 24rem);
 	}
 </style>

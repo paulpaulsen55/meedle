@@ -21,14 +21,8 @@
 	}
 
 	.dotted-bg {
-		background-image: radial-gradient(
-			circle at 1px 1px,
-			rgb(252 224 172 / 0.25) 2px,
-			transparent 0
-		);
+		background-image: radial-gradient(circle, #fce0ac40 1px, #00000000 1px);
 		background-size: 1.5rem 1.5rem;
 		background-repeat: repeat;
-		background-position: 0.5rem center;
-		position: relative;
 	}
 }
