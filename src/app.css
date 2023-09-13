@@ -19,4 +19,16 @@
 	.input {
 		@apply h-10 w-[240px] rounded-md px-3 py-2 text-black border border-magnum-700 focus:outline-none focus:ring-1 focus:ring-magnum-500 focus:border-magnum-500;
 	}
+
+	.dotted-bg {
+		background-image: radial-gradient(
+			circle at 1px 1px,
+			rgb(252 224 172 / 0.25) 2px,
+			transparent 0
+		);
+		background-size: 1.5rem 1.5rem;
+		background-repeat: repeat;
+		background-position: 0.5rem center;
+		position: relative;
+	}
 }

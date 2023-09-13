@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
-	import type { Coordinate } from '../app';
+	import type { Coordinate } from '../../app';
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 
 	export let middle: Coordinate, feat: SearchBoxCategoryResponse, locations: Array<Coordinate>;
