@@ -1,4 +1,5 @@
-import { SessionToken } from '@mapbox/search-js-core';
+import pkg from '@mapbox/search-js-core';
+const { SessionToken } = pkg;
 
 export async function load({ url, cookies }) {
 	const token = cookies.get('session_token');
