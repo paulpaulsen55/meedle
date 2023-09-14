@@ -21,7 +21,7 @@
 
 	<div class="self-start flex flex-col items-center">
 		<div class="space-x-3 flex">
-			<AddressInput bind:location={location1} bind:sessionToken={data.sessionToken} />
+			<AddressInput bind:location={location1} bind:sessionToken={data.sessionToken} /> 
 			<!-- <AddressInput bind:location={location2} bind:sessionToken={data.sessionToken} /> -->
 		</div>
 		<button on:click={() => startClick()} class="button-magnum w-64 mt-5 flex justify-center">
