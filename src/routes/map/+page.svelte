@@ -52,12 +52,12 @@
 		<button type="submit" class="button-white w-fit"> Calculate Middle Point </button>
 
 		{#if features}
-			<Accordion bind:features={features.features} />
+			<Accordion bind:response={features} />
 		{/if}
 
 	</aside>
 
 	{#if average}
-		<Map bind:middle={average} bind:feat={features} bind:locations={points} />
+		<Map bind:middle={average} bind:response={features} bind:locations={points} />
 	{/if}
 </form>

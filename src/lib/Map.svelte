@@ -4,7 +4,7 @@
 	import type { Coordinate } from '../app';
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 
-	export let middle: Coordinate, feat: SearchBoxCategoryResponse, locations: Array<Coordinate>;
+	export let middle: Coordinate, response: SearchBoxCategoryResponse, locations: Array<Coordinate>;
 
 	let mapElement: HTMLElement;
 	let map: mapboxgl.Map | null = null;
@@ -18,11 +18,6 @@
 	let featureMarkers: mapboxgl.Marker[] = [];
 	let locationMarkers: mapboxgl.Marker[] = [];
 	
-	if (map != null) {
-		map.setCenter(middle);
-		map.setZoom(5);
-	}
-
 	$: if (map != null) {
 		// add all peoples locations to the map
 		locationMarkers.forEach((marker) => marker.remove());
@@ -38,10 +33,10 @@
 		]);
 
 		// add the features to the map
-		if (feat) {
+		if (response) {
 			featureMarkers.forEach((marker) => marker.remove());
 			featureMarkers = [];
-			feat.features.forEach((feature: any) => {
+			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.properties.name}</p>`));
 				featureMarkers.push(m);
@@ -49,6 +44,7 @@
 			featureMarkers.forEach((marker) => marker.addTo(map!));
 		}
 	}
+
 
 	onMount(() => {
 		createMap();
@@ -66,6 +62,7 @@
 			bearing: viewState.bearing
 		});
 		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
+		map.setCenter(middle);
 	}
 </script>
 

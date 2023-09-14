@@ -1,19 +1,28 @@
 <script lang="ts">
+	import type { SearchBoxCategoryResponse,SearchBoxCategorySuggestion } from '@mapbox/search-js-core';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 
-	export let features;
+	export let response : SearchBoxCategoryResponse;
 
-    console.log(features);
-    
-    let items = [];
-    for (let index = 0; index < features.length; index++) {
-        const element = features[index];
+    console.log(response);
+
+    type item =  {
+		id:string;
+		title:string;
+		address:string;
+		description:string;
+	}
+
+    let items:item[] = [];
+
+    for (let index = 0; index < response.features.length; index++) {
+        const element = response.features[index];
         items.push({
-            id: `item-${index}`,
+            id: element.properties.mapbox_id,
             title: element.properties.name,
             address: element.properties.full_address,
-            description: element.properties.poi_category.toString()
+            description: element.properties.poi_category.toString(),
         })
     }
 
@@ -24,6 +33,10 @@
 	} = createAccordion({
 		defaultValue: 'item-1'
 	});
+
+	function togglePoint(){
+		
+	};
 </script>
 
 <div class="rounded-xl bg-neutral-800 shadow-lg z-10">
