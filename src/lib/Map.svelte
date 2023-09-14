@@ -10,7 +10,6 @@
 
 	$: if (map != null) {
 		map.setCenter(middle);
-		map.setZoom(5);
 
 		// add all peoples locations to the map
 		locationMarkers.forEach((marker) => marker.remove());
