@@ -29,7 +29,7 @@
 				<input bind:value={location2} type="text" id="location2" class="input" />
 			</div>
 		</div>
-		<button on:click={() => startClick()} class="button-magnum w-64 flex justify-center">
+		<button on:click={() => startClick()} class="button-magnum w-64 mt-5 flex justify-center">
 			start
 		</button>
 	</div>
