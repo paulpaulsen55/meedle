@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SearchBoxCategoryResponse,SearchBoxCategorySuggestion } from '@mapbox/search-js-core';
+	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 

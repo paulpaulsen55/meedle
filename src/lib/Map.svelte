@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
 	import type { Coordinate } from '../app';
-	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
+	import type { SearchBoxCategoryResponse,SearchBoxCategorySuggestion } from '@mapbox/search-js-core';
 
 	export let middle: Coordinate, response: SearchBoxCategoryResponse, locations: Array<Coordinate>;
 
@@ -15,9 +15,10 @@
 		pitch: 0,
 		bearing: 0
 	};
-	let featureMarkers: mapboxgl.Marker[] = [];
 	let locationMarkers: mapboxgl.Marker[] = [];
-	
+
+	let markers = new Map<string, mapboxgl.Marker>();
+
 	$: if (map != null) {
 		// add all peoples locations to the map
 		locationMarkers.forEach((marker) => marker.remove());
@@ -34,14 +35,13 @@
 
 		// add the features to the map
 		if (response) {
-			featureMarkers.forEach((marker) => marker.remove());
-			featureMarkers = [];
+			markers.clear();
 			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.properties.name}</p>`));
-				featureMarkers.push(m);
+				markers.set(feature.properties.mapbox_id,m);
 			});
-			featureMarkers.forEach((marker) => marker.addTo(map!));
+			markers.forEach((marker) => marker.addTo(map!));
 		}
 	}
 
