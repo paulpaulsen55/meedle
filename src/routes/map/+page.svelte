@@ -86,10 +86,10 @@
 
 		{#if features}
 			<div class="mt-20">
-				<Accordion bind:features={features.features} />
+				<Accordion bind:response={features} />
 			</div>
 		{/if}
 	</aside>
 
-	<Map bind:middle={average} bind:feat={features} bind:locations={points} />
+	<Map bind:middle={average} bind:response={features} bind:locations={points} />
 </div>
