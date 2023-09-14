@@ -37,6 +37,7 @@
 
 		// add the features to the map
 		if (response) {
+			markers.forEach((marker) => marker.remove());
 			markers.clear();
 			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);

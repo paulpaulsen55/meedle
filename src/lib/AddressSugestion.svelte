@@ -18,7 +18,7 @@
 
 {#if autofill != null}
 	<ul
-		class="z-10 flex flex-col rounded-lg absolute top-0 mt-20 bg-white text-black"
+		class="z-10 flex flex-col rounded-lg absolute top-0 mt-12 bg-white text-black"
 		transition:fly={{ duration: 150, y: -5 }}
 	>
 		{#each autofill.suggestions as suggestion}
