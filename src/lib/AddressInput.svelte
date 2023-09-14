@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { SessionToken, AddressAutofillCore } from '@mapbox/search-js-core';
+	import {
+		type AddressAutofillSuggestionResponse,
+		AddressAutofillCore
+	} from '@mapbox/search-js-core';
 	import AddressSugestion from '$lib/AddressSugestion.svelte';
 
 	export let location: string;
@@ -19,9 +22,6 @@
 </script>
 
 <div class="flex flex-col items-start justify-center relative">
-	<label for="location1" class="input-label" data-melt-part="root">
-		<span>Location 1</span>
-	</label>
 	<input
 		on:input={() => searchAutofill(location)}
 		on:focusout={() => {
@@ -32,7 +32,8 @@
 		bind:value={location}
 		type="text"
 		id="location1"
-		class="input"
+		placeholder="address"
+		class="input w-full"
 	/>
 	<AddressSugestion
 		bind:autofill={suggestions}
