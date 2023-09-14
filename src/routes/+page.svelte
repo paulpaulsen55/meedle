@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { locations } from '../store';
+	import NavBar from '$lib/NavBar.svelte';
 
 	let location1: string = 'tuxer steig 6',
 		location2: string = 'Rheinbabenallee 47';
@@ -12,6 +13,7 @@
 </script>
 
 <div class="h-screen grid place-items-center">
+	<NavBar />
 	<img src="/logo.svg" alt="logo" />
 
 	<div class="self-start flex flex-col items-center">

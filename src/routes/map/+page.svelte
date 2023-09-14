@@ -48,7 +48,7 @@
 
 <div class="fixed bottom-0 left-0 w-96 h-40 dotted-bg p-2"></div>
 <div class="flex">
-	<aside class="w-96 p-6">
+	<aside class="w-96 p-6 space-y-10">
 		<a href="/">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="transform: scale(2);">
 				<path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd" />
@@ -69,7 +69,7 @@
 				</div>
 			</div>
 		{:else}
-			<div class="flex justify-between items-end mt-5">
+			<div class="flex justify-between items-end">
 				<div>
 					<p>{location1}</p>
 					<p>between</p>
@@ -85,7 +85,7 @@
 		
 
 		{#if features}
-			<div class="mt-20">
+			<div class="">
 				<Accordion bind:response={features} />
 			</div>
 		{/if}
