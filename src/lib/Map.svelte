@@ -58,7 +58,7 @@
 			container: mapElement,
 			interactive: true,
 			style: mapStyle,
-			center: middle,
+			center: { lng: 10, lat: 51 },
 			zoom: viewState.zoom,
 			pitch: viewState.pitch,
 			bearing: viewState.bearing
