@@ -4,6 +4,7 @@
 	import { slide } from 'svelte/transition';
 
 	export let response : SearchBoxCategoryResponse;
+	export let updateHoveredPoint;
 
     console.log(response);
 

@@ -11,6 +11,8 @@
 
 	export let data;
 
+	let hoverdPointId: string | null;
+
 	let loc = { location1: '', location2: '' };
 	const unsubscribe: Unsubscriber = lol.subscribe((value) => (loc = value));
 
@@ -40,10 +42,13 @@
 		if (location1 && location2){
 			handleSubmit();
 			edit = false;
-		} else {
-
 		}
 	});
+
+	function updateHoveredPoint(newValue:string | null) {
+    	hoverdPointId = newValue;
+  	}
+
 </script>
 
 <div class="fixed bottom-0 left-0 w-96 h-40 dotted-bg p-2"></div>
@@ -86,7 +91,7 @@
 
 		{#if features}
 			<div class="mt-20">
-				<Accordion bind:response={features} />
+				<Accordion bind:response={features}  />
 			</div>
 		{/if}
 	</aside>
