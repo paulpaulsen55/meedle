@@ -1,7 +1,5 @@
 <script lang="ts">
-	import type { AddressAutofillSuggestionResponse } from '@mapbox/search-js-core';
-	import pkg from '@mapbox/search-js-core';
-	const { AddressAutofillCore } = pkg;
+	import  { AddressAutofillCore, type AddressAutofillSuggestionResponse } from '@mapbox/search-js-core';
 
 	import AddressSugestion from '$lib/AddressSugestion.svelte';
 
