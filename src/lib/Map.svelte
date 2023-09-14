@@ -20,6 +20,8 @@
 	let markers = new Map<string, mapboxgl.Marker>();
 
 	$: if (map != null) {
+		map.setCenter(middle);
+
 		// add all peoples locations to the map
 		locationMarkers.forEach((marker) => marker.remove());
 		locationMarkers = [];
