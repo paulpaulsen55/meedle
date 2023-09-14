@@ -3,7 +3,7 @@
 		type AddressAutofillSuggestionResponse,
 		AddressAutofillCore
 	} from '@mapbox/search-js-core';
-	import AddressSugestion from '$lib/AddressSugestion.svelte';
+	import AddressSugestion from '$lib/AddressSuggestion.svelte';
 
 	export let location: string;
 	export let sessionToken: string = '';
