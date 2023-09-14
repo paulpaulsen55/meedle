@@ -5,13 +5,25 @@
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 
 	export let middle: Coordinate, feat: SearchBoxCategoryResponse, locations: Array<Coordinate>;
+
+	let mapElement: HTMLElement;
+	let map: mapboxgl.Map | null = null;
+	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+	let mapStyle = 'mapbox://styles/mapbox/dark-v9';
+	let viewState = {
+		zoom: 5,
+		pitch: 0,
+		bearing: 0
+	};
 	let featureMarkers: mapboxgl.Marker[] = [];
 	let locationMarkers: mapboxgl.Marker[] = [];
-
-	$: if (map != null) {
+	
+	if (map != null) {
 		map.setCenter(middle);
 		map.setZoom(5);
+	}
 
+	$: if (map != null) {
 		// add all peoples locations to the map
 		locationMarkers.forEach((marker) => marker.remove());
 		locationMarkers = [];
@@ -37,16 +49,6 @@
 			featureMarkers.forEach((marker) => marker.addTo(map!));
 		}
 	}
-
-	let mapElement: HTMLElement;
-	let map: mapboxgl.Map | null = null;
-	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-	let mapStyle = 'mapbox://styles/mapbox/dark-v9';
-	let viewState = {
-		zoom: 5,
-		pitch: 0,
-		bearing: 0
-	};
 
 	onMount(() => {
 		createMap();
