@@ -6,8 +6,8 @@
 
 	export let data;
 
-	let location1: string = '',
-		location2: string = '';
+	let location1 = '',
+		location2 = '';
 
 	function startClick() {
 		locations.set({ location1, location2 });

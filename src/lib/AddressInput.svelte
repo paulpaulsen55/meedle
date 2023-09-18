@@ -3,7 +3,6 @@
 	import { createCombobox, melt } from '@melt-ui/svelte';
 	import { fly } from 'svelte/transition';
 	import type { AutocompleteElement } from '../app';
-	import { onMount } from 'svelte';
 	import Icon from './Icon.svelte';
 
 	export let location: string;
@@ -15,6 +14,9 @@
 	} = createCombobox({
 		forceVisible: true
 	});
+
+	// set the input value to the location variable passed from the parent components
+	inputValue.set(location);
 
 	let results: AutocompleteElement[] = [];
 	let suggestions: AddressAutofillSuggestionResponse | null = null;
@@ -30,10 +32,6 @@
 	});
 	
 
-	onMount(() => {
-		inputValue.set(location);
-	});
-
 	async function searchAutofill() {
 		if ($inputValue.value.length < 2) return;
 		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
@@ -46,6 +44,7 @@
 		});
 	}
 
+	// store the combobox value in the location variable to use it in the parent component
 	$: location = $inputValue.value;
 </script>
 
@@ -66,7 +65,7 @@
 </div>
 {#if $open}
 	<ul
-		class="z-10 flex max-h-[300px] flex-col overflow-hidden"
+		class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-md"
 		use:melt={$menu}
 		transition:fly={{ duration: 150, y: -5 }}
 	>
