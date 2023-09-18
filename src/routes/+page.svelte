@@ -4,10 +4,10 @@
 	import NavBar from '$lib/NavBar.svelte';
 	import AddressInput from '$lib/AddressInput.svelte';
 
-	export let data
+	export let data;
 
-	let location1: string = 'tuxer steig 6',
-		location2: string = 'Rheinbabenallee 47';
+	let location1: string = '',
+		location2: string = '';
 
 	function startClick() {
 		locations.set({ location1, location2 });
