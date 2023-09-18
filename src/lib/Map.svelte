@@ -2,7 +2,10 @@
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
 	import type { Coordinate } from '../app';
-	import type { SearchBoxCategoryResponse,SearchBoxCategorySuggestion } from '@mapbox/search-js-core';
+	import type {
+		SearchBoxCategoryResponse,
+		SearchBoxCategorySuggestion
+	} from '@mapbox/search-js-core';
 
 	export let middle: Coordinate, response: SearchBoxCategoryResponse, locations: Array<Coordinate>;
 
@@ -31,8 +34,8 @@
 		locationMarkers.forEach((marker) => marker.addTo(map!));
 		const factor = 0.01;
 		map.fitBounds([
-			[ locations[0].lng+factor, locations[0].lat-factor ],
-			[ locations[1].lng-factor, locations[1].lat+factor ]
+			[locations[0].lng + factor, locations[0].lat - factor],
+			[locations[1].lng - factor, locations[1].lat + factor]
 		]);
 
 		// add the features to the map
@@ -42,12 +45,11 @@
 			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.properties.name}</p>`));
-				markers.set(feature.properties.mapbox_id,m);
+				markers.set(feature.properties.mapbox_id, m);
 			});
 			markers.forEach((marker) => marker.addTo(map!));
 		}
 	}
-
 
 	onMount(() => {
 		createMap();
