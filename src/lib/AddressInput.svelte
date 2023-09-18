@@ -2,11 +2,15 @@
 	import type { AddressAutofillCore, AddressAutofillSuggestionResponse } from '@mapbox/search-js-core';
 	import { createCombobox, melt } from '@melt-ui/svelte';
 	import { fly } from 'svelte/transition';
-	import type { AutocompleteElement } from '../app';
 	import Icon from './Icon.svelte';
+	import { onMount } from 'svelte';
 
 	export let location: string;
 	export let sessionToken: string = '';
+	export let features: string[] = [];
+
+	let results: string[] = [];
+	let suggestions: AddressAutofillSuggestionResponse | null = null;
 
 	const {
 		elements: { menu, input, option },
@@ -37,12 +41,16 @@
 		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
 		results = [];
 		suggestions.suggestions.forEach((suggestion) => {
-			results.push({
-				title: suggestion.feature_name,
-				adress: suggestion.full_address
-			});
+			const s = suggestion.full_address!;
+			results.push(s);
 		});
 	}
+
+	onMount(() => {
+		if (location != '') {
+			searchAutofill();
+		}
+	});
 
 	// store the combobox value in the location variable to use it in the parent component
 	$: location = $inputValue.value;
@@ -71,16 +79,15 @@
 	>
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div class="flex max-h-full flex-col overflow-y-auto bg-white p-2 text-black" tabindex="0">
-			{#each results as el, index (index)}
+			{#each results as el}
 				<li
 					use:melt={$option({
-						value: el.adress
+						value: el
 					})}
 					class="cursor-pointer scroll-my-2 rounded-md py-2 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
 				>
 					<div class="pl-4">
-						<span class="font-medium">{el.title}</span>
-						<span class="block text-sm opacity-75">{el.adress}</span>
+						<span class="font-medium">{el}</span>
 					</div>
 				</li>
 			{:else}

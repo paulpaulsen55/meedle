@@ -54,7 +54,7 @@
 <div class="flex">
 	<aside class="w-96 p-6 space-y-10">
 		<a href="/">
-			<Icon name="arrowLeft" class="w-12 h-12"/>
+			<Icon name="arrowLeft" class="w-12 h-12" />
 		</a>
 		{#if edit}
 			<div class="mt-5">

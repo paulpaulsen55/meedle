@@ -14,8 +14,3 @@ export type Coordinate = {
 	lng: number;
 	lat: number;
 };
-
-export type AutocompleteElement = {
-	title: string;
-	adress: string | undefined;
-};
