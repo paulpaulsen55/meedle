@@ -15,7 +15,6 @@
 	let loc = { location1: '', location2: '' };
 	const unsubscribe: Unsubscriber = lol.subscribe((value) => (loc = value));
 
-
 	let location1 = loc.location1,
 		location2 = loc.location2,
 		average: Coordinate,
@@ -23,9 +22,6 @@
 		category = 'food_and_drink',
 		features: SearchBoxCategoryResponse,
 		edit = true;
-
-		console.log(location1, location2);
-		
 
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
@@ -58,7 +54,7 @@
 <div class="flex">
 	<aside class="w-96 p-6 space-y-10">
 		<a href="/">
-			<Icon name="arrowLeft" />
+			<Icon name="arrowLeft" class="w-12 h-12"/>
 		</a>
 		{#if edit}
 			<div class="mt-5">
