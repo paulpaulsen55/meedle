@@ -2,7 +2,7 @@ export const filters = new Map([
     ["Essen und Trinken", "food_and_drinks"],
     ["Essen", "food"],
     ["Restaurant", "restaurant"],
-    ["Fast Food Restaurant", "fast_food"],
+    ["Fast Food", "fast_food"],
     ["Café", "cafe"],
     ["Eisdiele", "ice_cream"],
     ["Bar", "bar"],
@@ -10,7 +10,7 @@ export const filters = new Map([
     ["Club", "nightlife"],
     ["Biergarten", "biergarten"],
 
-    ["Touristenattraktion", "tourist_attraction"],
+    /* ["Touristenattraktion", "tourist_attraction"],
     ["Spielplatz", "playground"],
     ["Garten", "garden"],
     ["Monument", "monument"],
@@ -39,5 +39,5 @@ export const filters = new Map([
     ["Einkaufszentrum", "shopping_mall"],
     ["Schuhladen", "shoe_store"],
     ["Kosmetik", "beauty_store"],
-    ["Kleidung", "clothing_store"],
+    ["Kleidung", "clothing_store"], */
 ]);
