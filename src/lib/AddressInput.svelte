@@ -1,19 +1,23 @@
 <script lang="ts">
-	import {
-		type AddressAutofillSuggestionResponse,
-		AddressAutofillCore
-	} from '@mapbox/search-js-core';
+	import type { AddressAutofillCore, AddressAutofillSuggestionResponse } from '@mapbox/search-js-core';
 	import AddressSugestion from '$lib/AddressSuggestion.svelte';
+	import { onMount } from 'svelte';
 
 	export let location: string;
 	export let sessionToken: string = '';
 
 	let suggestions: AddressAutofillSuggestionResponse | null = null;
+	let autofill: AddressAutofillCore;
 
-	const autofill = new AddressAutofillCore({
-		accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
-		language: 'de'
+
+	onMount(async() => {
+		const {AddressAutofillCore} = (await import('@mapbox/search-js-core'));
+		autofill = new AddressAutofillCore({
+			accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
+			language: 'de'
+		});
 	});
+	
 
 	async function searchAutofill(location: string) {
 		if (location.length < 3) return;
