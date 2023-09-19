@@ -1,4 +1,4 @@
-export const filters = new Map([
+export const food = new Map([
     ["Essen und Trinken", "food_and_drinks"],
     ["Essen", "food"],
     ["Restaurant", "restaurant"],
@@ -8,9 +8,11 @@ export const filters = new Map([
     ["Bar", "bar"],
     ["Pub", "pub"],
     ["Club", "nightlife"],
-    ["Biergarten", "biergarten"],
+    ["Biergarten", "biergarten"]
+]);
 
-    /* ["Touristenattraktion", "tourist_attraction"],
+export const activities = new Map([
+    ["Touristenattraktion", "tourist_attraction"],
     ["Spielplatz", "playground"],
     ["Garten", "garden"],
     ["Monument", "monument"],
@@ -33,11 +35,13 @@ export const filters = new Map([
     ["Arkade", "arcade"],
     ["Museum", "museum"],
     ["Unterhaltung", "entertainment"],
-    ["Musikveranstaltungen", "music_venue"],
+    ["Musikveranstaltungen", "music_venue"]
+]);
 
+export const shopping = new Map([
     ["Einkaufen", "shopping"], 
     ["Einkaufszentrum", "shopping_mall"],
     ["Schuhladen", "shoe_store"],
     ["Kosmetik", "beauty_store"],
-    ["Kleidung", "clothing_store"], */
+    ["Kleidung", "clothing_store"]
 ]);
