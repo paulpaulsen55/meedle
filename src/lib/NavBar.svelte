@@ -11,9 +11,9 @@
 		>
 		<div class="flex items-center justify-center">
 			<div class="space-x-5">
-				<a href="/">Home</a>
-				<a href="/">Funktionen</a>
-				<a href="/">Über</a>
+				<a href="#top">Home</a>
+				<a href="#functions">Funktionen</a>
+				<a href="#about">Über</a>
 			</div>
 			<div />
 			<div class="bg-neutral-500 w-0.5 h-8 ml-12" />

@@ -19,7 +19,7 @@
 	export let data;
 
 	const selectImages = ['filters.png', 'share.png', 'detail.png'];
-	let imgIndex = 0;
+	let imgIndex = 2;
 
 	let location1: string = 'tuxer steig 6',
 		location2: string = 'Rheinbabenallee 47';
@@ -30,7 +30,7 @@
 	}
 </script>
 
-<div class="grid place-items-center">
+<div class="grid place-items-center scroll-smooth" id="top">
 	<NavBar />
 	<section class="h-screen grid place-items-center">
 		<div class="grid place-items-center">
@@ -42,7 +42,7 @@
 			</p>
 		</div>
 		<div
-			class="self-start flex flex-col items-center relative bg-dotted radial bg-animate-pulse px-56 py-20"
+			class="self-start flex flex-col items-center relative bg-dotted radial bg-animate-pulse px-64 py-28"
 		>
 			<div class="space-x-3 flex">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
@@ -56,9 +56,11 @@
 				start
 			</button>
 		</div>
-		<ChevronDown class="animate-bounce mb-5" />
+		<a href="/#functions">
+			<ChevronDown class="animate-bounce mb-5 cursor-pointer" />
+		</a>
 	</section>
-	<section class="h-screen grid place-items-center">
+	<section class="h-screen grid place-items-center" id="functions">
 		<svg xmlns="http://www.w3.org/2000/svg" width="1438" height="68" fill="none"
 			><path
 				stroke="#F7B155"
@@ -75,10 +77,7 @@
 				repeatCount="indefinite"
 			/>
 		</svg>
-		<div
-			class="justify-self-center self-center h-4/5 w-3/5 flex gap-5 place-items-center"
-			id="functions"
-		>
+		<div class="justify-self-center self-center h-4/5 w-3/5 flex gap-5 place-items-center">
 			<div
 				class="h-4/5 w-1/3 space-y-4 hover:bg-neutral-800 p-10 rounded-md cursor-pointer transition hover:-translate-y-1"
 			>
@@ -170,5 +169,33 @@
 			{/each}
 		</div>
 	</section>
+	<section class="grid grid-cols-2 grid-rows-2 gap-10 w-3/5 mb-5 place-items-center" id="about">
+		<div>
+			<h2 class="text-2xl font-semibold mb-5">Wer wir sind?</h2>
+			<p>
+				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+				invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+				et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+				Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+				diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+				voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+				gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+			</p>
+		</div>
+		<img src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4" alt="img" class="h-4/5">
+		<img src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4" alt="img" class="h-4/5">
+		<div>
+			<h2 class="text-2xl font-semibold mb-5">wer wir sind?</h2>
+			<p>
+				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+				invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+				et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+				Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+				diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+				voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+				gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+			</p>
+		</div>
+			</section>
 	<Footer />
 </div>
