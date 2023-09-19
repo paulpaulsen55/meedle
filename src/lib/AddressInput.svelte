@@ -2,8 +2,8 @@
 	import type { AddressAutofillCore, AddressAutofillSuggestionResponse } from '@mapbox/search-js-core';
 	import { createCombobox, melt } from '@melt-ui/svelte';
 	import { fly } from 'svelte/transition';
-	import Icon from './Icon.svelte';
 	import { onMount } from 'svelte';
+	import { ChevronDown, ChevronUp } from 'lucide-svelte'
 
 	export let location: string;
 	export let sessionToken: string = '';
@@ -65,9 +65,9 @@
 	/>
 	<div class="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-black">
 		{#if $open}
-			<Icon name="chevronDown" />
+			<ChevronDown />
 		{:else}
-			<Icon name="chevronUp" />
+			<ChevronUp />
 		{/if}
 	</div>
 </div>

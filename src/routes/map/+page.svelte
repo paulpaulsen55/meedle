@@ -4,11 +4,11 @@
 	import type { Coordinate } from '../../app';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import Accordion from '$lib/Accordion.svelte';
-	import Icon from '$lib/Icon.svelte';
 	import { locations as lol } from '../../store';
 	import type { Unsubscriber } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
+	import { ArrowLeftIcon, Settings2, FileEdit } from 'lucide-svelte'
 
 	export let data;
 
@@ -54,7 +54,7 @@
 <div class="flex">
 	<aside class="w-96 p-6 space-y-10">
 		<a href="/">
-			<Icon name="arrowLeft" class="w-12 h-12" />
+			<ArrowLeftIcon class="w-12 h-12" />
 		</a>
 		{#if edit}
 			<div class="mt-5">
@@ -63,7 +63,7 @@
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 				<div class="mt-4 flex justify-center items-center relative">
 					<button class="absolute left-0 grid place-content-center h-full pl-2">
-						<Icon name="settingsHorizontal" />
+						<Settings2 />
 					</button>
 					<button
 						on:click={() => {
@@ -82,7 +82,7 @@
 					<p>{location2}</p>
 				</div>
 				<button type="button" on:click={() => (edit = true)} class="">
-					<Icon name="edit" />
+					<FileEdit />
 				</button>
 			</div>
 		{/if}
