@@ -10,6 +10,7 @@
 
 	let results: string[] = [];
 	let suggestions: AddressAutofillSuggestionResponse | null = null;
+	let autofill: AddressAutofillCore;
 
 	const {
 		elements: { menu, input, option },
@@ -20,11 +21,6 @@
 
 	// set the input value to the location variable passed from the parent components
 	inputValue.set(location);
-
-	let results: AutocompleteElement[] = [];
-	let suggestions: AddressAutofillSuggestionResponse | null = null;
-	let autofill: AddressAutofillCore;
-
 
 	onMount(async() => {
 		const {AddressAutofillCore} = (await import('@mapbox/search-js-core'));
