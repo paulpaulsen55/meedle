@@ -1,13 +1,14 @@
 <script lang="ts">
     import { createDialog, createTagsInput, melt } from '@melt-ui/svelte';
-    import { filters } from '$lib/helpers/filters';
+    import { food } from '$lib/helpers/filters';
+    import { activities } from '$lib/helpers/filters';
+    import { shopping } from '$lib/helpers/filters';
    
     const {
-    elements: { root, input, tag, deleteTrigger },
+    elements: { root, tag, deleteTrigger },
     states: { tags },
     helpers: {addTag},
   } = createTagsInput({
-    defaultTags: ['Svelte', 'Typescript'],
     unique: true,
     add(tag) {
       return { id: tag, value: tag };
@@ -18,6 +19,7 @@
       elements: {
         trigger,
         overlay,
+        title,
         content,
         close,
         portalled,
@@ -41,31 +43,57 @@
       <div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />
       <div
         class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
-              max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-white
+              max-w-[400px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-white
               p-6 shadow-lg"
         use:melt={$content}
       >
-      <div>
-        {#each filters.entries() as [k, v]}
-        <div>
-          <button
-            on:click={() => {addTag(k)}}
-            class="inline-flex h-8 items-center justify-center rounded-[4px]
-                  bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
-          >
-            {k}
-          </button>
+      <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
+        Essen und Trinken
+      </h2>
+        <div class="grid grid-rows-2 grid-flow-col auto-cols-max gap-1 overflow-x-scroll">
+          {#each food.entries() as [k, _]}
+          <div>
+            <button
+              on:click={() => {addTag(k)}}
+              class="inline-flex h-8 items-center justify-center rounded-[4px]
+                    bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
+            >
+              {k}
+            </button>
+          </div>
+          {/each}
         </div>
-        {/each}
-      </div>
-        <div>
-          <button
-            on:click={() => {addTag("test")}}
-            class="inline-flex h-8 items-center justify-center rounded-[4px]
-                  bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
-          >
-            Continue
-          </button>
+        <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
+          Freizeit
+        </h2>
+        <div class="grid grid-rows-2 grid-flow-col auto-cols-max gap-1 overflow-x-scroll">
+          {#each activities.entries() as [k, _]}
+          <div>
+            <button
+              on:click={() => {addTag(k)}}
+              class="inline-flex h-8 items-center justify-center rounded-[4px]
+                    bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
+            >
+              {k}
+            </button>
+          </div>
+          {/each}
+        </div>
+        <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
+          Einkaufen
+        </h2>
+        <div class="grid grid-rows-2 grid-flow-col auto-cols-max gap-1 overflow-x-scroll">
+          {#each shopping.entries() as [k, _]}
+          <div>
+            <button
+              on:click={() => {addTag(k)}}
+              class="inline-flex h-8 items-center justify-center rounded-[4px]
+                    bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
+            >
+              {k}
+            </button>
+          </div>
+          {/each}
         </div>
 
 
