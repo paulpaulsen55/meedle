@@ -4,7 +4,8 @@
 	import { slide } from 'svelte/transition';
 
 	export let response : SearchBoxCategoryResponse;
-	export let updateHoveredPoint;
+	export let updateHoveredPoint:Function;
+	export let hoverdPointId:string|null;
 
     console.log(response);
 
@@ -35,9 +36,6 @@
 		defaultValue: 'item-1'
 	});
 
-	function togglePoint(){
-		
-	};
 </script>
 
 <div class="rounded-xl bg-neutral-800 shadow-lg z-10">
@@ -49,6 +47,7 @@
 			<h2 class="flex">
 				<button
 					use:melt={$trigger(id)}
+					on:click={() => updateHoveredPoint(id)}
 					class="w-full cursor-pointer flex items-start flex-col bg-neutral-800 p-5 text-base font-medium leading-none transition hover:bg-neutral-700
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>

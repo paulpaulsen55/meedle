@@ -10,8 +10,7 @@
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
 
 	export let data;
-
-	let hoverdPointId: string | null;
+	export let hoverdPointId: string | null;
 
 	let loc = { location1: '', location2: '' };
 	const unsubscribe: Unsubscriber = lol.subscribe((value) => (loc = value));
@@ -45,10 +44,12 @@
 		}
 	});
 
-	function updateHoveredPoint(newValue:string | null) {
+	export function updateHoveredPointFunc(newValue:string | null) {
     	hoverdPointId = newValue;
   	}
 
+	$:console.log(hoverdPointId);
+	
 </script>
 
 <div class="fixed bottom-0 left-0 w-96 h-40 dotted-bg p-2"></div>
@@ -91,7 +92,7 @@
 
 		{#if features}
 			<div class="mt-20">
-				<Accordion bind:response={features}  />
+				<Accordion bind:response={features} updateHoveredPoint={updateHoveredPointFunc} bind:hoverdPointId={hoverdPointId}/>
 			</div>
 		{/if}
 	</aside>
