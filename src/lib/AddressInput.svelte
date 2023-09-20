@@ -1,9 +1,12 @@
 <script lang="ts">
-	import type { AddressAutofillCore, AddressAutofillSuggestionResponse } from '@mapbox/search-js-core';
+	import type {
+		AddressAutofillCore,
+		AddressAutofillSuggestionResponse
+	} from '@mapbox/search-js-core';
 	import { createCombobox, melt } from '@melt-ui/svelte';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { ChevronDown, ChevronUp } from 'lucide-svelte'
+	import { X } from 'lucide-svelte';
 
 	export let location: string;
 	export let sessionToken: string = '';
@@ -22,14 +25,13 @@
 	// set the input value to the location variable passed from the parent components
 	inputValue.set(location);
 
-	onMount(async() => {
-		const {AddressAutofillCore} = (await import('@mapbox/search-js-core'));
+	onMount(async () => {
+		const { AddressAutofillCore } = await import('@mapbox/search-js-core');
 		autofill = new AddressAutofillCore({
 			accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
 			language: 'de'
 		});
 	});
-	
 
 	async function searchAutofill() {
 		if ($inputValue.value.length < 2) return;
@@ -48,26 +50,29 @@
 	});
 
 	// reset results AND store the combobox value in the location variable to use it in the parent component
-	$ : {
-			if ($inputValue.value.length < 2) {
-				results = [];
-			}
-			location = $inputValue.value;
-		};
+	$: {
+		if ($inputValue.value.length < 2) {
+			results = [];
+		}
+		location = $inputValue.value;
+	}
 </script>
 
 <div class="relative">
 	<input
 		use:melt={$input}
 		on:input={() => searchAutofill()}
-		class="flex h-10 items-center justify-between rounded-lg bg-white px-3 pr-12 text-black w-full"
+		class="flex h-10 items-center justify-between rounded-lg bg-white px-3 text-black w-full"
 		placeholder="Adresse eingeben"
 	/>
 	<div class="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-black">
 		{#if $open}
-			<ChevronDown />
-		{:else}
-			<ChevronUp />
+			<button
+				on:click={() => inputValue.set('')}
+				class="grid place-items-center bg-white hover:text-red-600"
+			>
+				<X />
+			</button>
 		{/if}
 	</div>
 </div>
@@ -81,9 +86,7 @@
 		<div class="flex max-h-full flex-col overflow-y-auto bg-white p-2 text-black" tabindex="0">
 			{#each results as el}
 				<li
-					use:melt={$option({
-						value: el
-					})}
+					use:melt={$option({ value: el })}
 					class="cursor-pointer scroll-my-2 rounded-md py-2 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
 				>
 					<div class="pl-4">
