@@ -32,7 +32,7 @@
 
 <div class="grid place-items-center scroll-smooth" id="top">
 	<NavBar />
-	<section class="h-screen grid place-items-center">
+	<section class="h-screen grid place-items-center relative">
 		<div class="grid place-items-center">
 			<img src="/logo.svg" alt="logo" class="w-full" />
 			<p class="text-center text-neutral-400 mt-5">
@@ -56,7 +56,7 @@
 				start
 			</button>
 		</div>
-		<a href="/#functions">
+		<a href="/#functions" class="absolute bottom-20 flex justify-center">
 			<ChevronDown class="animate-bounce mb-5 cursor-pointer" />
 		</a>
 	</section>
@@ -77,9 +77,9 @@
 				repeatCount="indefinite"
 			/>
 		</svg>
-		<div class="justify-self-center self-center h-4/5 w-3/5 flex gap-5 place-items-center">
+		<div class="justify-self-center self-center h-4/5 w-3/5 flex gap-2 place-items-start">
 			<div
-				class="h-4/5 w-1/3 space-y-4 hover:bg-neutral-800 p-10 rounded-md cursor-pointer transition hover:-translate-y-1"
+				class="w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
 			>
 				<FastForward class="w-14 h-14 text-magnum-900" />
 				<h2 class="text-3xl font-bold text-neutral-100">Schnelligkeit</h2>
@@ -92,7 +92,7 @@
 			</div>
 			<div class="bg-neutral-600 w-px h-4/5" />
 			<div
-				class="h-4/5 w-1/3 space-y-4 hover:bg-neutral-800 p-10 rounded-md cursor-pointer transition hover:-translate-y-1"
+				class="w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
 			>
 				<Users class="w-14 h-14 text-magnum-500" />
 				<h2 class="text-3xl font-bold text-neutral-100">Treffen</h2>
@@ -105,7 +105,7 @@
 			</div>
 			<div class="bg-neutral-600 w-px h-4/5" />
 			<div
-				class="h-4/5 w-1/3 space-y-4 hover:bg-neutral-800 p-10 rounded-md cursor-pointer transition hover:-translate-y-1"
+				class="w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
 			>
 				<Sparkles class="w-14 h-14 text-magnum-300" />
 				<h2 class="text-3xl font-bold text-neutral-100">Wunderschön</h2>
