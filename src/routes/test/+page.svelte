@@ -3,8 +3,12 @@
     import { food } from '$lib/helpers/filters';
     import { activities } from '$lib/helpers/filters';
     import { shopping } from '$lib/helpers/filters';
-    import { X } from 'lucide-svelte';
+    import { X, ChevronRight, ChevronLeft   } from 'lucide-svelte';
    
+    let foodbox:HTMLElement;
+    let foodArrowRight:HTMLElement;
+    let foodArrowLeft:HTMLElement;
+
     const {
     elements: { root, tag, deleteTrigger },
     states: { tags },
@@ -29,6 +33,20 @@
     } = createDialog({
       role: 'alertdialog',
     });
+
+  function updateScroll(box: HTMLElement, arrowL: HTMLElement, arrowR: HTMLElement) {
+    console.log(box.offsetWidth);
+    console.log(box.scrollLeft);
+    if (box.scrollLeft <= 0) {
+      arrowL.hidden = true;
+    } else if (box.scrollLeft >= 186) {
+      arrowR.hidden = true;
+    } else {
+      arrowL.hidden = false;
+      arrowR.hidden = false;
+    }
+  }
+
   </script>
    
   <button use:melt={$trigger} class="button-white">
@@ -47,7 +65,11 @@
       <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
         Essen und Trinken
       </h2>
-        <div class="whitespace-nowrap overflow-x-auto">
+      <div class="flex items-stretch relative">
+        <button bind:this={foodArrowLeft} on:click={() => {foodbox.scrollLeft -= 50}} class="absolute -left-5 grid place-items-center h-full" hidden>
+          <ChevronLeft class="h-8 w-8 self-center"/>
+        </button>
+        <div bind:this={foodbox} on:scroll={() => updateScroll(foodbox, foodArrowLeft, foodArrowRight)} class="whitespace-nowrap overflow-x-auto scrollbar-hide">
           {#each food.entries() as [k, _], index}
             {#if index == Math.floor(food.size / 2)}
               <br class="inline-block">
@@ -60,36 +82,49 @@
               </button>
           {/each}
         </div>
+        <button bind:this={foodArrowRight} on:click={() => {foodbox.scrollLeft += 50}} class="absolute -right-5 grid place-items-center h-full">
+          <ChevronRight class="h-8 w-8 self-center"/>
+        </button>
+      </div>
+
+
+
+
+
         <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
           Freizeit
         </h2>
-        <div class="grid grid-rows-2 grid-flow-col auto-cols-max gap-1 overflow-x-scroll">
-          {#each activities.entries() as [k, _]}
-          <div>
+        <div class="whitespace-nowrap overflow-x-auto scrollbar-hide">
+          {#each activities.entries() as [k, _], index}
+            {#if index == Math.floor(activities.size / 2)}
+              <br class="inline-block">
+            {/if}
             <button
               on:click={() => {addTag(k)}}
-              class="inline-flex h-8 items-center justify-center rounded-[4px]
-                    bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
-            >
-              {k}
-            </button>
-          </div>
+              class="inline-block h-8 rounded bg-magnum-100 px-4 m-0.5 font-medium text-magnum-900"
+              >
+                {k}
+              </button>
           {/each}
         </div>
+
+
+
+
         <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
           Einkaufen
         </h2>
-        <div class="grid grid-rows-2 grid-flow-col auto-cols-max gap-1 overflow-x-scroll">
-          {#each shopping.entries() as [k, _]}
-          <div>
+        <div class="whitespace-nowrap overflow-x-auto scrollbar-hide">
+          {#each shopping.entries() as [k, _], index}
+            {#if index == Math.floor(shopping.size / 2)}
+              <br class="inline-block">
+            {/if}
             <button
               on:click={() => {addTag(k)}}
-              class="inline-flex h-8 items-center justify-center rounded-[4px]
-                    bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
-            >
-              {k}
-            </button>
-          </div>
+              class="inline-block h-8 rounded bg-magnum-100 px-4 m-0.5 font-medium text-magnum-900"
+              >
+                {k}
+              </button>
           {/each}
         </div>
 
@@ -113,14 +148,14 @@
                 class="flex items-center overflow-hidden rounded-md bg-magnum-200 text-magnum-900 [word-break:break-word]
              data-[selected]:bg-magnum-400"
               >
-                <span class="flex items-center border-r border-white/10 px-1.5"
+                <span use:melt={$deleteTrigger(t)} class="flex items-center border-r border-white/10 px-1.5 cursor-pointer"
                   >{t.value}</span
                 >
                 <button
                   use:melt={$deleteTrigger(t)}
-                  class="flex h-full items-center px-1 enabled:hover:bg-magnum-300"
+                  class="flex h-full items-center px-1"
                 >
-                <X />
+                <X class="square-3" />
                 </button>
               </div>
             {/each}
