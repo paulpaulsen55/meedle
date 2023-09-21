@@ -19,6 +19,7 @@
 	function startClick() {
 		locations.set({ location1, location2 });
 		r.set(radius);
+		p.set(poi);
 		goto('/map');
 	}
 
@@ -39,17 +40,14 @@
 			<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
 			<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 		</div>
-		<div class="space-x-3 flex">
-			<div class="flex flex-col items-start justify-center relative">
+		<div class="space-x-3 flex mt-5">
 				<button
 					type="button"
-					class="trigger"
+					class="trigger button-magnum"
 					use:melt={$trigger}
 				>
-					<Settings2 class="button-magnum w-64 flex justify-center" />
-					<span class="sr-only">Open Popover</span>
+					<Settings2 />
 				</button>
-			</div>
 			{#if $open}
 				<div use:melt={$content} transition:fade={{ duration: 100 }} class="content">
 					<div use:melt={$arrow} />
@@ -95,10 +93,6 @@ p {
 	@apply focus-visible:ring-magnum-400 focus-visible:ring-offset-1;
 	@apply flex-1 items-center justify-center;
 	@apply text-magnum-700;
-}
-
-.trigger {
-	@apply inline-flex h-10 w-10;
 }
 
 .close {
