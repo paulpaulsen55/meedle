@@ -8,11 +8,16 @@
 	import type { Unsubscriber } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
+	import AdressSettings from '$lib/AdressSettings.svelte';
+	import { radius as r } from '../../store';
+	import { poi as p } from '../../store';
 
 	export let data;
 
-	let loc = { location1: '', location2: '' };
+	let loc = { location1: '', location2: '' }, radius = 0, poi = 0;
 	const unsubscribe: Unsubscriber = lol.subscribe((value) => (loc = value));
+	const unsubscribeRad: Unsubscriber = r.subscribe((value) => (radius = value));
+	const unsubscribePoi: Unsubscriber = p.subscribe((value) => (poi = value));
 
 	let location1 = loc.location1,
 		location2 = loc.location2,
@@ -21,6 +26,7 @@
 		category = 'food_and_drink',
 		features: SearchBoxCategoryResponse,
 		edit = true;
+		
 
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
@@ -32,6 +38,10 @@
 			lng: (point1.lng + point2.lng) / 2,
 			lat: (point1.lat + point2.lat) / 2
 		};
+
+		r.set(radius);
+		p.set(poi);
+
 		features = await pointToFeatures(category, average);
 	}
 
@@ -60,11 +70,7 @@
 				<p>between</p>
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 				<div class="mt-4 flex justify-center items-center relative">
-					<button class="absolute left-0 grid place-content-center h-full pl-2">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
-						</svg>
-					</button>
+					<AdressSettings bind:radius bind:poi />
 					<button on:click={() => {edit = false; handleSubmit()}} class="button-magnum self-center w-3/4" >meet me in the middle</button>
 				</div>
 			</div>

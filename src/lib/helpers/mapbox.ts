@@ -32,9 +32,6 @@ export async function pointToFeatures(
 		&bbox=${average.lng - lng},${average.lat - lat},${average.lng + lng},${average.lat + lat}
 		&access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`
 	);
-	// minimum longitude,minimum latitude,maximum longitude,maximum latitude
-	console.log(`${average.lng - lng},${average.lat - lat},${average.lng + lng},${average.lat + lat}`);
-	console.log(`${average.lng},${average.lat}`);
 	
 	const feature = await response.json();
 	return feature;

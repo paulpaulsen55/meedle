@@ -3,11 +3,9 @@
 	import { locations } from '../store';
 	import NavBar from '$lib/NavBar.svelte';
 	import AddressInput from '$lib/AddressInput.svelte';
+	import AdressSettings from '$lib/AdressSettings.svelte';
 	import { radius as r } from '../store';
 	import { poi as p } from '../store';
-	import { createPopover, melt } from '@melt-ui/svelte';
-  	import { fade } from 'svelte/transition';
-  	import { Settings2, X } from 'lucide-svelte';
 
 	export let data
 
@@ -22,19 +20,6 @@
 		p.set(poi);
 		goto('/map');
 	}
-
-	const {
-    	elements: { trigger, content, arrow, close },
-    	states: { open },
-  	} = createPopover({
-    	forceVisible: true,
-	});
-
-	$: if (poi > 25){
-		poi = 25
-	} else if(poi < 1){
-		poi = 1
-	}
 </script>
 
 <div class="h-screen grid place-items-center">
@@ -47,32 +32,7 @@
 			<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 		</div>
 		<div class="space-x-3 flex mt-5">
-				<button
-					type="button"
-					class="trigger button-magnum"
-					use:melt={$trigger}
-				>
-					<Settings2 />
-				</button>
-			{#if $open}
-				<div use:melt={$content} transition:fade={{ duration: 100 }} class="content">
-					<div use:melt={$arrow} />
-					<div class="flex flex-col gap-2.5">
-						<p>Einstellungen</p>
-						<fieldset>
-							<label for="radius">Radius</label>
-							<input bind:value={radius} type="number" id="radius" class="input" placeholder="max. Radius" />
-						</fieldset>
-						<fieldset>
-							<label for="POI">POI</label>
-							<input bind:value={poi} type="number" min="1" max="25" id="POI" class="input" placeholder="Anzahl POI" />
-						</fieldset>
-					</div>
-					<button class="close" use:melt={$close}>
-						<X class="square-4" />
-					</button>
-				</div>
-			{/if}
+			<AdressSettings bind:radius bind:poi />
 			<button on:click={() => startClick()} class="button-magnum w-80 justify-center">
 				meet me in the middle
 			</button>
@@ -80,35 +40,3 @@
 	</div>
 </div>
 
-<style lang="postcss">
-fieldset {
-	@apply flex items-center gap-5;
-}
-
-label {
-	@apply w-[75px] text-sm text-neutral-700;
-}
-
-p {
-	@apply mb-2 font-medium text-neutral-900;
-}
-
-.input {
-	@apply flex h-8 w-full rounded-md border border-magnum-800 bg-transparent px-2.5 text-sm;
-	@apply ring-offset-magnum-300 focus-visible:ring;
-	@apply focus-visible:ring-magnum-400 focus-visible:ring-offset-1;
-	@apply flex-1 items-center justify-center;
-	@apply text-magnum-700;
-}
-
-.close {
-	@apply absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full;
-	@apply text-magnum-900 transition-colors hover:bg-magnum-500/10;
-	@apply focus-visible:ring focus-visible:ring-magnum-400 focus-visible:ring-offset-2;
-	@apply bg-white p-0 text-sm font-medium;
-}
-
-.content {
-	@apply z-10 w-60 rounded-[4px] bg-white p-5 shadow-sm;
-}
-</style>
