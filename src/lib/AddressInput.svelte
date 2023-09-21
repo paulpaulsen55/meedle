@@ -37,7 +37,7 @@
 		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
 		results = [];
 		suggestions.suggestions.forEach((suggestion) => {
-			const s = suggestion.address_line1!;
+			const s = suggestion.address_line1! + ", " + suggestion.postcode;
 			results.push(s);
 		});
 	}
