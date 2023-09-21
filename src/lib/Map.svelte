@@ -5,6 +5,8 @@
 	import type { SearchBoxCategoryResponse,SearchBoxCategorySuggestion } from '@mapbox/search-js-core';
 
 	export let middle: Coordinate, response: SearchBoxCategoryResponse, locations: Array<Coordinate>;
+	export let updateHoveredPoint:Function, hoverdPointId:string|null;
+
 
 	let mapElement: HTMLElement;
 	let map: mapboxgl.Map | null = null;
@@ -41,13 +43,37 @@
 			markers.clear();
 			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);
-				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.newValueproperties.name}</p>`));
-				markers.set(feature.properties.mapbox_id,m);
+                m.getElement().addEventListener('click',(event)=>onMarkerClick(event,feature.properties.mapbox_id))
+                markers.set(feature.properties.mapbox_id,m);
 			});
 			markers.forEach((marker) => marker.addTo(map!));
 		}
 	}
 
+    let currentMarkerId:string|null;
+
+    function onMarkerClick(event:any,id:string){
+        if(currentMarkerId != id){
+            currentMarkerId = id;
+            markers.get(id)?.togglePopup();
+        }else {
+            currentMarkerId = null;
+            markers.get(id)?.togglePopup();
+            markers.get(id)?.togglePopup();
+
+        }
+    }
+
+    $:{
+        markers.forEach((value) => {
+            if (value.getPopup().isOpen()){
+                value.togglePopup();
+            }
+        });
+        if (hoverdPointId != null){
+            markers.get(hoverdPointId)?.togglePopup();
+        }
+    }
 
 	onMount(() => {
 		createMap();

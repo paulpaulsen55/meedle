@@ -5,8 +5,7 @@
 	import { writable } from 'svelte/store'
 
 	export let response : SearchBoxCategoryResponse;
-	export let updateHoveredPoint:Function;
-	export let hoverdPointId:string|null;
+	export let updateHoveredPoint:Function, hoverdPointId:string|null;
 
     console.log(response);
 
@@ -36,8 +35,7 @@
 		states: {value}
 	} = createAccordion();
 
-	$:hoverdPointId,() => {
-		console.log("HoverdPoint changed");
+	$:{
 		let tmpItem = items.findLast((i)=>i.id==hoverdPointId);
 		if (tmpItem != undefined) {
 			value.set(tmpItem.id);
@@ -53,6 +51,7 @@
 			updateHoveredPoint(id);
 		}
 	}
+
 </script>
 
 <div class="rounded-xl bg-neutral-800 shadow-lg z-10">
