@@ -6,7 +6,6 @@
 	import { createCombobox, melt } from '@melt-ui/svelte';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { X } from 'lucide-svelte';
 
 	export let location: string;
 	export let sessionToken: string = '';
@@ -38,7 +37,7 @@
 		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
 		results = [];
 		suggestions.suggestions.forEach((suggestion) => {
-			const s = suggestion.full_address!;
+			const s = suggestion.address_line1!;
 			results.push(s);
 		});
 	}
@@ -63,18 +62,8 @@
 		use:melt={$input}
 		on:input={() => searchAutofill()}
 		class="flex h-10 items-center justify-between rounded-lg bg-white px-3 text-black w-full"
-		placeholder="Adresse eingeben"
-	/>
-	<div class="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-black">
-		{#if $open}
-			<button
-				on:click={() => inputValue.set('')}
-				class="grid place-items-center bg-white hover:text-red-600"
-			>
-				<X />
-			</button>
-		{/if}
-	</div>
+		placeholder="Adresse eingeben" 
+	/>	
 </div>
 {#if $open}
 	<ul
