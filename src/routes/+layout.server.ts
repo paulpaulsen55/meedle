@@ -9,6 +9,7 @@ export async function load({ url, cookies }) {
 	}
 
 	return {
-		currentPath: url.pathname
+		currentPath: url.pathname,
+		sessionToken: cookies.get('session_token'),
 	};
 }

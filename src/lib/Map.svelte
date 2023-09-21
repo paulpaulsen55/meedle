@@ -2,15 +2,25 @@
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
 	import type { Coordinate } from '../app';
-	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
+	import type { SearchBoxCategoryResponse,SearchBoxCategorySuggestion } from '@mapbox/search-js-core';
 
-	export let middle: Coordinate, feat: SearchBoxCategoryResponse, locations: Array<Coordinate>;
-	let featureMarkers: mapboxgl.Marker[] = [];
+	export let middle: Coordinate, response: SearchBoxCategoryResponse, locations: Array<Coordinate>;
+
+	let mapElement: HTMLElement;
+	let map: mapboxgl.Map | null = null;
+	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+	let mapStyle = 'mapbox://styles/mapbox/dark-v9';
+	let viewState = {
+		zoom: 5,
+		pitch: 0,
+		bearing: 0
+	};
 	let locationMarkers: mapboxgl.Marker[] = [];
 
-	$: if (map != null) {
+	let markers = new Map<string, mapboxgl.Marker>();
+
+	$: if (map != null && middle && locations) {
 		map.setCenter(middle);
-		map.setZoom(5);
 
 		// add all peoples locations to the map
 		locationMarkers.forEach((marker) => marker.remove());
@@ -26,27 +36,18 @@
 		]);
 
 		// add the features to the map
-		if (feat) {
-			featureMarkers.forEach((marker) => marker.remove());
-			featureMarkers = [];
-			feat.features.forEach((feature: any) => {
+		if (response) {
+			markers.forEach((marker) => marker.remove());
+			markers.clear();
+			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.properties.name}</p>`));
-				featureMarkers.push(m);
+				markers.set(feature.properties.mapbox_id,m);
 			});
-			featureMarkers.forEach((marker) => marker.addTo(map!));
+			markers.forEach((marker) => marker.addTo(map!));
 		}
 	}
 
-	let mapElement: HTMLElement;
-	let map: mapboxgl.Map | null = null;
-	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-	let mapStyle = 'mapbox://styles/mapbox/dark-v9';
-	let viewState = {
-		zoom: 5,
-		pitch: 0,
-		bearing: 0
-	};
 
 	onMount(() => {
 		createMap();
@@ -58,12 +59,13 @@
 			container: mapElement,
 			interactive: true,
 			style: mapStyle,
-			center: middle,
+			center: { lng: 10, lat: 51 },
 			zoom: viewState.zoom,
 			pitch: viewState.pitch,
 			bearing: viewState.bearing
 		});
 		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
+		map.setCenter(middle);
 	}
 </script>
 
