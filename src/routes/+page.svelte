@@ -9,13 +9,12 @@
   	import { fade } from 'svelte/transition';
   	import { Settings2, X } from 'lucide-svelte';
 
-
-	let radius: number;
-	let poi: number;
 	export let data
 
 	let location1: string = 'tuxer steig 6',
 		location2: string = 'Rheinbabenallee 47';
+	let radius: number;
+	let poi: number;
 
 	function startClick() {
 		locations.set({ location1, location2 });
