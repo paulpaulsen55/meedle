@@ -2,6 +2,7 @@
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
+	import { writable } from 'svelte/store'
 
 	export let response : SearchBoxCategoryResponse;
 	export let updateHoveredPoint:Function;
@@ -31,11 +32,27 @@
 
 	const {
 		elements: { content, item, trigger, root },
-		helpers: { isSelected }
-	} = createAccordion({
-		defaultValue: 'item-1'
-	});
+		helpers: { isSelected },
+		states: {value}
+	} = createAccordion();
 
+	$:hoverdPointId,() => {
+		console.log("HoverdPoint changed");
+		let tmpItem = items.findLast((i)=>i.id==hoverdPointId);
+		if (tmpItem != undefined) {
+			value.set(tmpItem.id);
+		}else {
+			value.set(undefined);
+		}
+	}
+
+	function preUpdateHoverdPoint(id:string){
+		if (id == hoverdPointId) {
+			updateHoveredPoint(null);
+		}else{
+			updateHoveredPoint(id);
+		}
+	}
 </script>
 
 <div class="rounded-xl bg-neutral-800 shadow-lg z-10">
@@ -46,8 +63,7 @@
 		>
 			<h2 class="flex">
 				<button
-					use:melt={$trigger(id)}
-					on:click={() => updateHoveredPoint(id)}
+					on:click={() => preUpdateHoverdPoint(id)}
 					class="w-full cursor-pointer flex items-start flex-col bg-neutral-800 p-5 text-base font-medium leading-none transition hover:bg-neutral-700
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
