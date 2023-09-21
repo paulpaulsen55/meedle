@@ -66,23 +66,24 @@
         Essen und Trinken
       </h2>
       <div class="flex items-stretch relative">
-        <button bind:this={foodArrowLeft} on:click={() => {foodbox.scrollLeft -= 50}} class="absolute -left-5 grid place-items-center h-full" hidden>
+        <button bind:this={foodArrowLeft} on:click={() => {foodbox.scrollLeft -= 50}} 
+          class="absolute -left-5 place-items-center h-full" hidden>
           <ChevronLeft class="h-8 w-8 self-center"/>
         </button>
-        <div bind:this={foodbox} on:scroll={() => updateScroll(foodbox, foodArrowLeft, foodArrowRight)} class="whitespace-nowrap overflow-x-auto scrollbar-hide">
+        <div bind:this={foodbox} on:scroll={() => updateScroll(foodbox, foodArrowLeft, foodArrowRight)} 
+          class="whitespace-nowrap overflow-x-auto scrollbar-hide">
           {#each food.entries() as [k, _], index}
             {#if index == Math.floor(food.size / 2)}
               <br class="inline-block">
             {/if}
-            <button
-              on:click={() => {addTag(k)}}
-              class="inline-block h-8 rounded bg-magnum-100 px-4 m-0.5 font-medium text-magnum-900"
-              >
+            <button on:click={() => {addTag(k)}} 
+              class="inline-block h-8 rounded bg-magnum-100 px-4 m-0.5 font-medium text-magnum-900">
                 {k}
-              </button>
+            </button>
           {/each}
         </div>
-        <button bind:this={foodArrowRight} on:click={() => {foodbox.scrollLeft += 50}} class="absolute -right-5 grid place-items-center h-full">
+        <button bind:this={foodArrowRight} on:click={() => {foodbox.scrollLeft += 50}} 
+          class="absolute -right-5 place-items-center h-full">
           <ChevronRight class="h-8 w-8 self-center"/>
         </button>
       </div>
