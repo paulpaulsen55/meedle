@@ -42,7 +42,8 @@
 			markers.forEach((marker) => marker.remove());
 			markers.clear();
 			response.features.forEach((feature: any) => {
-				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);
+				let m = new mapboxgl.Marker({ color: '#F38D1C', }).setLngLat(feature.geometry.coordinates);
+                m.setPopup(new mapboxgl.Popup({closeOnClick:true}).setHTML(`<p>${feature.properties.name}</p>`));
                 m.getElement().addEventListener('click',(event)=>onMarkerClick(event,feature.properties.mapbox_id))
                 markers.set(feature.properties.mapbox_id,m);
 			});
@@ -55,7 +56,6 @@
     function onMarkerClick(event:any,id:string){
         if(currentMarkerId != id){
             currentMarkerId = id;
-            markers.get(id)?.togglePopup();
         }else {
             currentMarkerId = null;
             markers.get(id)?.togglePopup();
