@@ -13,8 +13,8 @@
 
 	let location1: string = 'tuxer steig 6',
 		location2: string = 'Rheinbabenallee 47';
-	let radius: number;
-	let poi: number;
+	let radius = 5;
+	let poi = 5;
 
 	function startClick() {
 		locations.set({ location1, location2 });
@@ -29,6 +29,12 @@
   	} = createPopover({
     	forceVisible: true,
 	});
+
+	$: if (poi > 25){
+		poi = 25
+	} else if(poi < 1){
+		poi = 1
+	}
 </script>
 
 <div class="h-screen grid place-items-center">
@@ -55,11 +61,11 @@
 						<p>Einstellungen</p>
 						<fieldset>
 							<label for="radius">Radius</label>
-							<input bind:value={radius} type="number" id="radius" class="input" placeholder="Radius" />
+							<input bind:value={radius} type="number" id="radius" class="input" placeholder="max. Radius" />
 						</fieldset>
 						<fieldset>
 							<label for="POI">POI</label>
-							<input bind:value={poi} type="number" id="POI" class="input" placeholder="POI" />
+							<input bind:value={poi} type="number" min="1" max="25" id="POI" class="input" placeholder="Anzahl POI" />
 						</fieldset>
 					</div>
 					<button class="close" use:melt={$close}>
