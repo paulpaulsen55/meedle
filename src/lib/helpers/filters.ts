@@ -1,17 +1,19 @@
-export const food = new Map([
+const food = new Map([
     ["Essen und Trinken", "food_and_drinks"],
     ["Essen", "food"],
     ["Restaurant", "restaurant"],
     ["Fast Food", "fast_food"],
     ["Café", "cafe"],
+    ["Bubble Tea", "bubble_tea"],
     ["Eisdiele", "ice_cream"],
     ["Bar", "bar"],
     ["Pub", "pub"],
     ["Club", "nightlife"],
+    ["Karaoke Bar", "karaoke_bar"],
     ["Biergarten", "biergarten"]
 ]);
 
-export const activities = new Map([
+const activities = new Map([
     ["Touristenattraktion", "tourist_attraction"],
     ["Spielplatz", "playground"],
     ["Garten", "garden"],
@@ -21,16 +23,8 @@ export const activities = new Map([
     ["Park", "park"],
     ["See", "lake"],
     ["Berg", "mountain"],
-    ["Schwimmbad", "swimming_pool"],
     ["Veranstaltungsfläche", "event_space"],
     ["Vergnügungspark", "theme_park_attraction"],
-    ["Sportplatz", "field"],
-    ["Basketball", "basketball_court"],
-    ["Fussballplatz", "soccer_field"],
-    ["Minigolf", "miniature_golf"],
-    ["Go-Kart", "go_kart_racing"],
-    ["Billard", "billiards"],
-    ["Laser-Tag", "laser_tag"],
     ["Kino", "cinema"],
     ["Arkade", "arcade"],
     ["Museum", "museum"],
@@ -38,10 +32,36 @@ export const activities = new Map([
     ["Musikveranstaltungen", "music_venue"]
 ]);
 
-export const shopping = new Map([
+const sports = new Map([
+    ["Schwimmbad", "swimming_pool"],
+    ["Sportplatz", "field"],
+    ["Basketball", "basketball_court"],
+    ["Fussballplatz", "soccer_field"],
+    ["Minigolf", "miniature_golf"],
+    ["Go-Kart", "go_kart_racing"],
+    ["Billard", "billiards"],
+    ["Bowling", "bowling_alley"],
+    ["Laser-Tag", "laser_tag"]
+]);
+
+const shopping = new Map([
     ["Einkaufen", "shopping"], 
     ["Einkaufszentrum", "shopping_mall"],
     ["Schuhladen", "shoe_store"],
     ["Kosmetik", "beauty_store"],
-    ["Kleidung", "clothing_store"]
+    ["Kleidung", "clothing_store"],
+    ["Gebrauchtwarenladen", "thrift_shop"],
+    ["Musikladen", "music_shop"],
+    ["Buchhandlung", "book_store"],
+    ["Sportgeschäft", "sports_shop"],
+    ["Möbelgeschäft", "furniture_store"],
+    ["Baumarkt", "hardware_store"],
+    ["Geldautomat", "atm"]
 ]);
+
+export const filters = {
+    Essen: food, 
+    Freizeit: activities,
+    Sport: sports, 
+    Einkaufen: shopping
+};

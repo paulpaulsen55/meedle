@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    *,
+    html {
+        scroll-behavior: smooth !important;
+    }
+}
+
 @layer components {
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none;

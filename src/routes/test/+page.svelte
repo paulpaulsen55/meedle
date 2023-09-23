@@ -1,16 +1,11 @@
 <script lang="ts">
     import { createDialog, createTagsInput, melt } from '@melt-ui/svelte';
-    import { food } from '$lib/helpers/filters';
-    import { activities } from '$lib/helpers/filters';
-    import { shopping } from '$lib/helpers/filters';
-    import { X, ChevronRight, ChevronLeft   } from 'lucide-svelte';
-   
-    let foodbox:HTMLElement;
-    let foodArrowRight:HTMLElement;
-    let foodArrowLeft:HTMLElement;
+    import { filters } from '$lib/helpers/filters';
+    import { X, ChevronRight, ChevronLeft } from 'lucide-svelte';
+    import Scroller from '$lib/Scroller.svelte';
 
     const {
-    elements: { root, tag, deleteTrigger },
+    elements: { tag, deleteTrigger },
     states: { tags },
     helpers: {addTag},
   } = createTagsInput({
@@ -33,20 +28,6 @@
     } = createDialog({
       role: 'alertdialog',
     });
-
-  function updateScroll(box: HTMLElement, arrowL: HTMLElement, arrowR: HTMLElement) {
-    console.log(box.offsetWidth);
-    console.log(box.scrollLeft);
-    if (box.scrollLeft <= 0) {
-      arrowL.hidden = true;
-    } else if (box.scrollLeft >= 186) {
-      arrowR.hidden = true;
-    } else {
-      arrowL.hidden = false;
-      arrowR.hidden = false;
-    }
-  }
-
   </script>
    
   <button use:melt={$trigger} class="button-white">
@@ -55,92 +36,38 @@
    
   <div use:melt={$portalled}>
     {#if $open}
-      <div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />
+      <div use:melt={$overlay} class="fixed inset-0 z-5 bg-white" />
       <div
         class="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[90vw]
-              max-w-[400px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-white
+              max-w-[340px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-900
               p-6 shadow-lg"
         use:melt={$content}
       >
-      <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
-        Essen und Trinken
-      </h2>
-      <div class="flex items-stretch relative">
-        <button bind:this={foodArrowLeft} on:click={() => {foodbox.scrollLeft -= 50}} 
-          class="absolute -left-5 place-items-center h-full" hidden>
-          <ChevronLeft class="h-8 w-8 self-center"/>
-        </button>
-        <div bind:this={foodbox} on:scroll={() => updateScroll(foodbox, foodArrowLeft, foodArrowRight)} 
-          class="whitespace-nowrap overflow-x-auto scrollbar-hide">
-          {#each food.entries() as [k, _], index}
-            {#if index == Math.floor(food.size / 2)}
+      <input
+        type="text"
+        id="tag"
+        placeholder="Enter Tag"
+        class="input w-3/4"
+	    />
+
+      {#each Object.entries(filters) as filter}
+        <h2 use:melt={$title} class="m-1 text-lg font-medium text-white">{filter[0]}</h2>
+        <Scroller>
+          {#each filter[1].entries() as [k, _], index}
+            {#if index == Math.floor(filter[1].size / 2)}
               <br class="inline-block">
             {/if}
             <button on:click={() => {addTag(k)}} 
-              class="inline-block h-8 rounded bg-magnum-100 px-4 m-0.5 font-medium text-magnum-900">
+              class="inline-block h-8 rounded bg-magnum-200 px-4 m-0.5 font-medium text-magnum-900">
                 {k}
             </button>
           {/each}
-        </div>
-        <button bind:this={foodArrowRight} on:click={() => {foodbox.scrollLeft += 50}} 
-          class="absolute -right-5 place-items-center h-full">
-          <ChevronRight class="h-8 w-8 self-center"/>
-        </button>
-      </div>
-
-
-
-
-
-        <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
-          Freizeit
-        </h2>
-        <div class="whitespace-nowrap overflow-x-auto scrollbar-hide">
-          {#each activities.entries() as [k, _], index}
-            {#if index == Math.floor(activities.size / 2)}
-              <br class="inline-block">
-            {/if}
-            <button
-              on:click={() => {addTag(k)}}
-              class="inline-block h-8 rounded bg-magnum-100 px-4 m-0.5 font-medium text-magnum-900"
-              >
-                {k}
-              </button>
-          {/each}
-        </div>
-
-
-
-
-        <h2 use:melt={$title} class="m-0 text-lg font-medium text-black">
-          Einkaufen
-        </h2>
-        <div class="whitespace-nowrap overflow-x-auto scrollbar-hide">
-          {#each shopping.entries() as [k, _], index}
-            {#if index == Math.floor(shopping.size / 2)}
-              <br class="inline-block">
-            {/if}
-            <button
-              on:click={() => {addTag(k)}}
-              class="inline-block h-8 rounded bg-magnum-100 px-4 m-0.5 font-medium text-magnum-900"
-              >
-                {k}
-              </button>
-          {/each}
-        </div>
-
-
-
-
-
-
-
-
+        </Scroller>
+      {/each}
 
         <div class="flex flex-col items-start justify-center gap-2">
           <div
-            use:melt={$root}
-            class="flex min-w-[280px] flex-row flex-wrap gap-2.5 rounded-md bg-white px-3 py-2 text-magnum-700
+            class="flex min-w-[280px] flex-row flex-wrap gap-2.5 rounded-md py-2 text-magnum-700
             focus-within:ring focus-within:ring-magnum-400"
           >
             {#each $tags as t}
@@ -162,28 +89,7 @@
             {/each}
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         <div class="mt-6 flex justify-end gap-4">
           <button
             use:melt={$close}

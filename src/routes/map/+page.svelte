@@ -23,6 +23,14 @@
 		edit = true;
 
 	async function handleSubmit() {
+		const test2 = await fetch(
+			`https://api.mapbox.com/search/searchbox/v1/list/category?access_token=${
+			import.meta.env.VITE_MAPBOX_TOKEN
+		}&language=de`
+		);
+		const test = await test2.json();
+		console.log(test)
+
 		if (!location1 || !location2) return;
 
 		const point1 = await pointToCoordinates(location1);
