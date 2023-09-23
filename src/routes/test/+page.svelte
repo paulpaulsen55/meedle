@@ -5,15 +5,15 @@
     import Scroller from '$lib/Scroller.svelte';
 
     const {
-    elements: { tag, deleteTrigger },
-    states: { tags },
-    helpers: {addTag},
-  } = createTagsInput({
-    unique: true,
-    add(tag) {
-      return { id: tag, value: tag };
-    },
-  });
+      elements: { tag, deleteTrigger },
+      states: { tags },
+      helpers: {addTag},
+    } = createTagsInput({
+      unique: true,
+      add(tag) {
+        return { id: tag, value: tag };
+      },
+    });
 
     const {
       elements: {
@@ -64,49 +64,40 @@
           {/each}
         </Scroller>
       {/each}
-
-        <div class="flex flex-col items-start justify-center gap-2">
-          <div
-            class="flex min-w-[280px] flex-row flex-wrap gap-2.5 rounded-md py-2 text-magnum-700
-            focus-within:ring focus-within:ring-magnum-400"
-          >
-            {#each $tags as t}
-              <div
-                use:melt={$tag(t)}
-                class="flex items-center overflow-hidden rounded-md bg-magnum-200 text-magnum-900 [word-break:break-word]
-             data-[selected]:bg-magnum-400"
-              >
-                <span use:melt={$deleteTrigger(t)} class="flex items-center border-r border-white/10 px-1.5 cursor-pointer"
-                  >{t.value}</span
-                >
-                <button
-                  use:melt={$deleteTrigger(t)}
-                  class="flex h-full items-center px-1"
-                >
-                <X class="square-3" />
-                </button>
-              </div>
-            {/each}
-          </div>
+      <div class="flex flex-col items-start justify-center gap-2">
+        <div
+          class="flex h-6 flex-row flex-wrap gap-2.5 rounded-md py-2"
+        >
+          {#each $tags as t}
+            <div
+              use:melt={$tag(t)}
+              class="flex rounded-md bg-magnum-200 text-magnum-900 font-medium [word-break:break-word]"
+            >
+              <button use:melt={$deleteTrigger(t)} class="flex items-center rounded m-0.5">
+                <span class="px-1">{t.value}</span>
+                <X class="h-full px-1"/>
+              </button>
+            </div>
+          {/each}
         </div>
-        
-        <div class="mt-6 flex justify-end gap-4">
-          <button
-            use:melt={$close}
-            class="inline-flex h-8 items-center justify-center rounded-[4px]
-                      bg-zinc-100 px-4 font-medium leading-none text-zinc-600"
-          >
-            Cancel
-          </button>
-          <button
-            use:melt={$close}
-            class="inline-flex h-8 items-center justify-center rounded-[4px]
-                      bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
-          >
-            Continue
-          </button>
-        </div>
-   
+      </div>
+      
+      <div class="mt-6 flex justify-end gap-4">
+        <button
+          use:melt={$close}
+          class="inline-flex h-8 items-center justify-center rounded-[4px]
+                    bg-zinc-100 px-4 font-medium leading-none text-zinc-600"
+        >
+          Cancel
+        </button>
+        <button
+          use:melt={$close}
+          class="inline-flex h-8 items-center justify-center rounded-[4px]
+                    bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
+        >
+          Continue
+        </button>
+      </div>
         <button
           use:melt={$close}
           aria-label="Close"
