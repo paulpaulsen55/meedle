@@ -44,34 +44,41 @@
 			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C', }).setLngLat(feature.geometry.coordinates);
                 m.setPopup(new mapboxgl.Popup({closeOnClick:true}).setHTML(`<p>${feature.properties.name}</p>`));
-                m.getElement().addEventListener('click',(event)=>onMarkerClick(event,feature.properties.mapbox_id))
+                m.getElement().addEventListener('click',()=>onMarkerClick(feature.properties.mapbox_id))
                 markers.set(feature.properties.mapbox_id,m);
 			});
 			markers.forEach((marker) => marker.addTo(map!));
 		}
 	}
 
-    let currentMarkerId:string|null;
+    function onMarkerClick(id:string){
+        console.log(markers.get(id)?.getPopup().isOpen());
+        markers.forEach((value) => {
+            if (value.getPopup().isOpen()) {
+                value.togglePopup();
+            }
+        });
+        console.log("Nachher " + markers.get(id)?.getPopup().isOpen());
 
-    function onMarkerClick(event:any,id:string){
-        if(currentMarkerId != id){
-            currentMarkerId = id;
-        }else {
-            currentMarkerId = null;
-            markers.get(id)?.togglePopup();
-            markers.get(id)?.togglePopup();
-
-        }
+        /* if(id == hoverdPointId){
+             updateHoveredPoint(null);
+         }else{
+             updateHoveredPoint(id);
+         }*/
     }
 
     $:{
+        console.log("hello");
         markers.forEach((value) => {
-            if (value.getPopup().isOpen()){
+            if (value.getPopup().isOpen()) {
                 value.togglePopup();
             }
         });
         if (hoverdPointId != null){
+            console.log("Vorher "+markers.get(hoverdPointId)?.getPopup().isOpen());
             markers.get(hoverdPointId)?.togglePopup();
+            console.log("Nachher "+markers.get(hoverdPointId)?.getPopup().isOpen());
+
         }
     }
 
