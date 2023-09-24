@@ -69,9 +69,9 @@
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
 				<p>between</p>
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
-				<div class="mt-4 flex justify-center items-center relative">
+				<div class="space-x-3 flex mt-5">
 					<AdressSettings bind:radius bind:poi />
-					<button on:click={() => {edit = false; handleSubmit()}} class="button-magnum self-center w-3/4" >meet me in the middle</button>
+					<button on:click={() => {edit = false; handleSubmit()}} class="button-magnum w-80 justify-center" >meet me in the middle</button>
 				</div>
 			</div>
 		{:else}
