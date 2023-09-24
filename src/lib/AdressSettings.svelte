@@ -32,11 +32,11 @@
         <div class="flex flex-col gap-2.5">
             <p class="mb-2 font-medium text-neutral-900">Einstellungen</p>
             <fieldset>
-                <label for="radius">Radius</label>
+                <label for="radius">Radius (km)</label>
                 <input bind:value={radius} type="number" id="radius" class="input" placeholder="max. Radius" />
             </fieldset>
             <fieldset>
-                <label for="POI">POI</label>
+                <label for="POI">POIs</label>
                 <input bind:value={poi} type="number" min="1" max="25" id="POI" class="input" placeholder="Anzahl POI" />
             </fieldset>
         </div>
