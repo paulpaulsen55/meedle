@@ -8,12 +8,14 @@
 	import type { Unsubscriber } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
-	import { ArrowLeftIcon, Settings2, FileEdit } from 'lucide-svelte'
+	import { ArrowLeftIcon, Settings2, FileEdit } from 'lucide-svelte';
+	import type { Address } from '../../app';
 
 	export let data;
 
-	let loc = { location1: '', location2: '' };
-	const unsubscribe: Unsubscriber = lol.subscribe((value) => (loc = value));
+	const sus: Address = { title: '', address: '' };
+	let loc = { location1: sus, location2: sus };
+	const unsubscribe: Unsubscriber = lol.subscribe((value) => {loc = value;});
 
 	let location1 = loc.location1,
 		location2 = loc.location2,
@@ -41,7 +43,7 @@
 		location1 = loc.location1;
 		location2 = loc.location2;
 
-		if (location1 != '' && location2 != '') {
+		if (location1.title != '' && location2.title != '') {
 			handleSubmit();
 			edit = false;
 		} else {
@@ -77,9 +79,9 @@
 		{:else}
 			<div class="flex justify-between items-end">
 				<div>
-					<p>{location1}</p>
+					<p>{location1.address}</p>
 					<p>between</p>
-					<p>{location2}</p>
+					<p>{location2.address}</p>
 				</div>
 				<button type="button" on:click={() => (edit = true)} class="">
 					<FileEdit />

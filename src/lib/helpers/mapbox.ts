@@ -1,9 +1,9 @@
 import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
-import type { Coordinate } from '../../app';
+import type { Address, Coordinate } from '../../app';
 
-export async function pointToCoordinates(location: String): Promise<Coordinate> {
+export async function pointToCoordinates(location: Address): Promise<Coordinate> {
 	const response = await fetch(
-		`https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${
+		`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.address}.json?access_token=${
 			import.meta.env.VITE_MAPBOX_TOKEN
 		}`
 	);

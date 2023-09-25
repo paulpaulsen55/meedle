@@ -8,8 +8,10 @@
 	import { onMount } from 'svelte';
 	import type { Address } from '../app';
 
-	export let location: Address;
+	export let location: Address = { title: '', address: '' };
 	export let sessionToken: string = '';
+
+	console.log(sessionToken);
 
 	let results: Address[] = [];
 	let suggestions: AddressAutofillSuggestionResponse | null = null;
@@ -17,7 +19,7 @@
 
 	const {
 		elements: { menu, input, option },
-		states: { open, inputValue }
+		states: { open, inputValue, selected }
 	} = createCombobox({
 		forceVisible: true
 	});
@@ -31,11 +33,19 @@
 			accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
 			language: 'de'
 		});
+
+		if (location.address != '') {
+			searchAutofill(location.title).then(() => {
+				const option = results.find((result) => result.address === location.address);
+				if (option) selected.set({ label: option.title, value: option.address });
+			});
+		}
 	});
 
-	async function searchAutofill() {
+	async function searchAutofill(term = $inputValue.value) {
 		if ($inputValue.value.length < 2) return;
-		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
+
+		suggestions = await autofill.suggest(term, { sessionToken });
 		results = [];
 		suggestions.suggestions.forEach((suggestion) => {
 			const title = suggestion.address_line1!;
@@ -44,18 +54,14 @@
 		});
 	}
 
-	onMount(() => {
-		if (location.title != '') {
-			searchAutofill();
-		}
-	});
-
 	// reset results AND store the combobox value in the location variable to use it in the parent component
 	$: {
 		if ($inputValue.value!.length < 2) {
 			results = [];
 		}
-		// location.title = $inputValue.value;
+		location.title = $inputValue.value;
+		location.address =
+			results.find((result) => result.title == $inputValue.value)?.address ?? location.address;
 	}
 </script>
 
@@ -64,8 +70,8 @@
 		use:melt={$input}
 		on:input={() => searchAutofill()}
 		class="flex h-10 items-center justify-between rounded-lg bg-white px-3 text-black w-full"
-		placeholder="Adresse eingeben" 
-	/>	
+		placeholder="Adresse eingeben"
+	/>
 </div>
 {#if $open}
 	<ul
@@ -77,12 +83,12 @@
 		<div class="flex max-h-full flex-col overflow-y-auto bg-white p-2 text-black" tabindex="0">
 			{#each results as address}
 				<li
-					use:melt={$option({ value: address })}
+					use:melt={$option({ value: address.address, label: address.title })}
 					class="cursor-pointer scroll-my-2 rounded-md py-2 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
 				>
 					<div class="pl-4">
-						<span class="font-medium">{address.title}</span>
-						<span class="font-medium">{address.address}</span>
+						<p class="font-medium">{address.title}</p>
+						<p class="font-medium text-neutral-600 text-sm truncate">{address.address}</p>
 					</div>
 				</li>
 			{:else}

@@ -6,7 +6,7 @@
 	import type { Address } from '../app';
 
 	export let data;
- 
+
 	let location1: Address = { title: '', address: '' },
 		location2: Address = { title: '', address: '' };
 
