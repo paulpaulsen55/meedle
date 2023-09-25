@@ -5,17 +5,17 @@
 @tailwind utilities;
 
 @layer base {
-    *,
-    html {
-        scroll-behavior: smooth !important;
-    }
+	*,
+	html {
+		scroll-behavior: smooth !important;
+	}
 }
 
 @layer components {
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none;
 	}
-	
+
 	.scrollbar-hide {
 		-ms-overflow-style: none;
 		scrollbar-width: none;
