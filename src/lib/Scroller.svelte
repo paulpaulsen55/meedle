@@ -11,12 +11,12 @@
 
 	function updateScroll() {
 		if (box.scrollLeft <= 0) {
-			arrowLeft.hidden = true;
+			arrowLeft.classList.add('hidden');
 		} else if (box.scrollLeft + box.clientWidth >= box.scrollWidth) {
-			arrowRight.hidden = true;
+			arrowRight.classList.add('hidden');
 		} else {
-			arrowLeft.hidden = false;
-			arrowRight.hidden = false;
+			arrowLeft.classList.remove('hidden');
+            arrowRight.classList.remove('hidden');
 		}
 	}
 
@@ -40,15 +40,14 @@
 	}
 </script>
 
-<div class="relative">
+<div class="relative" style={$$props.style}>
 	<button
 		bind:this={arrowLeft}
 		on:click={() => {
 			box.scrollLeft -= scrollAmount;
 		}}
-		class="absolute top-0 h-full pr-4 bg-gradient-to-r from-neutral-900 via-neutral-900 to-transparent"
+		class="absolute top-0 h-full pr-4 bg-gradient-to-r from-neutral-900 via-neutral-900 to-transparent hidden"
 		style={`left: -${arrowSize * 3}px`}
-		hidden
 	>
 		<ChevronLeft class={`h-${arrowSize} w-${arrowSize} text-white`} />
 	</button>
