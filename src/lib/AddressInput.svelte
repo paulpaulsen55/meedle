@@ -6,11 +6,12 @@
 	import { createCombobox, melt } from '@melt-ui/svelte';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
+	import type { Address } from '../app';
 
-	export let location: string;
+	export let location: Address;
 	export let sessionToken: string = '';
 
-	let results: string[] = [];
+	let results: Address[] = [];
 	let suggestions: AddressAutofillSuggestionResponse | null = null;
 	let autofill: AddressAutofillCore;
 
@@ -22,7 +23,7 @@
 	});
 
 	// set the input value to the location variable passed from the parent components
-	inputValue.set(location);
+	inputValue.set(location.title);
 
 	onMount(async () => {
 		const { AddressAutofillCore } = await import('@mapbox/search-js-core');
@@ -37,23 +38,24 @@
 		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
 		results = [];
 		suggestions.suggestions.forEach((suggestion) => {
-			const s = suggestion.address_line1! + ", " + suggestion.postcode;
-			results.push(s);
+			const title = suggestion.address_line1!;
+			const address = suggestion.full_address!;
+			results.push({ title, address });
 		});
 	}
 
 	onMount(() => {
-		if (location != '') {
+		if (location.title != '') {
 			searchAutofill();
 		}
 	});
 
 	// reset results AND store the combobox value in the location variable to use it in the parent component
 	$: {
-		if ($inputValue.value.length < 2) {
+		if ($inputValue.value!.length < 2) {
 			results = [];
 		}
-		location = $inputValue.value;
+		// location.title = $inputValue.value;
 	}
 </script>
 
@@ -73,13 +75,14 @@
 	>
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div class="flex max-h-full flex-col overflow-y-auto bg-white p-2 text-black" tabindex="0">
-			{#each results as el}
+			{#each results as address}
 				<li
-					use:melt={$option({ value: el })}
+					use:melt={$option({ value: address })}
 					class="cursor-pointer scroll-my-2 rounded-md py-2 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
 				>
 					<div class="pl-4">
-						<span class="font-medium">{el}</span>
+						<span class="font-medium">{address.title}</span>
+						<span class="font-medium">{address.address}</span>
 					</div>
 				</li>
 			{:else}

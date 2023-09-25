@@ -3,11 +3,12 @@
 	import { locations } from '../store';
 	import NavBar from '$lib/NavBar.svelte';
 	import AddressInput from '$lib/AddressInput.svelte';
+	import type { Address } from '../app';
 
 	export let data;
-
-	let location1 = '',
-		location2 = '';
+ 
+	let location1: Address = { title: '', address: '' },
+		location2: Address = { title: '', address: '' };
 
 	function startClick() {
 		locations.set({ location1, location2 });
