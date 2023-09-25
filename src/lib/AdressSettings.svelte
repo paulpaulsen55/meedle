@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createPopover, melt } from '@melt-ui/svelte';
   	import { fade } from 'svelte/transition';
-  	import { Settings2, X } from 'lucide-svelte';
+  	import { X, SlidersHorizontal } from 'lucide-svelte';
 
     export let radius = 5, poi = 5;
 
@@ -24,7 +24,7 @@
     class="trigger button-magnum"
     use:melt={$trigger}
 >
-    <Settings2 />
+    <SlidersHorizontal />
 </button>
 {#if $open}
     <div use:melt={$content} transition:fade={{ duration: 100 }} class="z-10 w-60 rounded-[4px] bg-white p-5 shadow-sm">
