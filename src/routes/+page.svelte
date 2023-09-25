@@ -7,7 +7,7 @@
 	import { radius as r } from '../store';
 	import { poi as p } from '../store';
 
-	export let data
+	export let data;
 
 	let location1: string = 'tuxer steig 6',
 		location2: string = 'Rheinbabenallee 47';
