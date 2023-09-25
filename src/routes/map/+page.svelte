@@ -70,7 +70,9 @@
 				<p>between</p>
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 				<div class="space-x-3 flex mt-5">
-					<AdressSettings bind:radius bind:poi />
+					<div class={"design " + $$props.class}>
+						<AdressSettings bind:radius bind:poi />
+					</div>
 					<button on:click={() => {edit = false; handleSubmit()}} class="button-magnum w-80 justify-center" >meet me in the middle</button>
 				</div>
 			</div>
