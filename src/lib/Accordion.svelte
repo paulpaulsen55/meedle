@@ -2,10 +2,9 @@
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
-	import { writable } from 'svelte/store'
 
 	export let response : SearchBoxCategoryResponse;
-	export let updateHoveredPoint:Function, hoverdPointId:string|null;
+	export let hoverdPointId:string|null;
 
     console.log(response);
 
@@ -46,9 +45,9 @@
 
 	function preUpdateHoverdPoint(id:string){
 		if (id == hoverdPointId) {
-			updateHoveredPoint(null);
+			hoverdPointId = null;
 		}else{
-			updateHoveredPoint(id);
+			hoverdPointId = id
 		}
 	}
 

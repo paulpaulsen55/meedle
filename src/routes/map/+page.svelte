@@ -44,9 +44,6 @@
 		}
 	});
 
-	function updateHoveredPointFunc(newValue:string | null) {
-			hoverdPointId = newValue;
-  	}
 
 	$:console.log(hoverdPointId);
 
@@ -92,10 +89,10 @@
 
 		{#if features}
 			<div class="mt-20">
-				<Accordion bind:response={features} updateHoveredPoint={updateHoveredPointFunc} hoverdPointId={hoverdPointId}/>
+				<Accordion response={features} bind:hoverdPointId={hoverdPointId}/>
 			</div>
 		{/if}
 	</aside>
 
-	<Map bind:middle={average} bind:response={features} bind:locations={points} updateHoveredPoint={updateHoveredPointFunc} hoverdPointId={hoverdPointId}/>
+	<Map middle={average} response={features} locations={points} bind:hoverdPointId={hoverdPointId}/>
 </div>

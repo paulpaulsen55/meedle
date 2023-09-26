@@ -2,10 +2,10 @@
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
 	import type { Coordinate } from '../app';
-	import type { SearchBoxCategoryResponse,SearchBoxCategorySuggestion } from '@mapbox/search-js-core';
+	import type { SearchBoxCategoryResponse} from '@mapbox/search-js-core';
 
 	export let middle: Coordinate, response: SearchBoxCategoryResponse, locations: Array<Coordinate>;
-	export let updateHoveredPoint:Function, hoverdPointId:string|null;
+	export let hoverdPointId:string|null;
 
 
 	let mapElement: HTMLElement;
@@ -43,7 +43,7 @@
 			markers.clear();
 			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C', }).setLngLat(feature.geometry.coordinates);
-                m.setPopup(new mapboxgl.Popup({closeOnClick:true}).setHTML(`<p>${feature.properties.name}</p>`));
+                m.setPopup(new mapboxgl.Popup({closeButton:false}).setHTML(`<p>${feature.properties.name}</p>`));
                 m.getElement().addEventListener('click',()=>onMarkerClick(feature.properties.mapbox_id))
                 markers.set(feature.properties.mapbox_id,m);
 			});
@@ -52,35 +52,17 @@
 	}
 
     function onMarkerClick(id:string){
-
-        console.log(markers.get(id)?.getPopup().isOpen());
-        markers.forEach((value) => {
-            if (value.getPopup().isOpen()) {
-                value.togglePopup();
-                console.log("Marker iretation: "+value.getPopup().isOpen());
-            }
-        });
-        console.log("Nachher " + markers.get(id)?.getPopup().isOpen());
-
-        /* if(id == hoverdPointId){
-             updateHoveredPoint(null);
-         }else{
-             updateHoveredPoint(id);
-         }*/
+        hoverdPointId = id;
     }
 
     $:{
-        console.log("hello");
         markers.forEach((value) => {
             if (value.getPopup().isOpen()) {
                 value.togglePopup();
             }
         });
         if (hoverdPointId != null){
-            console.log("Vorher "+markers.get(hoverdPointId)?.getPopup().isOpen());
             markers.get(hoverdPointId)?.togglePopup();
-            console.log("Nachher "+markers.get(hoverdPointId)?.getPopup().isOpen());
-
         }
     }
 
