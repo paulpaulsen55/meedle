@@ -34,15 +34,15 @@
 	<NavBar />
 	<section class="h-screen grid place-items-center relative">
 		<div class="grid place-items-center">
-			<img src="/logo.svg" alt="logo" class="w-full" />
-			<p class="text-center text-neutral-400 mt-5">
-				Meedle ist die App, die dir hilft, den perfekten Ort für ein <br />
-				Treffen zu finden. Gib einfach zwei Orte ein und lass Meedle <br /> den Rest erledigen. Probiere
-				es direkt aus:
+			<img src="/logo.svg" alt="logo" class="w-full px-2 sm:px-0" />
+			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem]">
+				Meedle ist die App, die dir hilft, den perfekten Ort für ein
+				Treffen zu finden. Gib einfach zwei Orte ein und lass Meedle 
+				den Rest erledigen. Probiere es direkt aus:
 			</p>
 		</div>
 		<div
-			class="self-start flex flex-col items-center relative bg-dotted radial bg-animate-pulse px-64 py-28"
+			class="self-start flex flex-col items-center relative bg-dotted radial bg-animate-pulse sm:px-64 py-28"
 		>
 			<div class="space-x-3 flex">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
@@ -60,8 +60,8 @@
 			<ChevronDown class="animate-bounce mb-5 cursor-pointer" />
 		</a>
 	</section>
-	<section class="h-screen grid place-items-center" id="functions">
-		<svg xmlns="http://www.w3.org/2000/svg" width="1438" height="68" fill="none"
+	 <section class="h-screen grid place-items-center" id="functions">
+		<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-full lg:w-4/5"
 			><path
 				stroke="#F7B155"
 				stroke-dasharray={'60 60'}
@@ -77,9 +77,9 @@
 				repeatCount="indefinite"
 			/>
 		</svg>
-		<div class="justify-self-center self-center h-4/5 w-3/5 flex gap-2 place-items-start">
+		<div class="justify-self-center self-center h-4/5 w-full lg:w-4/5 xl:w-[70%] flex gap-2 place-items-center md:place-items-start flex-col  md:flex-row">
 			<div
-				class="w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
+				class="lg:w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
 			>
 				<FastForward class="w-14 h-14 text-magnum-900" />
 				<h2 class="text-3xl font-bold text-neutral-100">Schnelligkeit</h2>
@@ -92,7 +92,7 @@
 			</div>
 			<div class="bg-neutral-600 w-px h-4/5" />
 			<div
-				class="w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
+				class="lg:w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
 			>
 				<Users class="w-14 h-14 text-magnum-500" />
 				<h2 class="text-3xl font-bold text-neutral-100">Treffen</h2>
@@ -105,7 +105,7 @@
 			</div>
 			<div class="bg-neutral-600 w-px h-4/5" />
 			<div
-				class="w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
+				class="lg:w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
 			>
 				<Sparkles class="w-14 h-14 text-magnum-300" />
 				<h2 class="text-3xl font-bold text-neutral-100">Wunderschön</h2>
@@ -118,8 +118,8 @@
 			</div>
 		</div>
 	</section>
-	<section class="h-screen grid grid-cols-2 place-items-center w-3/5">
-		<div class="space-y-5">
+	<section class="h-screen grid sm:grid-cols-2 place-items-center w-full lg:w-4/5 xl:w-[70%]">
+		<div class="space-y-5 self-end sm:self-auto sm:block mb-5 sm:mb-0">
 			<button
 				class="w-full flex items-center gap-5 hover:bg-neutral-800 p-2 rounded-md transition cursor-pointer focus:scale-105 focus:bg-neutral-800"
 				on:click={() => (imgIndex = 0)}
@@ -154,13 +154,13 @@
 				</h3>
 			</button>
 		</div>
-		<div class="bg-neutral-800 p-2 rounded-md w-full h-1/2 flex justify-center relative">
+		<div class="bg-neutral-800 p-2 rounded-md w-full h-full sm:h-1/2 flex justify-center relative">
 			{#each selectImages as img, i}
 				{#if i == imgIndex}
 					<img
 						src={'/' + img}
 						alt="map"
-						class="h-full p-5 absolute"
+						class="h-full p-5 absolute object-scale-down"
 						style="filter: drop-shadow(0 20px 13px rgb(247 177 85 / 0.03)) drop-shadow(0 8px 5px rgb(247 177 85 / 0.08));"
 						in:fly={{ y: 50, duration: 500 }}
 						out:fly={{ y: -50, duration: 500 }}
@@ -169,7 +169,7 @@
 			{/each}
 		</div>
 	</section>
-	<section class="grid grid-cols-2 grid-rows-2 gap-10 w-3/5 mb-5 place-items-center" id="about">
+	<section class="grid sm:grid-cols-2 sm:grid-rows-2 gap-10 w-3/5 mb-5 place-items-center" id="about">
 		<div>
 			<h2 class="text-2xl font-semibold mb-5">Wer wir sind?</h2>
 			<p>
@@ -196,6 +196,6 @@
 				gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 			</p>
 		</div>
-			</section>
+	</section>
 	<Footer />
 </div>

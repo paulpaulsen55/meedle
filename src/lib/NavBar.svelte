@@ -1,5 +1,5 @@
-<nav class="z-20 backdrop-blur-md pt-5 sticky flex justify-center top-0 w-full">
-	<div class="bg-neutral-800 flex justify-between p-3 rounded-md w-3/5">
+<nav class="z-20 backdrop-blur pt-5 sticky grid place-items-center top-0 left-0 w-full">
+	<div class="bg-neutral-800 flex justify-between p-3 rounded-md w-full lg:w-4/5 xl:w-[70%]">
 		<svg xmlns="http://www.w3.org/2000/svg" width="114" height="43" fill="none"
 			><path
 				fill="#fff"
@@ -10,15 +10,15 @@
 			/></svg
 		>
 		<div class="flex items-center justify-center">
-			<div class="space-x-5">
+			<div class="space-x-2 sm:space-x-5">
 				<a href="#top">Home</a>
 				<a href="#functions">Funktionen</a>
 				<a href="#about">Über</a>
 			</div>
 			<div />
-			<div class="bg-neutral-500 w-0.5 h-8 ml-12" />
+			<div class="bg-neutral-500 w-0.5 h-8 ml-4 sm:ml-12" />
 			<a
-				class="grid place-content-center w-16"
+				class="grid place-content-center w-8 sm:w-16"
 				href="https://github.com/paulpaulsen55/meedle"
 				target="_blank"
 			>

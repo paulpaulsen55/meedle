@@ -1,5 +1,5 @@
 <div class="bg-dotted linear w-full grid place-items-center relative">
-	<footer class="w-3/5 grid place-items-center grid-cols-3 bg-neutral-800 rounded-md p-10 z-10">
+	<footer class="w-full lg:w-4/5 xl:w-[70%] grid place-items-center grid-cols-3 bg-neutral-800 rounded-md p-10 z-10">
 		<svg xmlns="http://www.w3.org/2000/svg" width="225" height="85" fill="none"
 			><path
 				fill="#fff"
