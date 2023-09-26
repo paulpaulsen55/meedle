@@ -52,10 +52,12 @@
 	}
 
     function onMarkerClick(id:string){
+
         console.log(markers.get(id)?.getPopup().isOpen());
         markers.forEach((value) => {
             if (value.getPopup().isOpen()) {
                 value.togglePopup();
+                console.log("Marker iretation: "+value.getPopup().isOpen());
             }
         });
         console.log("Nachher " + markers.get(id)?.getPopup().isOpen());
