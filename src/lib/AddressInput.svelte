@@ -11,8 +11,6 @@
 	export let location: Address = { title: '', address: '' };
 	export let sessionToken: string = '';
 
-	console.log(sessionToken);
-
 	let results: Address[] = [];
 	let suggestions: AddressAutofillSuggestionResponse | null = null;
 	let autofill: AddressAutofillCore;
@@ -55,8 +53,8 @@
 	}
 
 	// reset results AND store the combobox value in the location variable to use it in the parent component
-	$: {
-		if ($inputValue.value.length != undefined || $inputValue.value.length < 2) {
+	$ : {
+		if ($inputValue.value.length != undefined && $inputValue.value.length < 2) {
 			results = [];
 		}
 		location.title = $inputValue.value;
