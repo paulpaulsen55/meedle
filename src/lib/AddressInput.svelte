@@ -41,7 +41,7 @@
 	});
 
 	async function searchAutofill(term = $inputValue.value) {
-		if ($inputValue.value.length < 2) return;
+		if ($inputValue.value.length != undefined && $inputValue.value.length < 2) return;
 
 		suggestions = await autofill.suggest(term, { sessionToken });
 		results = [];
