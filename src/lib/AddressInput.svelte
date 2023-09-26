@@ -42,9 +42,9 @@
 	});
 
 	async function searchAutofill() {
-		if ($inputValue && $inputValue.length < 2) return;
-
-		suggestions = await autofill.suggest($inputValue, { sessionToken });
+		if ($inputValue.value.length <= 2) return;
+		
+		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
 		results = [];
 		suggestions.suggestions.forEach((suggestion) => {
 			const title = suggestion.address_line1!;
@@ -55,13 +55,11 @@
 
 	// reset results AND store the combobox value in the location variable to use it in the parent component
 	$ : {
-		if ($inputValue) {
-			if ($inputValue.length < 2) {
-				results = [];
-			}
-			location.title = $inputValue;
-			location.address = results.find((result) => result.title == $inputValue)?.address ?? location.address;
+		if ($inputValue.value.length <= 2) {
+			results = [];
 		}
+		location.title = $inputValue.value;
+		location.address = results.find((result) => result.title == $inputValue.value)?.address ?? location.address;
 	}
 </script>
 
