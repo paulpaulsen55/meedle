@@ -54,13 +54,13 @@
 
 	// reset results AND store the combobox value in the location variable to use it in the parent component
 	$ : {
-		if ($inputValue.value.length == undefined) return;
-		if ($inputValue.value.length < 2) {
-			results = [];
+		if ($inputValue.value.length != undefined){
+			if ($inputValue.value.length < 2) {
+				results = [];
+			}
+			location.title = $inputValue.value;
+			location.address = results.find((result) => result.title == $inputValue.value)?.address ?? location.address;
 		}
-		location.title = $inputValue.value;
-		location.address =
-			results.find((result) => result.title == $inputValue.value)?.address ?? location.address;
 	}
 </script>
 
