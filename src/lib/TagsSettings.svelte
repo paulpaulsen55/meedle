@@ -73,23 +73,7 @@
 		dispatch('updateTags', filterTags); // send tags to parent
 	}
 
-	afterUpdate(() => {
-		$tags.forEach(function (v) {
-			if(document.getElementById(v.value)?.id == v.value) {
-				document.getElementById(v.value)?.classList.replace("bg-magnum-200", "bg-magnum-300");
-			}
-		}); 
-	});
-
-	function toggleSelected(id:string) {
-		if(document.getElementById(id)?.classList.contains("bg-magnum-200")) {
-			document.getElementById(id)?.classList.replace("bg-magnum-200", "bg-magnum-300");
-		} else {
-			document.getElementById(id)?.classList.replace("bg-magnum-300", "bg-magnum-200");
-		}
-	}
-
-	let sussyBussy = (map: Map<string, string>) => {
+	let filteredTags = (map: Map<string, string>) => {
 		if (searchTerm.length == 0) {
 			return map;
 		}
@@ -106,11 +90,19 @@
 		results = [];
 		const r = Object.values(filters);
 		r.forEach((map) => {
-			results.push(sussyBussy(map));
+			results.push(filteredTags(map));
 		});
 	} else if (searchTerm.length == 0 && filters) {
 		results = Object.values(filters);
 	}
+
+	afterUpdate(() => {
+		$tags.forEach(function (v) {
+			if(document.getElementById(v.value)?.id == v.value) {
+				document.getElementById(v.value)?.classList.replace("bg-magnum-200", "bg-magnum-300");
+			}
+		}); 
+	});
 </script>
 
 <div class="flex space-x-2 h-6">
@@ -161,9 +153,7 @@
 							<br class="inline-block" />
 						{/if}
 						<button id={k}
-							on:click={() => {
-								addTag(k); toggleSelected(k);
-							}}
+							on:click={() => { addTag(k) }}
 							class="inline-block h-8 rounded bg-magnum-200 px-4 m-0.5 font-medium text-magnum-900
 									hover:bg-magnum-300"
 						>
@@ -178,8 +168,7 @@
 					<div class="flex gap-2 h-6">
 						{#each $tags as t}
 							<div use:melt={$tag(t)} class="flex py-2 rounded-md bg-magnum-300 text-magnum-900 hover:bg-magnum-400">
-								<button on:click={() => toggleSelected(t.value)}
-									use:melt={$deleteTrigger(t)} 
+								<button use:melt={$deleteTrigger(t)} 
 									class="flex items-center rounded m-0.5">
 									<span class="px-1">{t.value}</span>
 									<X class="h-5 w-5" />
