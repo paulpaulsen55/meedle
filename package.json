@@ -39,6 +39,6 @@
 		"@mapbox/search-js-core": "^1.0.0-beta.17",
 		"@melt-ui/svelte": "^0.50.0",
 		"lucide-svelte": "^0.279.0",
-		"mapbox-gl": "^2.15.0"
+		"mapbox-gl": "^3.0.0-beta.3"
 	}
 }

@@ -33,17 +33,18 @@
 		});
 
 		if (location.address != '') {
-			searchAutofill(location.title).then(() => {
+			inputValue.set(location.title);
+			searchAutofill().then(() => {
 				const option = results.find((result) => result.address === location.address);
 				if (option) selected.set({ label: option.title, value: option.address });
 			});
 		}
 	});
 
-	async function searchAutofill(term: string = '') {
-		if ($inputValue.value &&  $inputValue.value.length < 2) return;
-		term = $inputValue.value ?? term;
-		suggestions = await autofill.suggest(term, { sessionToken });
+	async function searchAutofill() {
+		if ($inputValue.value && $inputValue.value.length < 2) return;
+
+		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
 		results = [];
 		suggestions.suggestions.forEach((suggestion) => {
 			const title = suggestion.address_line1!;
