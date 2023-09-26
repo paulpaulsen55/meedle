@@ -10,13 +10,14 @@
 	import { X, Plus } from 'lucide-svelte';
 	import Scroller from '$lib/Scroller.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import { afterUpdate } from 'svelte';
 
 	let filterTags: Array<Tag> = [],
 		tempTags: Tag[] = [],
 		continueOption = false;
 
-	let searchTerm = '';
-	let results: Map<string, string>[] = [];
+	let searchTerm = '',
+		results: Map<string, string>[] = [];
 
 	const dispatch = createEventDispatcher();
 
@@ -72,6 +73,22 @@
 		dispatch('updateTags', filterTags); // send tags to parent
 	}
 
+	afterUpdate(() => {
+		$tags.forEach(function (v) {
+			if(document.getElementById(v.value)?.id == v.value) {
+				document.getElementById(v.value)?.classList.replace("bg-magnum-200", "bg-magnum-300");
+			}
+		}); 
+	});
+
+	function toggleSelected(id:string) {
+		if(document.getElementById(id)?.classList.contains("bg-magnum-200")) {
+			document.getElementById(id)?.classList.replace("bg-magnum-200", "bg-magnum-300");
+		} else {
+			document.getElementById(id)?.classList.replace("bg-magnum-300", "bg-magnum-200");
+		}
+	}
+
 	let sussyBussy = (map: Map<string, string>) => {
 		if (searchTerm.length == 0) {
 			return map;
@@ -93,7 +110,6 @@
 		});
 	} else if (searchTerm.length == 0 && filters) {
 		results = Object.values(filters);
-		console.log(results);
 	}
 </script>
 
@@ -144,11 +160,12 @@
 						{#if j == Math.floor(results[i].size / 2)}
 							<br class="inline-block" />
 						{/if}
-						<button
+						<button id={k}
 							on:click={() => {
-								addTag(k);
+								addTag(k); toggleSelected(k);
 							}}
-							class="inline-block h-8 rounded bg-magnum-200 px-4 m-0.5 font-medium text-magnum-900"
+							class="inline-block h-8 rounded bg-magnum-200 px-4 m-0.5 font-medium text-magnum-900
+									hover:bg-magnum-300"
 						>
 							{k}
 						</button>
@@ -160,8 +177,10 @@
 				<Scroller arrowSize={5}>
 					<div class="flex gap-2 h-6">
 						{#each $tags as t}
-							<div use:melt={$tag(t)} class="flex rounded-md bg-magnum-300 text-magnum-900 py-2">
-								<button use:melt={$deleteTrigger(t)} class="flex items-center rounded m-0.5">
+							<div use:melt={$tag(t)} class="flex py-2 rounded-md bg-magnum-300 text-magnum-900 hover:bg-magnum-400">
+								<button on:click={() => toggleSelected(t.value)}
+									use:melt={$deleteTrigger(t)} 
+									class="flex items-center rounded m-0.5">
 									<span class="px-1">{t.value}</span>
 									<X class="h-5 w-5" />
 								</button>
