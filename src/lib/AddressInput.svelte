@@ -40,9 +40,9 @@
 		}
 	});
 
-	async function searchAutofill(term = $inputValue.value) {
+	async function searchAutofill(term: string = '') {
 		if ($inputValue.value &&  $inputValue.value.length < 2) return;
-
+		term = $inputValue.value ?? term;
 		suggestions = await autofill.suggest(term, { sessionToken });
 		results = [];
 		suggestions.suggestions.forEach((suggestion) => {
