@@ -44,9 +44,6 @@
 		}
 	});
 
-
-	$:console.log(hoverdPointId);
-
 </script>
 
 <div class="fixed bottom-0 left-0 w-96 h-40 dotted-bg p-2"></div>
