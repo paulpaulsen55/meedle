@@ -32,9 +32,7 @@
 			<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 		</div>
 		<div class="space-x-3 flex mt-5">
-			<div class={"design " + $$props.class}>
-				<AdressSettings bind:radius bind:poi />
-			</div>
+			<AdressSettings bind:radius bind:poi class="button-magnum" />
 			<button on:click={() => startClick()} class="button-magnum w-80 justify-center">
 				meet me in the middle
 			</button>

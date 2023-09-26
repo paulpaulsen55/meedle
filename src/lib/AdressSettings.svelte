@@ -21,7 +21,7 @@
 
 <button
     type="button"
-    class="trigger button-magnum"
+    class={$$props.class}
     use:melt={$trigger}
 >
     <SlidersHorizontal />
@@ -33,7 +33,7 @@
             <p class="mb-2 font-medium text-neutral-900">Einstellungen</p>
             <fieldset>
                 <label for="radius">Radius (km)</label>
-                <input bind:value={radius} type="number" id="radius" class="input" placeholder="max. Radius" />
+                <input bind:value={radius} type="number" min="1" max="50" id="radius" class="input" placeholder="max. Radius" />
             </fieldset>
             <fieldset>
                 <label for="POI">POIs</label>
