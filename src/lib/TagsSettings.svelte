@@ -1,11 +1,5 @@
 <script lang="ts">
-	import {
-		createDialog,
-		createTagsInput,
-		melt,
-		type CreateDialogProps,
-		type Tag
-	} from '@melt-ui/svelte';
+	import { createDialog, createTagsInput, melt, type CreateDialogProps, type Tag } from '@melt-ui/svelte';
 	import { filters } from '$lib/helpers/filters';
 	import { X, Plus } from 'lucide-svelte';
 	import Scroller from '$lib/Scroller.svelte';
@@ -86,14 +80,9 @@
 		return result;
 	};
 
-	$: if (searchTerm.length > 0 && filters) {
-		results = [];
-		const r = Object.values(filters);
-		r.forEach((map) => {
-			results.push(filteredTags(map));
-		});
-	} else if (searchTerm.length == 0 && filters) {
-		results = Object.values(filters);
+	function setUnselected(id:string) {
+		document.getElementById(id)?.classList.replace("bg-magnum-300", "bg-magnum-200");
+
 	}
 
 	afterUpdate(() => {
@@ -103,6 +92,16 @@
 			}
 		}); 
 	});
+
+	$: if (searchTerm.length > 0 && filters) {
+		results = [];
+		const r = Object.values(filters);
+		r.forEach((map) => {
+			results.push(filteredTags(map));
+		});
+	} else if (searchTerm.length == 0 && filters) {
+		results = Object.values(filters);
+	}
 </script>
 
 <div class="flex space-x-2 h-6">
@@ -168,7 +167,8 @@
 					<div class="flex gap-2 h-6">
 						{#each $tags as t}
 							<div use:melt={$tag(t)} class="flex py-2 rounded-md bg-magnum-300 text-magnum-900 hover:bg-magnum-400">
-								<button use:melt={$deleteTrigger(t)} 
+								<button on:click={() => setUnselected(t.value)}
+									use:melt={$deleteTrigger(t)} 
 									class="flex items-center rounded m-0.5">
 									<span class="px-1">{t.value}</span>
 									<X class="h-5 w-5" />
