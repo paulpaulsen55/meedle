@@ -43,6 +43,7 @@
 
 	async function searchAutofill() {
 		if ($inputValue.value && $inputValue.value.length < 2) return;
+		console.log('searchAutofill', $inputValue.value);
 
 		suggestions = await autofill.suggest($inputValue.value, { sessionToken });
 		results = [];
