@@ -43,7 +43,7 @@
 			markers.clear();
 			response.features.forEach((feature: any) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C', }).setLngLat(feature.geometry.coordinates);
-                m.setPopup(new mapboxgl.Popup({closeButton:false}).setHTML(`<p>${feature.properties.name}</p>`));
+                m.setPopup(new mapboxgl.Popup({closeButton:false}).setHTML(`<p class="text-black">${feature.properties.name}</p>`));
                 m.getElement().addEventListener('click',()=>onMarkerClick(feature.properties.mapbox_id))
                 markers.set(feature.properties.mapbox_id,m);
 			});
