@@ -16,7 +16,7 @@
 			arrowRight.classList.add('hidden');
 		} else {
 			arrowLeft.classList.remove('hidden');
-            arrowRight.classList.remove('hidden');
+			arrowRight.classList.remove('hidden');
 		}
 	}
 
