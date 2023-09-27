@@ -13,6 +13,7 @@
 	import { poi as p } from '../../store';
 
 	export let data;
+	let hoverdPointId: string | null;
 
 	let loc = { location1: '', location2: '' }, radius = 0, poi = 0;
 	const unsubscribe: Unsubscriber = lol.subscribe((value) => (loc = value));
@@ -50,10 +51,9 @@
 		if (location1 && location2){
 			handleSubmit();
 			edit = false;
-		} else {
-
 		}
 	});
+
 </script>
 
 <div class="fixed bottom-0 left-0 w-96 h-40 dotted-bg p-2"></div>
@@ -91,11 +91,11 @@
 		
 
 		{#if features}
-			<div class="">
-				<Accordion bind:response={features} />
+			<div class="mt-20">
+				<Accordion response={features} bind:hoverdPointId={hoverdPointId}/>
 			</div>
 		{/if}
 	</aside>
-
-	<Map bind:middle={average} bind:response={features} bind:locations={points} />
+	<Map middle={average} response={features} locations={points} bind:hoverdPointId={hoverdPointId}/>
 </div>
+
