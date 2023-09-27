@@ -42,4 +42,5 @@
 		"@melt-ui/svelte": "^0.50.0",
 		"lucide-svelte": "^0.279.0",
 		"mapbox-gl": "^3.0.0-beta.3"
+	}
 }
