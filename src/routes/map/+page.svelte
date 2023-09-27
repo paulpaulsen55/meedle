@@ -73,20 +73,22 @@
 		</a>
 		{#if edit}
 			<div class="mt-5">
-				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
-				<p>between</p>
-				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
+				<div class="space-y-3">
+					<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
+					<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
+				</div>
 				<div class="space-x-3 flex mt-5">
 					<AdressSettings bind:radius bind:poi />
 					<button on:click={() => {edit = false; handleSubmit()}} class="button-magnum w-80 justify-center" >meet me in the middle</button>
 				</div>
 			</div>
 		{:else}
-			<div class="flex justify-between items-end">
-				<div>
-					<p>{location1.address}</p>
-					<p>between</p>
-					<p>{location2.address}</p>
+			<div class="flex justify-between items-end w-full gap-2">
+				<div class="w-[85%]">
+					<p class="w-fit">Zwischen</p>
+					<p class="truncate">{location1.address}</p>
+					<p class="w-fit">und</p>
+					<p class="truncate">{location2.address}</p>
 				</div>
 				<button type="button" on:click={() => (edit = true)} class="">
 					<FileEdit />

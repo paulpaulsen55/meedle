@@ -15,10 +15,19 @@
 		Map
 	} from 'lucide-svelte';
 	import { fade, fly } from 'svelte/transition';
-  import type { Address } from '../app';
+  	import type { Address } from '../app';
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import { radius as r } from '../store';
 	import { poi as p } from '../store';
+	import { createSeparator, melt, type CreateSeparatorProps, } from '@melt-ui/svelte';
+
+	export let orientation: CreateSeparatorProps['orientation'] = 'vertical';
+ 
+	const {
+		elements: { root: vertical },
+	} = createSeparator({
+		orientation,
+	});
 
 	export let data;
 
@@ -40,10 +49,10 @@
 
 <div class="grid place-items-center scroll-smooth" id="top">
 	<NavBar />
-	<section class="h-screen grid place-items-center relative">
-		<div class="grid place-items-center">
-			<img src="/logo.svg" alt="logo" class="w-full px-2 sm:px-0" />
-			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem]">
+	<section class="h-screen flex flex-col relative">
+		<div class="grid place-items-center mt-32">
+			<img src="/logo.svg" alt="logo" class="w-[60%] spx-2 sm:px-0" />
+			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed">
 				Meedle ist die App, die dir hilft, den perfekten Ort für ein
 				Treffen zu finden. Gib einfach zwei Orte ein und lass Meedle 
 				den Rest erledigen. Probiere es direkt aus:
@@ -52,43 +61,46 @@
 		<div
 			class="self-start flex flex-col items-center relative bg-dotted radial bg-animate-pulse sm:px-64 py-28"
 		>
-			<div class="space-x-3 flex">
+			<div class="space-y-3 flex flex-col w-96">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 			</div>
-			<button
-				on:click={() => startClick()}
-				class="button-magnum w-64 mt-5 flex justify-center z-10"
-				type="button"
-			>
-				start
-			</button>
+			<div class="z-10 flex w-full mt-5 gap-2">
+				<AdressSettings bind:radius bind:poi/>
+				<button
+					on:click={() => startClick()}
+					class="button-magnum flex justify-center w-full"
+					type="button"
+				>
+					meet me in the middle
+				</button>
+			</div>
 		</div>
-		<a href="/#functions" class="absolute bottom-20 flex justify-center">
+		<a href="/#functions" class="absolute bottom-20 flex justify-center w-full">
 			<ChevronDown class="animate-bounce mb-5 cursor-pointer" />
 		</a>
 	</section>
 	 <section class="h-screen grid place-items-center" id="functions">
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-full lg:w-4/5"
-			><path
-				stroke="#F7B155"
-				stroke-dasharray={'60 60'}
-				stroke-linecap="round"
-				stroke-width="11"
-				d="M6 25.114c97.979 17.476 353.159 73.45 768.539 0 204.632-34.276 457.401-14.916 657.461 0"
-			/>
-			<animate
-				attributeName="stroke-dashoffset"
-				values="120;0"
-				dur="3s"
-				calcMode="linear"
-				repeatCount="indefinite"
-			/>
-		</svg>
-		<div class="justify-self-center self-center h-4/5 w-full lg:w-4/5 xl:w-[70%] flex gap-2 place-items-center md:place-items-start flex-col  md:flex-row">
-			<div
-				class="lg:w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
-			>
+		<div class="w-full grid place-items-center">
+			<svg xmlns="http://www.w3.org/2000/svg" width="1438" height="68" fill="none"
+				><path
+					stroke="#F7B155"
+					stroke-dasharray={'60 60'}
+					stroke-linecap="round"
+					stroke-width="11"
+					d="M6 25.114c97.979 17.476 353.159 73.45 768.539 0 204.632-34.276 457.401-14.916 657.461 0"
+				/>
+				<animate
+					attributeName="stroke-dashoffset"
+					values="120;0"
+					dur="3s"
+					calcMode="linear"
+					repeatCount="indefinite"
+				/>
+			</svg>
+		</div>
+		<div class="w-full lg:w-4/5 xl:w-[70%] grid place-items-center md:place-items-start grid-cols-1 lg:grid-cols-3 relative">
+			<div class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5">
 				<FastForward class="w-14 h-14 text-magnum-900" />
 				<h2 class="text-3xl font-bold text-neutral-100">Schnelligkeit</h2>
 				<p class="text-neutral-400">
@@ -98,10 +110,10 @@
 					anderen Personen liegen. So sparst Du Zeit und Mühe bei der Suche nach dem idealen Ort.
 				</p>
 			</div>
-			<div class="bg-neutral-600 w-px h-4/5" />
-			<div
-				class="lg:w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
-			>
+			<div class="absolute left-1/3 grid place-items-center top-0  h-full ">
+				<div use:melt={$vertical} class="h-4/5 w-[2px] bg-neutral-700"/>
+			</div>
+			<div class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5">
 				<Users class="w-14 h-14 text-magnum-500" />
 				<h2 class="text-3xl font-bold text-neutral-100">Treffen</h2>
 				<p class="text-neutral-400">
@@ -111,10 +123,10 @@
 					Geschichte. Mit Meedle ist der perfekte Ort nur wenige Klicks entfernt.
 				</p>
 			</div>
-			<div class="bg-neutral-600 w-px h-4/5" />
-			<div
-				class="lg:w-1/3 space-y-4 hover:bg-neutral-800 p-2 rounded-md cursor-pointer transition hover:-translate-y-1"
-			>
+			<div class="absolute left-2/3 grid place-items-center top-0 h-full">
+				<div use:melt={$vertical} class="h-4/5 w-[2px] bg-neutral-700"/>
+			</div>
+			<div class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5">
 				<Sparkles class="w-14 h-14 text-magnum-300" />
 				<h2 class="text-3xl font-bold text-neutral-100">Wunderschön</h2>
 				<p class="text-neutral-400">
