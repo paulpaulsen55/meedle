@@ -11,11 +11,18 @@
 	import { ArrowLeftIcon, Settings2, FileEdit } from 'lucide-svelte';
 	import type { Address } from '../../app';
 
+	import AdressSettings from '$lib/AdressSettings.svelte';
+	import { radius as r } from '../../store';
+	import { poi as p } from '../../store';
+
 	export let data;
+	let hoverdPointId: string | null;
 
 	const sus: Address = { title: '', address: '' };
-	let loc = { location1: sus, location2: sus };
+	let loc = { location1: sus, location2: sus },radius = 0, poi = 0;
 	const unsubscribe: Unsubscriber = lol.subscribe((value) => {loc = value;});
+	const unsubscribeRad: Unsubscriber = r.subscribe((value) => (radius = value));
+	const unsubscribePoi: Unsubscriber = p.subscribe((value) => (poi = value));
 
 	let location1 = loc.location1,
 		location2 = loc.location2,
@@ -24,6 +31,7 @@
 		category = 'food_and_drink',
 		features: SearchBoxCategoryResponse,
 		edit = true;
+		
 
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
@@ -35,6 +43,10 @@
 			lng: (point1.lng + point2.lng) / 2,
 			lat: (point1.lat + point2.lat) / 2
 		};
+
+		r.set(radius);
+		p.set(poi);
+
 		features = await pointToFeatures(category, average);
 	}
 
@@ -48,8 +60,10 @@
 			edit = false;
 		} else {
 			edit = true;
+
 		}
 	});
+
 </script>
 
 <div class="fixed bottom-0 left-0 w-96 h-40 dotted-bg p-2" />
@@ -63,17 +77,10 @@
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
 				<p>between</p>
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
-				<div class="mt-4 flex justify-center items-center relative">
-					<button class="absolute left-0 grid place-content-center h-full pl-2">
-						<Settings2 />
-					</button>
-					<button
-						on:click={() => {
-							edit = false;
-							handleSubmit();
-						}}
-						class="button-magnum self-center w-3/4">meet me in the middle</button
-					>
+
+				<div class="space-x-3 flex mt-5">
+					<AdressSettings bind:radius bind:poi />
+					<button on:click={() => {edit = false; handleSubmit()}} class="button-magnum w-80 justify-center" >meet me in the middle</button>
 				</div>
 			</div>
 		{:else}
@@ -90,11 +97,11 @@
 		{/if}
 
 		{#if features}
-			<div class="">
-				<Accordion bind:response={features} />
+			<div class="mt-20">
+				<Accordion response={features} bind:hoverdPointId={hoverdPointId}/>
 			</div>
 		{/if}
 	</aside>
-
-	<Map bind:middle={average} bind:response={features} bind:locations={points} />
+	<Map middle={average} response={features} locations={points} bind:hoverdPointId={hoverdPointId}/>
 </div>
+

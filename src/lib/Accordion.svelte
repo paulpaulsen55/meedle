@@ -3,7 +3,9 @@
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 
-	export let response: SearchBoxCategoryResponse;
+
+	export let response : SearchBoxCategoryResponse;
+	export let hoverdPointId:string|null;
 
 	type item = {
 		id: string;
@@ -25,13 +27,29 @@
 	}
 
 	const {
-		elements: { content, item, trigger },
-		helpers: { isSelected }
-	} = createAccordion({
-		defaultValue: 'item-1'
-	});
 
-	function togglePoint() {}
+		elements: { content, item, trigger, root },
+		helpers: { isSelected },
+		states: {value}
+	} = createAccordion();
+
+	$:{
+		let tmpItem = items.findLast((i)=>i.id==hoverdPointId);
+		if (tmpItem != undefined) {
+			value.set(tmpItem.id);
+		}else {
+			value.set(undefined);
+		}
+	}
+
+	function preUpdateHoverdPoint(id:string){
+		if (id == hoverdPointId) {
+			hoverdPointId = null;
+		}else{
+			hoverdPointId = id
+		}
+	}
+
 </script>
 
 <div class="rounded-xl bg-neutral-800 shadow-lg z-10">
@@ -42,7 +60,7 @@
 		>
 			<h2 class="flex">
 				<button
-					use:melt={$trigger(id)}
+					on:click={() => preUpdateHoverdPoint(id)}
 					class="w-full cursor-pointer flex items-start flex-col bg-neutral-800 p-5 text-base font-medium leading-none transition hover:bg-neutral-700
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
