@@ -14,3 +14,8 @@ export type Coordinate = {
 	lng: number;
 	lat: number;
 };
+
+export type Address = {
+	title: string;
+	address: string;
+};

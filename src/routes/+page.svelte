@@ -15,17 +15,28 @@
 		Map
 	} from 'lucide-svelte';
 	import { fade, fly } from 'svelte/transition';
+  import type { Address } from '../app';
+	import AdressSettings from '$lib/AdressSettings.svelte';
+	import { radius as r } from '../store';
+	import { poi as p } from '../store';
 
 	export let data;
 
 	const selectImages = ['filters.png', 'share.png', 'detail.png'];
 	let imgIndex = 2;
 
-	let location1: string = 'tuxer steig 6',
-		location2: string = 'Rheinbabenallee 47';
+
+	export let data;
+
+	let location1: Address = { title: '', address: '' },
+		location2: Address = { title: '', address: '' };
+	let radius = 5;
+	let poi = 5;
 
 	function startClick() {
 		locations.set({ location1, location2 });
+		r.set(radius);
+		p.set(poi);
 		goto('/map');
 	}
 </script>
