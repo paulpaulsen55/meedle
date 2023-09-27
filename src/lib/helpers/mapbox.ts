@@ -1,5 +1,7 @@
 import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 import type { Coordinate, Feature, FeatureCollection } from '../../app';
+import { poi, radius } from '../../store';
+import type { Unsubscriber } from 'svelte/store';
 
 function test(test: any, categories: string[]) {
 	let matches: Feature[] = [];
@@ -35,18 +37,25 @@ export async function pointToFeatures(
 	categories: string[],
 	average: Coordinate
 ): Promise<SearchBoxCategoryResponse> {
+	let rad = 0, pp = 0;
+	const unsubscribeRad: Unsubscriber = radius.subscribe((value) => (rad = value));
+	const unsubscribePoi: Unsubscriber = poi.subscribe((value) => (pp = value));
+
+	const lat = rad * (360 / 40075);
+	const lng = rad * (360 / (Math.cos(lat) * 40075));
+
 	let res: SearchBoxCategoryResponse[] = [];
 	
 	for (let i = 0; i < categories.length; i++) {
 		const r = await fetch(
-			`https://api.mapbox.com/search/searchbox/v1/category/${categories[i]}?proximity=${average.lng},${
-				average.lat
-			}&origin=${average.lng},${average.lat}&access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`
+			`https://api.mapbox.com/search/searchbox/v1/category/${categories[i]}?proximity=${average.lng},${average.lat}
+			&origin=${average.lng},${average.lat}
+			&limit=${pp}
+			&bbox=${average.lng - lng},${average.lat - lat},${average.lng + lng},${average.lat + lat}
+			&access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`
 		);
 		res.push(await r.json());
 	}
-		
-	console.log("f",res);
 	
 	const feature = test(res, categories);
 	return feature;
