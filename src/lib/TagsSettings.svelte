@@ -26,12 +26,15 @@
 	const {
 		elements: { tag, deleteTrigger },
 		states: { tags },
-		helpers: { addTag },
+		helpers: { addTag, updateTag },
 	} = createTagsInput({
 		defaultTags: [{id:"food_and_drink", value:"Essen und Trinken"}],
 		unique: true,
 		add(tag) {
-			return { id: tag, value: tag };
+			return { id: tag, value: '' };
+		},	
+		update(tag) {
+			return { id: tag.id, value: tag.value };
 		}
 	});
 
@@ -151,8 +154,11 @@
 			{#each Object.entries(filters) as filter, i}
 				<h2 use:melt={$title} class="m-1 text-lg font-medium text-white">{filter[0]}</h2>
 				<Scroller style="height: 4.5rem">
-					{#each results[i].entries() as [k, _], j}
-						<button id={k} on:click={() => { addTag(k) }}
+					{#each results[i].entries() as [k, s], j}
+						<button id={k} on:click={() => { 
+								addTag(s);
+								updateTag({ id: s, value: k });
+							}}
 							class="inline-block h-8 rounded bg-magnum-200 px-4 m-0.5 font-medium text-magnum-900
 									hover:bg-magnum-300"
 						>

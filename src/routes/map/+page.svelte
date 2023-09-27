@@ -25,10 +25,9 @@
 		location2 = loc.location2,
 		average: Coordinate,
 		points: Array<Coordinate>,
-		category = ["shopping", "shoe_store"],
+		category = ['food_and_drink'],
 		features: SearchBoxCategoryResponse,
-		edit = true,
-		filterTags: Tag[] = [];
+		edit = true;
 
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
@@ -48,7 +47,9 @@
 	}
 
 	function handleTagsSetting(event: CustomEvent<Tag[]>) {
-		filterTags = event.detail;
+		const filterTags = event.detail;
+		category = filterTags.map((tag) => tag.id);
+		handleSubmit();
 	}
 
 	// loads data only when both locations are set through the store - prevents unnecessary api calls
