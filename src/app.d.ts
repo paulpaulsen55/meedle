@@ -14,3 +14,18 @@ export type Coordinate = {
 	lng: number;
 	lat: number;
 };
+
+export type Feature = {
+	categories?: string[],
+	name: string,
+	address?: string,
+	coordinate?: Coordinate
+	id?: string,
+	metadata?: any,
+	maki?: string
+}
+
+export type FeatureCollection = {
+	matches: feature[],
+	nonMatches: feature[]
+}

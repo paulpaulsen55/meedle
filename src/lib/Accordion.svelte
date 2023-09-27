@@ -5,8 +5,6 @@
 
 	export let response: SearchBoxCategoryResponse;
 
-	console.log(response);
-
 	type item = {
 		id: string;
 		title: string;
