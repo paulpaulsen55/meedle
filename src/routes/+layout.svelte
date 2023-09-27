@@ -2,7 +2,6 @@
 	import '../app.css';
 	import '../map.css';
 	import PageTransition from '$lib/PageTransition.svelte';
-	3;
 
 	export let data;
 </script>

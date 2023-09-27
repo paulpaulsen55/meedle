@@ -15,7 +15,10 @@
 
 	const dispatch = createEventDispatcher();
 
-	const displayTagsInput = createTagsInput({ unique: true }),
+	const displayTagsInput = createTagsInput({ 
+		unique: true, 
+		defaultTags: [{id:"food_and_drink", value:"Essen und Trinken"}] 
+		}),
 		displayTagElement = displayTagsInput.elements.tag,
 		displayTags = displayTagsInput.states.tags,
 		displayDeleteTrigger = displayTagsInput.elements.deleteTrigger;
@@ -23,8 +26,9 @@
 	const {
 		elements: { tag, deleteTrigger },
 		states: { tags },
-		helpers: { addTag }
+		helpers: { addTag },
 	} = createTagsInput({
+		defaultTags: [{id:"food_and_drink", value:"Essen und Trinken"}],
 		unique: true,
 		add(tag) {
 			return { id: tag, value: tag };
@@ -148,16 +152,15 @@
 				<h2 use:melt={$title} class="m-1 text-lg font-medium text-white">{filter[0]}</h2>
 				<Scroller style="height: 4.5rem">
 					{#each results[i].entries() as [k, _], j}
-						{#if j == Math.floor(results[i].size / 2)}
-							<br class="inline-block" />
-						{/if}
-						<button id={k}
-							on:click={() => { addTag(k) }}
+						<button id={k} on:click={() => { addTag(k) }}
 							class="inline-block h-8 rounded bg-magnum-200 px-4 m-0.5 font-medium text-magnum-900
 									hover:bg-magnum-300"
 						>
 							{k}
 						</button>
+						{#if j == Math.floor(results[i].size / 2)}
+							<br class="inline-block" />
+						{/if}
 					{/each}
 				</Scroller>
 			{/each}
@@ -169,7 +172,8 @@
 							<div use:melt={$tag(t)} class="flex py-2 rounded-md bg-magnum-300 text-magnum-900 hover:bg-magnum-400">
 								<button on:click={() => setUnselected(t.value)}
 									use:melt={$deleteTrigger(t)} 
-									class="flex items-center rounded m-0.5">
+									class="flex items-center rounded m-0.5"
+								>
 									<span class="px-1">{t.value}</span>
 									<X class="h-5 w-5" />
 								</button>

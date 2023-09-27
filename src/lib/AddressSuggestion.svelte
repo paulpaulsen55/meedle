@@ -8,8 +8,6 @@
 	const dispatch = createEventDispatcher();
 
 	function sendClick(text: string | undefined) {
-		console.log(text);
-
 		dispatch('message', {
 			text: text
 		});
@@ -25,7 +23,6 @@
 			<button
 				on:click={() => {
 					sendClick(suggestion.place_name);
-					console.log(suggestion.place_name);
 				}}
 				class="relative cursor-pointer rounded-md py-4 hover:bg-magnum-100 transition"
 			>
