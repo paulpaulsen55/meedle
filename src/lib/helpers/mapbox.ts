@@ -1,5 +1,5 @@
 import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
-import type { Coordinate, Feature } from '../../app';
+import type { Address, Coordinate, Feature } from '../../app';
 import { poi, radius } from '../../store';
 import type { Unsubscriber } from 'svelte/store';
 
@@ -39,7 +39,7 @@ function filterFeatures(reponses: any, categories: string[]) {
 	return results
 }
 
-export async function pointToCoordinates(location: string): Promise<Coordinate> {
+export async function pointToCoordinates(location: Address): Promise<Coordinate> {
 	const response = await fetch(
 		`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.address}.json?access_token=${
 			import.meta.env.VITE_MAPBOX_TOKEN
