@@ -52,20 +52,20 @@
 
 </script>
 
-<div class="scrollable rounded-xl bg-neutral-800 shadow-lg z-10">
+<div class="overflow-auto rounded-xl bg-neutral-800 shadow-lg z-10 mt-10">
 	{#each items as { id, title, address, description }, i}
 		<div
 			use:melt={$item(id)}
 			class="overflow-hidden transition first:rounded-t-xl last:rounded-b-xl"
 		>
-			<h2 class="flex">
+			<h2>
 				<button
 					on:click={() => preUpdateHoverdPoint(id)}
-					class="w-full cursor-pointer flex items-start flex-col bg-neutral-800 p-5 text-base font-medium leading-none transition hover:bg-neutral-700
+					class="w-full cursor-pointer flex items-start gap-2 flex-col bg-neutral-800 px-5 py-8 text-base font-medium leading-none transition hover:bg-neutral-700
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
-					<p>{title}</p>
-					<span class="text-neutral-600 text-sm">{address}</span>
+					<p class="truncate w-full text-start">{title}</p>
+					<span class="text-neutral-600 text-sm text-start truncate w-full">{address}</span>
 				</button>
 			</h2>
 			{#if $isSelected(id)}
@@ -86,11 +86,5 @@
 <style lang="postcss">
 	.content {
 		box-shadow: inset 0px 1px 0px theme('colors.neutral.500');
-	}
-
-	.scrollable {
-		max-height: 580px;
-		height: fit-content;
-		overflow: auto;
 	}
 </style>

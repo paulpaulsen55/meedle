@@ -66,14 +66,14 @@
 
 </script>
 
-<div class="fixed bottom-0 left-0 w-96 h-40 dotted-bg p-2" />
+
 <div class="flex">
-	<aside class="w-96 p-6 space-y-10">
+	<aside class="flex flex-col w-96 p-6 h-screen">
 		<a href="/">
 			<ArrowLeftIcon class="w-12 h-12" />
 		</a>
 		{#if edit}
-			<div class="mt-5">
+			<div class="mt-10">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
 				<p>between</p>
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
@@ -83,7 +83,7 @@
 				</div>
 			</div>
 		{:else}
-			<div class="flex justify-between items-end">
+			<div class="flex justify-between items-end mt-10">
 				<div>
 					<p>{location1.address}</p>
 					<p>between</p>
@@ -96,10 +96,9 @@
 		{/if}
 
 		{#if features}
-			<div class="mt-20">
-				<Accordion response={features} bind:hoverdPointId={hoverdPointId}/>
-			</div>
+			<Accordion response={features} bind:hoverdPointId={hoverdPointId}/>
 		{/if}
+		<div class="w-96 h-64 dotted-bg -ml-6 -mb-4 p-2" />
 	</aside>
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId={hoverdPointId}/>
 </div>
