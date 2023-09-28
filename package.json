@@ -14,14 +14,17 @@
 	"devDependencies": {
 		"@melt-ui/pp": "^0.1.2",
 		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-vercel": "^3.0.3",
 		"@sveltejs/kit": "^1.20.4",
 		"@tailwindcss/typography": "^0.5.9",
+		"@types/mapbox-gl": "^2.7.14",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.15",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"lucide-svelte": "^0.277.0",
 		"postcss": "^8.4.28",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
@@ -37,8 +40,8 @@
 	"type": "module",
 	"dependencies": {
 		"@mapbox/search-js-core": "^1.0.0-beta.17",
-		"@melt-ui/svelte": "^0.47.6",
+		"@melt-ui/svelte": "^0.50.0",
 		"lucide-svelte": "^0.279.0",
-		"mapbox-gl": "^2.15.0"
+		"mapbox-gl": "^3.0.0-beta.3"
 	}
 }

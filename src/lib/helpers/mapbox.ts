@@ -41,7 +41,7 @@ function filterFeatures(reponses: any, categories: string[]) {
 
 export async function pointToCoordinates(location: string): Promise<Coordinate> {
 	const response = await fetch(
-		`https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${
+		`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.address}.json?access_token=${
 			import.meta.env.VITE_MAPBOX_TOKEN
 		}`
 	);

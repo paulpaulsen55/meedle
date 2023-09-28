@@ -4,6 +4,7 @@
 	import { slide } from 'svelte/transition';
 
 	export let response: Feature[];
+	export let hoverdPointId:string|null;
 
 	type item = {
 		id: string;
@@ -26,34 +27,49 @@
 			});
 		}
 	}
+	
+	const {
+		elements: { content, item, trigger, root },
+		helpers: { isSelected },
+		states: {value}
+	} = createAccordion();
 
 	refresh();
-	
 
-	const {
-		elements: { content, item, trigger },
-		helpers: { isSelected }
-	} = createAccordion({
-		defaultValue: 'item-1'
-	});
+	$:{
+		let tmpItem = items.findLast((i)=>i.id==hoverdPointId);
+		if (tmpItem != undefined) {
+			value.set(tmpItem.id);
+		}else {
+			value.set(undefined);
+		}
+		if(response) refresh();
+	}
 
-	$ : if(response) refresh();
+	function preUpdateHoverdPoint(id:string){
+		if (id == hoverdPointId) {
+			hoverdPointId = null;
+		}else{
+			hoverdPointId = id
+		}
+	}
+
 </script>
 
-<div class="rounded-xl bg-neutral-800 shadow-lg z-10">
+<div class="overflow-auto rounded-xl bg-neutral-800 shadow-lg z-10 mt-10">
 	{#each items as { id, title, address, description }, i}
 		<div
 			use:melt={$item(id)}
 			class="overflow-hidden transition first:rounded-t-xl last:rounded-b-xl"
 		>
-			<h2 class="flex">
+			<h2>
 				<button
-					use:melt={$trigger(id)}
-					class="w-full cursor-pointer flex items-start flex-col bg-neutral-800 p-5 text-base font-medium leading-none transition hover:bg-neutral-700
+					on:click={() => preUpdateHoverdPoint(id)}
+					class="w-full cursor-pointer flex items-start gap-2 flex-col bg-neutral-800 px-5 py-8 text-base font-medium leading-none transition hover:bg-neutral-700
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
-					<p>{title}</p>
-					<span class="text-neutral-600 text-sm">{address}</span>
+					<p class="truncate w-full text-start">{title}</p>
+					<span class="text-neutral-600 text-sm text-start truncate w-full">{address}</span>
 				</button>
 			</h2>
 			{#if $isSelected(id)}

@@ -15,6 +15,10 @@ export type Coordinate = {
 	lat: number;
 };
 
+export type Address = {
+	title: string;
+	address: string;
+};
 export type Feature = {
 	categories: string[],
 	name: string,

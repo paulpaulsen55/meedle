@@ -3,14 +3,15 @@
 	import { locations } from '../store';
 	import NavBar from '$lib/NavBar.svelte';
 	import AddressInput from '$lib/AddressInput.svelte';
+	import type { Address } from '../app';
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import { radius as r } from '../store';
 	import { poi as p } from '../store';
 
 	export let data;
 
-	let location1: string = 'tuxer steig 6',
-		location2: string = 'Rheinbabenallee 47';
+	let location1: Address = { title: '', address: '' },
+		location2: Address = { title: '', address: '' };
 	let radius = 5;
 	let poi = 5;
 
