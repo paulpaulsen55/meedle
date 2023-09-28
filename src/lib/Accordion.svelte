@@ -53,7 +53,6 @@
 			hoverdPointId = id
 		}
 	}
-
 </script>
 
 <div class="overflow-auto rounded-xl bg-neutral-800 shadow-lg z-10 mt-10">

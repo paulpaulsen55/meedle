@@ -67,7 +67,6 @@
 			edit = false;
 		} else {
 			edit = true;
-
 		}
 	});
 
@@ -90,11 +89,12 @@
 				</div>
 			</div>
 		{:else}
-			<div class="flex justify-between items-end mt-10">
-				<div>
-					<p>{location1.address}</p>
-					<p>between</p>
-					<p>{location2.address}</p>
+			<div class="flex justify-between items-end w-full gap-2">
+				<div class="w-[85%]">
+					<p class="w-fit">Zwischen</p>
+					<p class="truncate">{location1.address}</p>
+					<p class="w-fit">und</p>
+					<p class="truncate">{location2.address}</p>
 				</div>
 				<button type="button" on:click={() => (edit = true)} class="">
 					<FileEdit />

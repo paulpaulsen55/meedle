@@ -21,7 +21,7 @@
 
 <button
     type="button"
-    class={$$props.class}
+    class={"p-2 hover:bg-neutral-700 bg-neutral-800 rounded transition " + $$props.class}
     use:melt={$trigger}
 >
     <SlidersHorizontal />
@@ -36,7 +36,7 @@
                 <input bind:value={radius} type="number" min="1" max="50" id="radius" class="input" placeholder="max. Radius" />
             </fieldset>
             <fieldset>
-                <label for="POI">POIs</label>
+                <label for="POI">Ergebnisse</label>
                 <input bind:value={poi} type="number" min="1" max="25" id="POI" class="input" placeholder="Anzahl POI" />
             </fieldset>
         </div>

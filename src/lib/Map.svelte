@@ -53,7 +53,6 @@
 		}
 	}
 
-
     function onMarkerClick(id:string){
         hoverdPointId = id;
     }
