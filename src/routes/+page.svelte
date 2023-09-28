@@ -50,7 +50,7 @@
 <div class="grid place-items-center scroll-smooth" id="top">
 	<NavBar />
 	<section class="h-screen flex flex-col relative">
-		<div class="grid place-items-center mt-5">
+		<div class="grid place-items-center mt-10">
 			<img src="/logo.svg" alt="logo" class="w-[60%] spx-2 sm:px-0" />
 			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed">
 				Meedle ist die App, die dir hilft, den perfekten Ort für ein
@@ -59,7 +59,7 @@
 			</p>
 		</div>
 		<div
-			class="self-start flex flex-col items-center relative bg-dotted radial bg-animate-pulse sm:px-64 py-28"
+			class="self-start flex flex-col items-center relative bg-dotted radial bg-animate-pulse sm:px-64 py-20"
 		>
 			<div class="space-y-3 flex flex-col w-96">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
