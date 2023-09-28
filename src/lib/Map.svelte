@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
-	import type { Coordinate } from '../app';
+	import type { Coordinate, Feature } from '../app';
 	import type {
 		SearchBoxCategoryResponse,
 		SearchBoxCategorySuggestion
 	} from '@mapbox/search-js-core';
 
-	export let middle: Coordinate, response: SearchBoxCategoryResponse, locations: Array<Coordinate>;
+	export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
 
 	let mapElement: HTMLElement;
 	let map: mapboxgl.Map | null = null;
@@ -42,10 +42,10 @@
 		if (response) {
 			markers.forEach((marker) => marker.remove());
 			markers.clear();
-			response.features.forEach((feature: any) => {
-				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.geometry.coordinates);
-				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.properties.name}</p>`));
-				markers.set(feature.properties.mapbox_id, m);
+			response.forEach((feature: any) => {
+				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.coordinate);
+				m.setPopup(new mapboxgl.Popup().setHTML(`<p>${feature.name}</p>`));
+				markers.set(feature.id, m);
 			});
 			markers.forEach((marker) => marker.addTo(map!));
 		}

@@ -1,48 +1,45 @@
 import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
-import type { Coordinate, Feature, FeatureCollection } from '../../app';
+import type { Coordinate, Feature } from '../../app';
 import { poi, radius } from '../../store';
 import type { Unsubscriber } from 'svelte/store';
 
-function test(test: any, categories: string[]) {
+function filterFeatures(reponses: any, categories: string[]) {
 	let pp = 0;
 	const unsubscribePoi: Unsubscriber = poi.subscribe((value:number) => (pp = value));
 
-	let matches: Feature[] = [];
+	let results: Feature[] = [];
 	
 	//foreach loops do not work here @Johannes
-	for (let i = 0; i <= test.length - 1; i++) {
-		for (let j = 0; j <= test[i].features.length - 1; j++) {
-			const f = test[i].features[j];
+	for (let i = 0; i <= reponses.length - 1; i++) {
+		for (let j = 0; j <= reponses[i].features.length - 1; j++) {
+			const f = reponses[i].features[j];
 			console.log(categories.every( ai => f.properties.poi_category_ids.includes(ai)), f.properties.poi_category_ids, categories);
 			
 			if(categories.every( ai => f.properties.poi_category_ids.includes(ai))) {
-				matches.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki})
+				results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, ismatch: true})
 			}
 		}
 	}
 
-	console.log('matches', matches);
-
-	const remaining = pp - matches.length;
+	const remaining = pp - results.length;
 	let full = pp;
-	let nonMatches: Feature[] = [];
 	
-	outer: for (let i = 0; i <= test.length - 1; i++) {
+	outer: for (let i = 0; i <= reponses.length - 1; i++) {
 		let inner = remaining
-		for (let j = 0; j <= test[i].features.length - 1; j++) {
+		for (let j = 0; j <= reponses[i].features.length - 1; j++) {
 			if (full < 1) break outer;
 			if (inner < 1) break;
 
-			const f = test[i].features[j];
-			nonMatches.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki})
+			const f = reponses[i].features[j];
+			results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, ismatch: false})
 			full--;
 			inner--;
 		}
 	}
 	
-	console.log('nonMatches', nonMatches);
+	console.log('results', results);
 
-	return test[0]
+	return results
 }
 
 export async function pointToCoordinates(location: string): Promise<Coordinate> {
@@ -59,7 +56,7 @@ export async function pointToCoordinates(location: string): Promise<Coordinate> 
 export async function pointToFeatures(
 	categories: string[],
 	average: Coordinate
-): Promise<SearchBoxCategoryResponse> {
+): Promise<Feature[]> {
 	let rad = 0, pp = 0;
 	const unsubscribeRad: Unsubscriber = radius.subscribe((value) => (rad = value));
 	const unsubscribePoi: Unsubscriber = poi.subscribe((value) => (pp = value));
@@ -79,6 +76,6 @@ export async function pointToFeatures(
 		);
 		res.push(await r.json());
 	}
-	const feature = test(res, categories);
+	const feature = filterFeatures(res, categories);
 	return feature;
 }

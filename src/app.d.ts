@@ -16,16 +16,12 @@ export type Coordinate = {
 };
 
 export type Feature = {
-	categories?: string[],
+	categories: string[],
 	name: string,
-	address?: string,
+	address: string,
 	coordinate?: Coordinate
-	id?: string,
+	id: string,
 	metadata?: any,
-	maki?: string
-}
-
-export type FeatureCollection = {
-	matches: feature[],
-	nonMatches: feature[]
+	maki?: string,
+	ismatch?: boolean
 }

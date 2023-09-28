@@ -1,9 +1,10 @@
 <script lang="ts">
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
+	import type { Feature } from '../app';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 
-	export let response: SearchBoxCategoryResponse;
+	export let response: Feature[];
 
 	type item = {
 		id: string;
@@ -14,13 +15,13 @@
 
 	let items: item[] = [];
 
-	for (let index = 0; index < response.features.length; index++) {
-		const element = response.features[index];
+	for (let index = 0; index < response.length; index++) {
+		const element = response[index];
 		items.push({
-			id: element.properties.mapbox_id,
-			title: element.properties.name,
-			address: element.properties.full_address,
-			description: element.properties.poi_category.toString()
+			id: element.id,
+			title: element.name,
+			address: element.address,
+			description: element.categories.join()
 		});
 	}
 

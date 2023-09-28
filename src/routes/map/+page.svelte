@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Map from '$lib/Map.svelte';
 	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
-	import type { Coordinate } from '../../app';
+	import type { Coordinate, Feature } from '../../app';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import Accordion from '$lib/Accordion.svelte';
 	import TagsSettings from '$lib/TagsSettings.svelte';
@@ -26,7 +26,7 @@
 		average: Coordinate,
 		points: Array<Coordinate>,
 		category = ['food_and_drink'],
-		features: SearchBoxCategoryResponse,
+		features: Feature[],
 		edit = true;
 
 	async function handleSubmit() {

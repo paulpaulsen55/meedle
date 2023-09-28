@@ -30,6 +30,7 @@
 	} = createTagsInput({
 		defaultTags: [{id:"food_and_drink", value:"Essen und Trinken"}],
 		unique: true,
+		maxTags: 3,
 		add(tag) {
 			return { id: tag, value: '' };
 		},	
