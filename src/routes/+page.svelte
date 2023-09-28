@@ -4,7 +4,6 @@
 	import NavBar from '$lib/NavBar.svelte';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import type { Address } from '../app';
-
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import { radius as r } from '../store';
 	import { poi as p } from '../store';
