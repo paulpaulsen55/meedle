@@ -50,7 +50,7 @@
 <div class="grid place-items-center scroll-smooth" id="top">
 	<NavBar />
 	<section class="h-screen flex flex-col relative">
-		<div class="grid place-items-center mt-32">
+		<div class="grid place-items-center mt-5">
 			<img src="/logo.svg" alt="logo" class="w-[60%] spx-2 sm:px-0" />
 			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed">
 				Meedle ist die App, die dir hilft, den perfekten Ort für ein
