@@ -10,6 +10,6 @@ export async function load({ url, cookies }) {
 
 	return {
 		currentPath: url.pathname,
-		sessionToken: cookies.get('session_token'),
+		sessionToken: cookies.get('session_token')
 	};
 }

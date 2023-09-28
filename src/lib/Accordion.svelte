@@ -3,40 +3,53 @@
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 
+
 	export let response : SearchBoxCategoryResponse;
+	export let hoverdPointId:string|null;
 
-    console.log(response);
+	type item = {
+		id: string;
+		title: string;
+		address: string;
+		description: string;
+	};
 
-    type item =  {
-		id:string;
-		title:string;
-		address:string;
-		description:string;
+	let items: item[] = [];
+
+	for (let index = 0; index < response.features.length; index++) {
+		const element = response.features[index];
+		items.push({
+			id: element.properties.mapbox_id,
+			title: element.properties.name,
+			address: element.properties.full_address,
+			description: element.properties.poi_category.toString()
+		});
 	}
 
-    let items:item[] = [];
-
-    for (let index = 0; index < response.features.length; index++) {
-        const element = response.features[index];
-        items.push({
-            id: element.properties.mapbox_id,
-            title: element.properties.name,
-            address: element.properties.full_address,
-            description: element.properties.poi_category.toString(),
-        })
-    }
-
-
 	const {
-		elements: { content, item, trigger, root },
-		helpers: { isSelected }
-	} = createAccordion({
-		defaultValue: 'item-1'
-	});
 
-	function togglePoint(){
-		
-	};
+		elements: { content, item, trigger, root },
+		helpers: { isSelected },
+		states: {value}
+	} = createAccordion();
+
+	$:{
+		let tmpItem = items.findLast((i)=>i.id==hoverdPointId);
+		if (tmpItem != undefined) {
+			value.set(tmpItem.id);
+		}else {
+			value.set(undefined);
+		}
+	}
+
+	function preUpdateHoverdPoint(id:string){
+		if (id == hoverdPointId) {
+			hoverdPointId = null;
+		}else{
+			hoverdPointId = id
+		}
+	}
+
 </script>
 
 <div class="scrollable rounded-xl bg-neutral-800 shadow-lg z-10">
@@ -47,12 +60,12 @@
 		>
 			<h2 class="flex">
 				<button
-					use:melt={$trigger(id)}
+					on:click={() => preUpdateHoverdPoint(id)}
 					class="w-full cursor-pointer flex items-start flex-col bg-neutral-800 p-5 text-base font-medium leading-none transition hover:bg-neutral-700
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
-				    <p>{title}</p>
-                    <span class="text-neutral-600 text-sm">{address}</span>
+					<p>{title}</p>
+					<span class="text-neutral-600 text-sm">{address}</span>
 				</button>
 			</h2>
 			{#if $isSelected(id)}
