@@ -12,7 +12,7 @@
 	function updateScroll() {
 		if (box.scrollLeft <= 0) {
 			arrowLeft.classList.add('hidden');
-		} else if (box.scrollLeft + box.clientWidth >= box.scrollWidth) {
+		} else if (box.scrollLeft + box.clientWidth >= box.scrollWidth - 1) {
 			arrowRight.classList.add('hidden');
 		} else {
 			arrowLeft.classList.remove('hidden');

@@ -3,7 +3,7 @@
 	import { filters } from '$lib/helpers/filters';
 	import { X, Plus } from 'lucide-svelte';
 	import Scroller from '$lib/Scroller.svelte';
-	import { createEventDispatcher } from 'svelte';
+	import { beforeUpdate, createEventDispatcher } from 'svelte';
 	import { afterUpdate } from 'svelte';
 
 	let filterTags: Array<Tag> = [],
@@ -29,7 +29,6 @@
 	} = createTagsInput({
 		defaultTags: [{id:"food_and_drink", value:"Essen und Trinken"}],
 		unique: true,
-		maxTags: 3,
 		add(tag) {
 			return { id: tag, value: '' };
 		},	
@@ -90,6 +89,12 @@
 	function setUnselected(id:string) {
 		document.getElementById(id)?.classList.replace("bg-magnum-300", "bg-magnum-200");
 	}
+
+	beforeUpdate(() => {
+		if ($tags.length > 3) {
+			tags.set($tags.slice(0, 3));
+		}
+	})
 
 	afterUpdate(() => {
 		$tags.forEach(function (v) {
