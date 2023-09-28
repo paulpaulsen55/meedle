@@ -15,7 +15,7 @@
 	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 	let mapStyle = 'mapbox://styles/mapbox/dark-v9';
 	let viewState = {
-		zoom: 5,
+		zoom: 3,
 		pitch: 0,
 		bearing: 0
 	};
