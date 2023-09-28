@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 	import type { Feature } from '../app';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
@@ -15,24 +14,30 @@
 
 	let items: item[] = [];
 
-	for (let index = 0; index < response.length; index++) {
-		const element = response[index];
-		items.push({
-			id: element.id,
-			title: element.name,
-			address: element.address,
-			description: element.categories.join()
-		});
+	function refresh() {
+		items = [];
+		for (let index = 0; index < response.length; index++) {
+			const element = response[index];
+			items.push({
+				id: element.id,
+				title: element.name,
+				address: element.address,
+				description: element.categories.join()
+			});
+		}
 	}
 
+	refresh();
+	
+
 	const {
-		elements: { content, item, trigger, root },
+		elements: { content, item, trigger },
 		helpers: { isSelected }
 	} = createAccordion({
 		defaultValue: 'item-1'
 	});
 
-	function togglePoint() {}
+	$ : if(response) refresh();
 </script>
 
 <div class="rounded-xl bg-neutral-800 shadow-lg z-10">

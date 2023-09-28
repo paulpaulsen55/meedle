@@ -13,7 +13,6 @@ function filterFeatures(reponses: any, categories: string[]) {
 	for (let i = 0; i <= reponses.length - 1; i++) {
 		for (let j = 0; j <= reponses[i].features.length - 1; j++) {
 			const f = reponses[i].features[j];
-			console.log(categories.every( ai => f.properties.poi_category_ids.includes(ai)), f.properties.poi_category_ids, categories);
 			
 			if(categories.every( ai => f.properties.poi_category_ids.includes(ai))) {
 				results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, ismatch: true})
@@ -37,8 +36,6 @@ function filterFeatures(reponses: any, categories: string[]) {
 		}
 	}
 	
-	console.log('results', results);
-
 	return results
 }
 

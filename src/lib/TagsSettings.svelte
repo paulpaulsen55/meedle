@@ -8,9 +8,8 @@
 
 	let filterTags: Array<Tag> = [],
 		tempTags: Tag[] = [],
-		continueOption = false;
-
-	let searchTerm = '',
+		continueOption = false,
+		searchTerm = '',
 		results: Map<string, string>[] = [];
 
 	const dispatch = createEventDispatcher();
@@ -90,7 +89,6 @@
 
 	function setUnselected(id:string) {
 		document.getElementById(id)?.classList.replace("bg-magnum-300", "bg-magnum-200");
-
 	}
 
 	afterUpdate(() => {
@@ -101,14 +99,21 @@
 		}); 
 	});
 
-	$: if (searchTerm.length > 0 && filters) {
-		results = [];
-		const r = Object.values(filters);
-		r.forEach((map) => {
-			results.push(filteredTags(map));
-		});
-	} else if (searchTerm.length == 0 && filters) {
-		results = Object.values(filters);
+	$ : {
+		if (searchTerm.length > 0 && filters) {
+			results = [];
+			const r = Object.values(filters);
+			r.forEach((map) => {
+				results.push(filteredTags(map));
+			});
+		} else if (searchTerm.length == 0 && filters) {
+			results = Object.values(filters);
+		}
+
+		if ($displayTags.length) {
+			filterTags = $displayTags
+			dispatch('updateTags', filterTags); // send tags to parent
+		};
 	}
 </script>
 
@@ -126,7 +131,10 @@
 				use:melt={$displayTagElement(t)}
 				class="flex rounded-md bg-magnum-300 text-magnum-900 py-2"
 			>
-				<button use:melt={$displayDeleteTrigger(t)} class="flex items-center rounded m-0.5">
+				<button 
+					use:melt={$displayDeleteTrigger(t)} 
+					class="flex items-center rounded m-0.5"
+				>
 					<span class="px-1">{t.value}</span>
 					<X class="h-5 w-5" />
 				</button>

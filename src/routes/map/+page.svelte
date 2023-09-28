@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Map from '$lib/Map.svelte';
-	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
 	import type { Coordinate, Feature } from '../../app';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import Accordion from '$lib/Accordion.svelte';
@@ -48,6 +47,7 @@
 
 	function handleTagsSetting(event: CustomEvent<Tag[]>) {
 		const filterTags = event.detail;
+		category = [];
 		category = filterTags.map((tag) => tag.id);
 		handleSubmit();
 	}
