@@ -1,10 +1,9 @@
 <script lang="ts">
-	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
+	import type { Feature } from '../app';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 
-
-	export let response : SearchBoxCategoryResponse;
+	export let response: Feature[];
 	export let hoverdPointId:string|null;
 
 	type item = {
@@ -16,22 +15,26 @@
 
 	let items: item[] = [];
 
-	for (let index = 0; index < response.features.length; index++) {
-		const element = response.features[index];
-		items.push({
-			id: element.properties.mapbox_id,
-			title: element.properties.name,
-			address: element.properties.full_address,
-			description: element.properties.poi_category.toString()
-		});
+	function refresh() {
+		items = [];
+		for (let index = 0; index < response.length; index++) {
+			const element = response[index];
+			items.push({
+				id: element.id,
+				title: element.name,
+				address: element.address,
+				description: element.categories.join()
+			});
+		}
 	}
-
+	
 	const {
-
 		elements: { content, item, trigger, root },
 		helpers: { isSelected },
 		states: {value}
 	} = createAccordion();
+
+	refresh();
 
 	$:{
 		let tmpItem = items.findLast((i)=>i.id==hoverdPointId);
@@ -40,6 +43,7 @@
 		}else {
 			value.set(undefined);
 		}
+		if(response) refresh();
 	}
 
 	function preUpdateHoverdPoint(id:string){

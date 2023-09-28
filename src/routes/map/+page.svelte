@@ -1,15 +1,16 @@
 <script lang="ts">
 	import Map from '$lib/Map.svelte';
-	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
-	import type { Coordinate } from '../../app';
+	import type { Coordinate, Feature } from '../../app';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import Accordion from '$lib/Accordion.svelte';
+	import TagsSettings from '$lib/TagsSettings.svelte';
 	import { locations as lol } from '../../store';
 	import type { Unsubscriber } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
 	import { ArrowLeftIcon, Settings2, FileEdit } from 'lucide-svelte';
 	import type { Address } from '../../app';
+	import type { Tag } from '@melt-ui/svelte';
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import { radius as r } from '../../store';
 	import { poi as p } from '../../store';
@@ -28,10 +29,9 @@
 		location2 = loc.location2,
 		average: Coordinate,
 		points: Array<Coordinate>,
-		category = 'food_and_drink',
-		features: SearchBoxCategoryResponse,
+		category = ['food_and_drink'],
+		features: Feature[],
 		edit = true;
-		
 
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
@@ -48,6 +48,13 @@
 		p.set(poi);
 
 		features = await pointToFeatures(category, average);
+	}
+
+	function handleTagsSetting(event: CustomEvent<Tag[]>) {
+		const filterTags = event.detail;
+		category = [];
+		category = filterTags.map((tag) => tag.id);
+		handleSubmit();
 	}
 
 	// loads data only when both locations are set through the store - prevents unnecessary api calls
@@ -100,5 +107,8 @@
 		{/if}
 		<div class="w-96 h-64 dotted-bg -ml-6 -mb-4 p-2" />
 	</aside>
+	<div class="absolute ml-96 z-10 p-1">
+		<TagsSettings on:updateTags={handleTagsSetting} />
+	</div>
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId={hoverdPointId}/>
 </div>
