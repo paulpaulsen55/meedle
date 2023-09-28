@@ -19,3 +19,13 @@ export type Address = {
 	title: string;
 	address: string;
 };
+export type Feature = {
+	categories: string[],
+	name: string,
+	address: string,
+	coordinate?: Coordinate
+	id: string,
+	metadata?: any,
+	maki?: string,
+	ismatch?: boolean
+}

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { SearchBoxCategoryResponse } from '@mapbox/search-js-core';
+	import type { Feature } from '../app';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 
-	export let response : SearchBoxCategoryResponse;
+	export let response: Feature[];
 	export let hoverdPointId:string|null;
 
 	type item = {
@@ -15,22 +15,26 @@
 
 	let items: item[] = [];
 
-	for (let index = 0; index < response.features.length; index++) {
-		const element = response.features[index];
-		items.push({
-			id: element.properties.mapbox_id,
-			title: element.properties.name,
-			address: element.properties.full_address,
-			description: element.properties.poi_category.toString()
-		});
+	function refresh() {
+		items = [];
+		for (let index = 0; index < response.length; index++) {
+			const element = response[index];
+			items.push({
+				id: element.id,
+				title: element.name,
+				address: element.address,
+				description: element.categories.join()
+			});
+		}
 	}
-
+	
 	const {
-
 		elements: { content, item, trigger, root },
 		helpers: { isSelected },
 		states: {value}
 	} = createAccordion();
+
+	refresh();
 
 	$:{
 		let tmpItem = items.findLast((i)=>i.id==hoverdPointId);
@@ -39,6 +43,7 @@
 		}else {
 			value.set(undefined);
 		}
+		if(response) refresh();
 	}
 
 	function preUpdateHoverdPoint(id:string){
@@ -50,20 +55,20 @@
 	}
 </script>
 
-<div class="rounded-xl bg-neutral-800 shadow-lg z-10">
+<div class="overflow-auto rounded-xl bg-neutral-800 shadow-lg z-10 mt-10">
 	{#each items as { id, title, address, description }, i}
 		<div
 			use:melt={$item(id)}
 			class="overflow-hidden transition first:rounded-t-xl last:rounded-b-xl"
 		>
-			<h2 class="flex">
+			<h2>
 				<button
 					on:click={() => preUpdateHoverdPoint(id)}
-					class="w-full cursor-pointer flex items-start flex-col bg-neutral-800 p-5 text-base font-medium leading-none transition hover:bg-neutral-700
+					class="w-full cursor-pointer flex items-start gap-2 flex-col bg-neutral-800 px-5 py-8 text-base font-medium leading-none transition hover:bg-neutral-700
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
-					<p>{title}</p>
-					<span class="text-neutral-600 text-sm">{address}</span>
+					<p class="truncate w-full text-start">{title}</p>
+					<span class="text-neutral-600 text-sm text-start truncate w-full">{address}</span>
 				</button>
 			</h2>
 			{#if $isSelected(id)}

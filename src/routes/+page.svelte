@@ -15,7 +15,7 @@
 		Map
 	} from 'lucide-svelte';
 	import { fade, fly } from 'svelte/transition';
-  	import type { Address } from '../app';
+  import type { Address } from '../app';
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import { radius as r } from '../store';
 	import { poi as p } from '../store';
