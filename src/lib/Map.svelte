@@ -2,10 +2,6 @@
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
 	import type { Coordinate, Feature } from '../app';
-	import type {
-		SearchBoxCategoryResponse,
-		SearchBoxCategorySuggestion
-	} from '@mapbox/search-js-core';
 
 	export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
 	export let hoverdPointId:string|null;
@@ -43,10 +39,10 @@
 		if (response) {
 			markers.forEach((marker) => marker.remove());
 			markers.clear();
-			response.forEach((feature: any) => {
+			response.forEach((feature: Feature) => {
 				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.coordinate);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
-				m.getElement().addEventListener('click',()=>onMarkerClick(feature.properties.mapbox_id))
+				m.getElement().addEventListener('click',()=>onMarkerClick(feature.id))
 				markers.set(feature.id, m);
 			});
 			markers.forEach((marker) => marker.addTo(map!));

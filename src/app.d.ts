@@ -23,9 +23,9 @@ export type Feature = {
 	categories: string[],
 	name: string,
 	address: string,
-	coordinate?: Coordinate
+	coordinate: Coordinate
 	id: string,
 	metadata?: any,
 	maki?: string,
-	ismatch?: boolean
+	ismatch: boolean
 }
