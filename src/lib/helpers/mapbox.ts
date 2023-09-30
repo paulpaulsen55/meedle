@@ -30,12 +30,13 @@ function filterFeatures(reponses: any, categories: string[]) {
 			if (inner < 1) break;
 
 			const f = reponses[i].features[j];
-			results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, isMatch: false})
+			const inList = results.filter(e => e.id === f.properties.mapbox_id).length > 0;
+			if(results.length < pp && !inList) results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, isMatch: false})
 			full--;
 			inner--;
 		}
 	}
-	
+	console.log(results)
 	return results
 }
 
