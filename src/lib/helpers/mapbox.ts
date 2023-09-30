@@ -14,8 +14,8 @@ function filterFeatures(reponses: any, categories: string[]) {
 		for (let j = 0; j <= reponses[i].features.length - 1; j++) {
 			const f = reponses[i].features[j];
 			
-			if(categories.every( ai => f.properties.poi_category_ids.includes(ai))) {
-				results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, ismatch: true})
+			if(results.length < pp && categories.every( ai => f.properties.poi_category_ids.includes(ai))) {
+				results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, isMatch: true})
 			}
 		}
 	}
@@ -30,7 +30,7 @@ function filterFeatures(reponses: any, categories: string[]) {
 			if (inner < 1) break;
 
 			const f = reponses[i].features[j];
-			results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, ismatch: false})
+			results.push({name: f.properties.name, categories: f.properties.poi_category, address: f.properties.address, coordinate: {lng: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]}, id: f.properties.mapbox_id, metadata: f.properties.metadata, maki: f.properties.maki, isMatch: false})
 			full--;
 			inner--;
 		}

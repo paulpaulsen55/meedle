@@ -27,5 +27,5 @@ export type Feature = {
 	id: string,
 	metadata?: any,
 	maki?: string,
-	ismatch: boolean
+	isMatch: boolean
 }

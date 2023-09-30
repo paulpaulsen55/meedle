@@ -3,7 +3,6 @@
 	import type { Coordinate, Feature } from '../../app';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import Accordion from '$lib/Accordion.svelte';
-	import TagsSettings from '$lib/TagsSettings.svelte';
 	import { locations as lol } from '../../store';
 	import type { Unsubscriber } from 'svelte/store';
 	import { onMount } from 'svelte';
@@ -14,6 +13,7 @@
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import { radius as r } from '../../store';
 	import { poi as p } from '../../store';
+	import TagsSettings from '$lib/TagsSettings.svelte';
 
 	export let data;
 	let hoverdPointId: string | null;
@@ -54,6 +54,8 @@
 		const filterTags = event.detail;
 		category = [];
 		category = filterTags.map((tag) => tag.id);
+		console.log(category);
+		
 		handleSubmit();
 	}
 
@@ -108,7 +110,7 @@
 		<div class="w-96 h-64 dotted-bg -ml-6 -mb-4 p-2" />
 	</aside>
 	<div class="absolute ml-96 z-10 p-1">
-		<TagsSettings on:updateTags={handleTagsSetting} />
+		<TagsSettings on:updateTags={handleTagsSetting}/>
 	</div>
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId={hoverdPointId}/>
 </div>
