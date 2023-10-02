@@ -36,7 +36,6 @@ function filterFeatures(reponses: any, categories: string[]) {
 			inner--;
 		}
 	}
-	console.log(results)
 	return results
 }
 
