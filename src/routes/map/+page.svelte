@@ -54,7 +54,6 @@
 		const filterTags = event.detail;
 		category = [];
 		category = filterTags.map((tag) => tag.id);
-		console.log(category);
 		
 		handleSubmit();
 	}
