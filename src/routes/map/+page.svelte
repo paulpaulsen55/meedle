@@ -90,8 +90,8 @@
 					<AdressSettings bind:radius bind:poi />
 					<button
 						on:click={() => {
-							edit = false;
 							handleSubmit();
+							edit = false;
 						}}
 						class="button-magnum w-80 justify-center">meet me in the middle</button
 					>
