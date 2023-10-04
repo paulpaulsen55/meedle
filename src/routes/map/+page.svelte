@@ -1,34 +1,34 @@
 <script lang="ts">
 	import Map from '$lib/Map.svelte';
-	import type { Coordinate, Feature } from '../../app';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import Accordion from '$lib/Accordion.svelte';
-	import { locations as lol } from '../../store';
-	import type { Unsubscriber } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
-	import { ArrowLeftIcon, Settings2, FileEdit } from 'lucide-svelte';
-	import type { Address } from '../../app';
-	import type { Tag } from '@melt-ui/svelte';
+	import { ArrowLeftIcon, FileEdit } from 'lucide-svelte';
 	import AdressSettings from '$lib/AdressSettings.svelte';
-	import { radius as r } from '../../store';
-	import { poi as p } from '../../store';
+	import { locations as lol, poi as p, radius as r } from '../../store';
 	import TagsSettings from '$lib/TagsSettings.svelte';
+	import type { Unsubscriber } from 'svelte/store';
+	import type { Tag } from '@melt-ui/svelte';
+	import type { Coordinate, Feature, Address } from '../../app';
 
 	export let data;
 	let hoverdPointId: string | null;
 
-
 	const sus: Address = { title: '', address: '' };
-	let loc = { location1: sus, location2: sus },radius = 0, poi = 0;
-	const unsubscribe: Unsubscriber = lol.subscribe((value) => {loc = value;});
+	let loc = { location1: sus, location2: sus },
+		radius = 0,
+		poi = 0;
+	const unsubscribe: Unsubscriber = lol.subscribe((value) => {
+		loc = value;
+	});
 	const unsubscribeRad: Unsubscriber = r.subscribe((value) => (radius = value));
 	const unsubscribePoi: Unsubscriber = p.subscribe((value) => (poi = value));
 
 	let location1 = loc.location1,
 		location2 = loc.location2,
 		average: Coordinate,
-		points: Array<Coordinate>,
+		points: Coordinate[] = [],
 		category = ['food_and_drink'],
 		features: Feature[],
 		edit = true;
@@ -38,6 +38,10 @@
 
 		const point1 = await pointToCoordinates(location1);
 		const point2 = await pointToCoordinates(location2);
+		lol.set({
+			location1: { title: location1.title, address: location1.address, coordinate: point1 },
+			location2: { title: location2.title, address: location2.address, coordinate: point2 }
+		});
 		points = [point1, point2];
 		average = {
 			lng: (point1.lng + point2.lng) / 2,
@@ -54,7 +58,7 @@
 		const filterTags = event.detail;
 		category = [];
 		category = filterTags.map((tag) => tag.id);
-		
+
 		handleSubmit();
 	}
 
@@ -70,9 +74,7 @@
 			edit = true;
 		}
 	});
-
 </script>
-
 
 <div class="flex">
 	<aside class="flex flex-col w-96 p-6 h-screen">
@@ -86,7 +88,13 @@
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 				<div class="space-x-3 flex mt-5">
 					<AdressSettings bind:radius bind:poi />
-					<button on:click={() => {edit = false; handleSubmit()}} class="button-magnum w-80 justify-center" >meet me in the middle</button>
+					<button
+						on:click={() => {
+							edit = false;
+							handleSubmit();
+						}}
+						class="button-magnum w-80 justify-center">meet me in the middle</button
+					>
 				</div>
 			</div>
 		{:else}
@@ -104,12 +112,12 @@
 		{/if}
 
 		{#if features}
-			<Accordion response={features} bind:hoverdPointId={hoverdPointId}/>
+			<Accordion response={features} bind:hoverdPointId />
 		{/if}
 		<div class="w-96 h-64 dotted-bg -ml-6 -mb-4 p-2" />
 	</aside>
 	<div class="absolute ml-96 z-10 p-1">
-		<TagsSettings on:updateTags={handleTagsSetting}/>
+		<TagsSettings on:updateTags={handleTagsSetting} />
 	</div>
-	<Map middle={average} response={features} locations={points} bind:hoverdPointId={hoverdPointId}/>
+	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
 </div>

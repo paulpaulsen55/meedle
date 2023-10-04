@@ -1,0 +1,55 @@
+<script lang="ts">
+	import { ExternalLink, CarFront, Bike, Footprints } from 'lucide-svelte';
+	import { getTravelTimes } from './helpers/mapbox';
+	import { locations } from '../store';
+	import Loader from './Loader.svelte';
+	import type { Feature } from '../app';
+	import type { Unsubscriber } from 'svelte/store';
+
+	export let tags: string[];
+	export let feature: Feature;
+
+	let loc: any;
+	const unsubscribeRad: Unsubscriber = locations.subscribe((value) => (loc = value));
+
+	if (tags.length > 3) {
+		tags = tags.slice(0, 3);
+	}
+</script>
+
+<div class="p-4 grid gap-4 place-items-center">
+	<div class="flex">
+		{#each tags as tag}
+			<span class="inline-block text-neutral-500 mx-2">#{tag}</span>
+		{/each}
+	</div>
+	{#await getTravelTimes(loc.location1.coordinate, feature.coordinate)}
+		<Loader />
+	{:then travelTimes}
+		<h3 class="text-center text-white text-lg font-semibold">
+			{travelTimes.distance} km zum Zielort
+		</h3>
+		<div class="flex text-white gap-2 justify-between items-center">
+			<p class="flex">
+				<CarFront class="h-5"/>
+				<span class="truncate">: {travelTimes.driving} Min.</span>
+			</p>
+			<p class="flex">
+				<Bike class="h-5"/>
+				<span class="truncate">: {travelTimes.cycling} Min.</span>
+			</p>
+			<p class="flex">
+				<Footprints class="h-5"/>
+				<span class="truncate">: {travelTimes.walking} Min.</span>
+			</p>
+		</div>
+		<a
+			href="https://www.google.de/maps/search/?api=1&query={feature.name}, {feature.address}"
+			target="_blank"
+			class="w-full bg-neutral-500 text-white relative text-base py-2 rounded-md text-center hover:bg-neutral-600 transition"
+		>
+			<ExternalLink class="absolute top-0 left-5 h-full w-6 text-white" />
+			<span>Google Maps</span>
+		</a>
+	{/await}
+</div>

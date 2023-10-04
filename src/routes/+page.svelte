@@ -15,18 +15,18 @@
 		Map
 	} from 'lucide-svelte';
 	import { fade, fly } from 'svelte/transition';
-  import type { Address } from '../app';
+	import type { Address } from '../app';
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import { radius as r } from '../store';
 	import { poi as p } from '../store';
-	import { createSeparator, melt, type CreateSeparatorProps, } from '@melt-ui/svelte';
+	import { createSeparator, melt, type CreateSeparatorProps } from '@melt-ui/svelte';
 
 	export let orientation: CreateSeparatorProps['orientation'] = 'vertical';
- 
+
 	const {
-		elements: { root: vertical },
+		elements: { root: vertical }
 	} = createSeparator({
-		orientation,
+		orientation
 	});
 
 	export let data;
@@ -53,9 +53,8 @@
 		<div class="grid place-items-center mt-10">
 			<img src="/logo.svg" alt="logo" class="w-[60%] spx-2 sm:px-0" />
 			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed">
-				Meedle ist die App, die dir hilft, den perfekten Ort für ein
-				Treffen zu finden. Gib einfach zwei Orte ein und lass Meedle 
-				den Rest erledigen. Probiere es direkt aus:
+				Meedle ist die App, die dir hilft, den perfekten Ort für ein Treffen zu finden. Gib einfach
+				zwei Orte ein und lass Meedle den Rest erledigen. Probiere es direkt aus:
 			</p>
 		</div>
 		<div
@@ -66,7 +65,7 @@
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 			</div>
 			<div class="z-10 flex w-full mt-5 gap-2">
-				<AdressSettings bind:radius bind:poi/>
+				<AdressSettings bind:radius bind:poi />
 				<button
 					on:click={() => startClick()}
 					class="button-magnum flex justify-center w-full"
@@ -80,7 +79,7 @@
 			<ChevronDown class="animate-bounce mb-5 cursor-pointer" />
 		</a>
 	</section>
-	 <section class="h-screen grid place-items-center" id="functions">
+	<section class="h-screen grid place-items-center" id="functions">
 		<div class="w-full grid place-items-center">
 			<svg xmlns="http://www.w3.org/2000/svg" width="1438" height="68" fill="none"
 				><path
@@ -99,8 +98,12 @@
 				/>
 			</svg>
 		</div>
-		<div class="w-full lg:w-4/5 xl:w-[70%] grid place-items-center md:place-items-start grid-cols-1 lg:grid-cols-3 relative">
-			<div class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5">
+		<div
+			class="w-full lg:w-4/5 xl:w-[70%] grid place-items-center md:place-items-start grid-cols-1 lg:grid-cols-3 relative"
+		>
+			<div
+				class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
+			>
 				<FastForward class="w-14 h-14 text-magnum-900" />
 				<h2 class="text-3xl font-bold text-neutral-100">Schnelligkeit</h2>
 				<p class="text-neutral-400">
@@ -110,10 +113,12 @@
 					anderen Personen liegen. So sparst Du Zeit und Mühe bei der Suche nach dem idealen Ort.
 				</p>
 			</div>
-			<div class="absolute left-1/3 grid place-items-center top-0  h-full ">
-				<div use:melt={$vertical} class="h-4/5 w-[2px] bg-neutral-700"/>
+			<div class="absolute left-1/3 grid place-items-center top-0 h-full">
+				<div use:melt={$vertical} class="h-4/5 w-[2px] bg-neutral-700" />
 			</div>
-			<div class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5">
+			<div
+				class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
+			>
 				<Users class="w-14 h-14 text-magnum-500" />
 				<h2 class="text-3xl font-bold text-neutral-100">Treffen</h2>
 				<p class="text-neutral-400">
@@ -124,9 +129,11 @@
 				</p>
 			</div>
 			<div class="absolute left-2/3 grid place-items-center top-0 h-full">
-				<div use:melt={$vertical} class="h-4/5 w-[2px] bg-neutral-700"/>
+				<div use:melt={$vertical} class="h-4/5 w-[2px] bg-neutral-700" />
 			</div>
-			<div class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5">
+			<div
+				class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
+			>
 				<Sparkles class="w-14 h-14 text-magnum-300" />
 				<h2 class="text-3xl font-bold text-neutral-100">Wunderschön</h2>
 				<p class="text-neutral-400">
@@ -189,7 +196,10 @@
 			{/each}
 		</div>
 	</section>
-	<section class="grid sm:grid-cols-2 sm:grid-rows-2 gap-10 w-3/5 mb-5 place-items-center" id="about">
+	<section
+		class="grid sm:grid-cols-2 sm:grid-rows-2 gap-10 w-3/5 mb-5 place-items-center"
+		id="about"
+	>
 		<div>
 			<h2 class="text-2xl font-semibold mb-5">Wer wir sind?</h2>
 			<p>
@@ -202,8 +212,16 @@
 				gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 			</p>
 		</div>
-		<img src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4" alt="img" class="h-4/5">
-		<img src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4" alt="img" class="h-4/5">
+		<img
+			src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4"
+			alt="img"
+			class="h-4/5"
+		/>
+		<img
+			src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4"
+			alt="img"
+			class="h-4/5"
+		/>
 		<div>
 			<h2 class="text-2xl font-semibold mb-5">wer wir sind?</h2>
 			<p>

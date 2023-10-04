@@ -2,61 +2,37 @@
 	import type { Feature } from '../app';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
+	import AccordionContent from './AccordionContent.svelte';
 
 	export let response: Feature[];
-	export let hoverdPointId:string|null;
+	export let hoverdPointId: string | null;
 
-	type item = {
-		id: string;
-		title: string;
-		address: string;
-		description: string;
-	};
-
-	let items: item[] = [];
-
-	function refresh() {
-		items = [];
-		for (let index = 0; index < response.length; index++) {
-			const element = response[index];
-			items.push({
-				id: element.id,
-				title: element.name,
-				address: element.address,
-				description: element.categories.join()
-			});
-		}
-	}
-	
 	const {
-		elements: { content, item, trigger, root },
+		elements: { content, item },
 		helpers: { isSelected },
-		states: {value}
+		states: { value }
 	} = createAccordion();
 
-	refresh();
-
-	$:{
-		let tmpItem = items.findLast((i)=>i.id==hoverdPointId);
+	$: {
+		let tmpItem = response.findLast((i) => i.id == hoverdPointId);
 		if (tmpItem != undefined) {
 			value.set(tmpItem.id);
-		}else {
+		} else {
 			value.set(undefined);
 		}
-		if(response) refresh();
 	}
 
-	function preUpdateHoverdPoint(id:string){
+	function preUpdateHoverdPoint(id: string) {
 		if (id == hoverdPointId) {
 			hoverdPointId = null;
-		}else{
-			hoverdPointId = id
+		} else {
+			hoverdPointId = id;
 		}
 	}
 </script>
 
 <div class="overflow-auto rounded-xl bg-neutral-800 shadow-lg z-10 mt-10">
-	{#each items as { id, title, address, description }, i}
+	{#each response as { id, name, address, categories, coordinate }, i}
 		<div
 			use:melt={$item(id)}
 			class="overflow-hidden transition first:rounded-t-xl last:rounded-b-xl"
@@ -67,8 +43,10 @@
 					class="w-full cursor-pointer flex items-start gap-2 flex-col bg-neutral-800 px-5 py-8 text-base font-medium leading-none transition hover:bg-neutral-700
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
-					<p class="truncate w-full text-start">{title}</p>
-					<span class="text-neutral-600 text-sm text-start truncate w-full">{address}</span>
+					<p class="truncate w-full text-start">{name}</p>
+					<span class="text-neutral-600 text-sm text-start truncate w-full"
+						>{address.slice(0, address.lastIndexOf(','))}</span
+					>
 				</button>
 			</h2>
 			{#if $isSelected(id)}
@@ -77,9 +55,7 @@
 					use:melt={$content(id)}
 					transition:slide
 				>
-					<div class="px-5 py-4">
-						{description}
-					</div>
+					<AccordionContent tags={categories} feature={response[i]} />
 				</div>
 			{/if}
 		</div>
