@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { Feature } from '../app';
-	import { createAccordion, melt } from '@melt-ui/svelte';
-	import { slide } from 'svelte/transition';
+	import { createAccordion, createTooltip, melt } from '@melt-ui/svelte';
+	import { fade, slide } from 'svelte/transition';
 	import AccordionContent from './AccordionContent.svelte';
-	import { Star } from 'lucide-svelte';
+	import { Star, Triangle } from 'lucide-svelte';
 
 	export let response: Feature[];
 	export let hoverdPointId: string | null;
@@ -13,6 +13,11 @@
 		helpers: { isSelected },
 		states: { value }
 	} = createAccordion();
+
+	const toolTip = createTooltip({positioning: {placement: 'top'}});
+	const arrow = toolTip.elements.arrow;
+	const tipContent = toolTip.elements.content;
+	const tipTrigger = toolTip.elements.trigger;
 
 	$: {
 		let tmpItem = response.findLast((i) => i.id == hoverdPointId);
@@ -41,16 +46,18 @@
 			<h2>
 				<button
 					on:click={() => preUpdateHoverdPoint(id)}
-					class="w-full cursor-pointer flex items-start gap-2 flex-col bg-neutral-800 px-5 py-7 text-base font-medium leading-none transition hover:bg-neutral-700
+					class="w-full cursor-pointer bg-neutral-800 px-5 py-7 text-base font-medium transition hover:bg-neutral-700 text-start
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
-					<p class="truncate w-full text-start flex gap-2 items-center">
-						{#if isMatch}
-							<Star class="text-magnum-300 h-5"/>
-						{/if}
-						<span>{name}</span>
-					</p>
-					<span class="text-neutral-600 text-sm text-start truncate w-full"
+					{#if isMatch}
+						<button class="relative group inline-block">
+							<span class="-top-6 absolute hidden group-hover:block text-neutral-400 whitespace-nowrap text-sm font-extralight">übereinstimmende Filter</span>
+							<Star class="text-magnum-300 h-5 m-0.5" />
+						</button>
+					{/if}
+					<p class="truncate inline-block">{name}</p>
+					<br>
+					<span class="text-neutral-600 text-sm truncate w-full"
 						>{address.slice(0, address.lastIndexOf(','))}</span
 					>
 				</button>
