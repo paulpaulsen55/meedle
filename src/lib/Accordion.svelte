@@ -52,10 +52,10 @@
 					{#if isMatch}
 						<button class="relative group inline-block">
 							<span class="-top-6 absolute hidden group-hover:block text-neutral-400 whitespace-nowrap text-sm font-extralight">übereinstimmende Filter</span>
-							<Star class="text-magnum-300 h-5 m-0.5" />
+							<Star class="text-magnum-300 h-5 my-0.5" />
 						</button>
 					{/if}
-					<p class="truncate inline-block">{name}</p>
+					<p class="truncate inline-block w-5/6">{name}</p>
 					<br>
 					<span class="text-neutral-600 text-sm truncate w-full"
 						>{address.slice(0, address.lastIndexOf(','))}</span
