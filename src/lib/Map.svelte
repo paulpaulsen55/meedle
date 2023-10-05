@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
-	import * as s from '@mapbox/maki';
 	import type { Coordinate, Feature } from '../app';
 
 	export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
@@ -44,7 +43,7 @@
 			markers.clear();
 			response.forEach((feature: Feature) => {
 				let el = document.createElement('div');
-				el.style.background =  'url(/image.svg) center center no-repeat'; // Replace with the path to your Maki icon
+				el.style.background =  'url(/marker.svg) center center no-repeat'; // Replace with the path to your Maki icon
 				el.style.backgroundSize = '25px'
 				el.style.width = '45px';
 				el.style.height = '45px';
@@ -55,8 +54,8 @@
 				img.style.marginLeft = 'auto';
 				img.style.marginRight = 'auto';
 				img.style.marginTop = '8px'
-				img.style.width = '35%';
-				img.style.height = '35%';
+				img.style.width = '33%';
+				img.style.height = '33%';
 				
 				el.appendChild(img)
 
