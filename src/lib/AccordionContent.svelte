@@ -52,7 +52,7 @@
 		<h3 class="text-center text-white text-lg font-semibold flex items-center gap-2">
 			<span>{travelTimes.distance} km zum Zielort</span>
 			<button use:melt={$trigger}>
-				<HelpCircle class="text-neutral-500 h-5"/>
+				<HelpCircle class="text-neutral-500 h-5 hover:text-neutral-600 transition"/>
 			</button>
 		</h3>
 		<div class="flex text-white gap-2 justify-between items-center">
@@ -81,11 +81,11 @@
 </div>
 
 {#if $open}
-  <div use:melt={$content} in:fade={{ duration: 100 }} class="z-10 w-60 rounded-[4px] bg-white p-5 shadow-sm relative">
+  <div use:melt={$content} in:fade={{ duration: 100 }} class="z-10 w-64 rounded-[4px] bg-white p-5 shadow-sm relative">
     <div use:melt={$arrow} />
 	<AccordionContentLocationSwitch locations={loc} bind:check />
-    <button class="absolute top-2 right-2" use:melt={$close}>
-      	<X class="square-4 text-black" />
+    <button class="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full text-magnum-900 transition hover:bg-magnum-500/10" use:melt={$close}>
+      	<X class="square-4" />
     </button>
   </div>
 {/if}

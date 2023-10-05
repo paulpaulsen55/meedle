@@ -14,15 +14,15 @@
    
 <form class="text-black space-y-2">
     <p class="text-center">ausgehend von:</p>
-    <div class="flex justify-evenly">
-        <span>{locations.location1.title}</span>
+    <div class="grid grid-flow-col gap-2">
+        <span class="truncate">{locations.location1.title}</span>
         <button
             use:melt={$root}
-            class="switch relative h-6 cursor-default rounded-full bg-magnum-800 transition-colors"
+            class="switch w-11 relative h-6 cursor-default rounded-full bg-magnum-800 transition-colors"
         >
             <span class="thumb block rounded-full bg-white transition" />
         </button>
-        <span>{locations.location2.title}</span>
+        <span class="truncate">{locations.location2.title}</span>
         <input use:melt={$input} />
     </div>
     <div class="text-center">
@@ -31,13 +31,8 @@
 </form>
   
 <style>
-    .switch {
-      --w: 2.75rem;
-      --padding: 0.125rem;
-      width: var(--w);
-    }
-   
     .thumb {
+      --padding: 0.125rem;
       --size: 1.25rem;
       width: var(--size);
       height: var(--size);
@@ -45,6 +40,6 @@
     }
    
     :global([data-state='checked']) .thumb {
-      transform: translateX(calc(var(--w) - var(--size) - var(--padding)));
+      transform: translateX(calc(2.75rem - var(--size) - var(--padding)));
     }
 </style>
