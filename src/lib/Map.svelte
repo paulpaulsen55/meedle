@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
+	import * as s from '@mapbox/maki';
 	import type { Coordinate, Feature } from '../app';
 
 	export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
@@ -37,10 +38,29 @@
 
 		// add the features to the map
 		if (response) {
+	
+			
 			markers.forEach((marker) => marker.remove());
 			markers.clear();
 			response.forEach((feature: Feature) => {
-				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.coordinate);
+				let el = document.createElement('div');
+				el.style.background =  'url(/image.svg) center center no-repeat'; // Replace with the path to your Maki icon
+				el.style.backgroundSize = '25px'
+				el.style.width = '45px';
+				el.style.height = '45px';
+
+				let img = document.createElement('object');
+				img.setAttribute("data", '/icons/' + feature.maki + '.svg');
+				img.setAttribute("type", 'image/svg+xml');
+				img.style.marginLeft = 'auto';
+				img.style.marginRight = 'auto';
+				img.style.marginTop = '8px'
+				img.style.width = '35%';
+				img.style.height = '35%';
+				
+				el.appendChild(img)
+
+				let m = new mapboxgl.Marker(el).setLngLat(feature.coordinate);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
 				m.getElement().addEventListener('click',()=>onMarkerClick(feature.id))
 				markers.set(feature.id, m);
