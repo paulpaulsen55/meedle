@@ -1,6 +1,5 @@
 <script lang="ts">
     import { createSwitch, melt } from '@melt-ui/svelte';
-	import { createEventDispatcher, onMount } from 'svelte';
 
     export let locations: any;
     export let check: boolean = false;
@@ -10,9 +9,7 @@
         states: { checked }
     } = createSwitch();
 
-    onMount(() => {
-        checked.set(check);
-    })
+    checked.set(check);
   </script>
    
 <form class="text-black space-y-2">

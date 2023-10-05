@@ -3,7 +3,7 @@
 	import { getTravelTimes } from './helpers/mapbox';
 	import { locations } from '../store';
 	import Loader from './Loader.svelte';
-	import type { Address, Coordinate, Feature } from '../app';
+	import type { Coordinate, Feature } from '../app';
 	import type { Unsubscriber } from 'svelte/store';
 	import { createPopover, melt } from '@melt-ui/svelte';
 	import { fade } from 'svelte/transition';
@@ -52,7 +52,7 @@
 		<h3 class="text-center text-white text-lg font-semibold flex items-center gap-2">
 			<span>{travelTimes.distance} km zum Zielort</span>
 			<button use:melt={$trigger}>
-				<HelpCircle class="text-magnum-400 h-5"/>
+				<HelpCircle class="text-neutral-500 h-5"/>
 			</button>
 		</h3>
 		<div class="flex text-white gap-2 justify-between items-center">
@@ -81,9 +81,9 @@
 </div>
 
 {#if $open}
-  <div use:melt={$content} transition:fade={{ duration: 100 }} class="z-10 w-60 rounded-[4px] bg-white p-5 shadow-sm relative">
+  <div use:melt={$content} in:fade={{ duration: 100 }} class="z-10 w-60 rounded-[4px] bg-white p-5 shadow-sm relative">
     <div use:melt={$arrow} />
-	<AccordionContentLocationSwitch locations={loc} bind:check/>
+	<AccordionContentLocationSwitch locations={loc} bind:check />
     <button class="absolute top-2 right-2" use:melt={$close}>
       	<X class="square-4 text-black" />
     </button>
