@@ -88,16 +88,15 @@
 	function createCustomMarker(feature: Feature) {
 		let el = document.createElement('div');
 		el.style.background =  'url(/marker.svg) center center no-repeat'; // Replace with the path to your Maki icon
-		el.style.backgroundSize = '25px'
+		el.style.backgroundSize = '25px';
 		el.style.width = '45px';
 		el.style.height = '45px';
 
 		let img = document.createElement('object');
 		img.setAttribute("data", '/icons/' + feature.maki + '.svg');
 		img.setAttribute("type", 'image/svg+xml');
-		img.style.marginLeft = 'auto';
-		img.style.marginRight = 'auto';
-		img.style.marginTop = '8px'
+		img.style.margin = 'auto';
+		img.style.marginTop = '17%'
 		img.style.width = '33%';
 		img.style.height = '33%';
 		
