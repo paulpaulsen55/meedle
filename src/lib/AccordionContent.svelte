@@ -1,19 +1,42 @@
 <script lang="ts">
-	import { ExternalLink, CarFront, Bike, Footprints } from 'lucide-svelte';
+	import { ExternalLink, CarFront, Bike, Footprints, HelpCircle, X } from 'lucide-svelte';
 	import { getTravelTimes } from './helpers/mapbox';
 	import { locations } from '../store';
 	import Loader from './Loader.svelte';
-	import type { Feature } from '../app';
+	import type { Address, Coordinate, Feature } from '../app';
 	import type { Unsubscriber } from 'svelte/store';
+	import { createPopover, melt } from '@melt-ui/svelte';
+	import { fade } from 'svelte/transition';
+	import AccordionContentLocationSwitch from './AccordionContentLocationSwitch.svelte';
 
 	export let tags: string[];
 	export let feature: Feature;
 
+	let check: boolean = false,
+		location: Coordinate = {lat: 0, lng: 0};
+
 	let loc: any;
 	const unsubscribeRad: Unsubscriber = locations.subscribe((value) => (loc = value));
 
+	const {
+		elements: { trigger, content, arrow, close },
+		states: { open },
+	} = createPopover({
+		forceVisible: true,
+	});
+
+
 	if (tags.length > 3) {
 		tags = tags.slice(0, 3);
+	}
+
+	$: {
+		open.set(false);
+		if (check) {
+			location = loc.location2.coordinate;
+		} else {
+			location = loc.location1.coordinate;
+		}
 	}
 </script>
 
@@ -23,11 +46,14 @@
 			<span class="inline-block text-neutral-500 mx-2">#{tag}</span>
 		{/each}
 	</div>
-	{#await getTravelTimes(loc.location1.coordinate, feature.coordinate)}
+	{#await getTravelTimes(location, feature.coordinate)}
 		<Loader />
 	{:then travelTimes}
-		<h3 class="text-center text-white text-lg font-semibold">
-			{travelTimes.distance} km zum Zielort
+		<h3 class="text-center text-white text-lg font-semibold flex items-center gap-2">
+			<span>{travelTimes.distance} km zum Zielort</span>
+			<button use:melt={$trigger}>
+				<HelpCircle class="text-magnum-400 h-5"/>
+			</button>
 		</h3>
 		<div class="flex text-white gap-2 justify-between items-center">
 			<p class="flex">
@@ -53,3 +79,13 @@
 		</a>
 	{/await}
 </div>
+
+{#if $open}
+  <div use:melt={$content} transition:fade={{ duration: 100 }} class="z-10 w-60 rounded-[4px] bg-white p-5 shadow-sm relative">
+    <div use:melt={$arrow} />
+	<AccordionContentLocationSwitch locations={loc} bind:check/>
+    <button class="absolute top-2 right-2" use:melt={$close}>
+      	<X class="square-4 text-black" />
+    </button>
+  </div>
+{/if}
