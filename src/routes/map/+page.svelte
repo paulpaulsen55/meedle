@@ -114,7 +114,7 @@
 		{#if features}
 			<Accordion response={features} bind:hoverdPointId />
 		{/if}
-		<div class="w-96 h-64 dotted-bg -ml-6 -mb-4 p-2" />
+		<div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2" />
 	</aside>
 	<div class="absolute ml-96 z-10 p-1">
 		<TagsSettings on:updateTags={handleTagsSetting} />
