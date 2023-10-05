@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Feature } from '../app';
-	import { createAccordion, createTooltip, melt } from '@melt-ui/svelte';
+	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { fade, slide } from 'svelte/transition';
 	import AccordionContent from './AccordionContent.svelte';
 	import { Star, Triangle } from 'lucide-svelte';
@@ -13,11 +13,6 @@
 		helpers: { isSelected },
 		states: { value }
 	} = createAccordion();
-
-	const toolTip = createTooltip({positioning: {placement: 'top'}});
-	const arrow = toolTip.elements.arrow;
-	const tipContent = toolTip.elements.content;
-	const tipTrigger = toolTip.elements.trigger;
 
 	$: {
 		let tmpItem = response.findLast((i) => i.id == hoverdPointId);
