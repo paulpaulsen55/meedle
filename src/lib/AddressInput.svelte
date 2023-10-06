@@ -59,11 +59,11 @@
 			results = [];
 		}
 		location.title = $inputValue;
-		location.address = results.find((result) => result.title == $inputValue)?.address ?? location.address;
 	}
 </script>
 
 <div class="relative">
+
 	<input
 		use:melt={$input}
 		on:input={() => searchAutofill()}
@@ -72,6 +72,7 @@
 	/>
 </div>
 {#if $open}
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<ul
 		class="z-10 flex max-h-[250px] flex-col overflow-hidden rounded-md"
 		use:melt={$menu}
@@ -81,6 +82,7 @@
 		<div class="flex max-h-full flex-col overflow-y-auto bg-white p-2 text-black" tabindex="0">
 			{#each results as address}
 				<li
+					on:click={() => location.address = address.address}
 					use:melt={$option({ value: address.address, label: address.title })}
 					class="cursor-pointer scroll-my-2 rounded-md py-2 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
 				>

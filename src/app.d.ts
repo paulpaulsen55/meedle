@@ -18,14 +18,22 @@ export type Coordinate = {
 export type Address = {
 	title: string;
 	address: string;
+	coordinate?: Coordinate;
 };
 export type Feature = {
-	categories: string[],
-	name: string,
-	address: string,
-	coordinate: Coordinate
-	id: string,
-	metadata?: any,
-	maki?: string,
-	isMatch: boolean
-}
+	categories: string[];
+	name: string;
+	address: string;
+	coordinate: Coordinate;
+	id: string;
+	metadata?: any;
+	maki?: string;
+	isMatch: boolean;
+};
+
+export type TravelTimes = {
+	driving: number;
+	cycling: number;
+	walking: number;
+	distance: number;
+};

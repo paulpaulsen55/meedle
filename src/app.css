@@ -8,6 +8,8 @@
 	*,
 	html {
 		scroll-behavior: smooth !important;
+		color-scheme: dark;
+		scrollbar-width: thin;
 	}
 }
 
