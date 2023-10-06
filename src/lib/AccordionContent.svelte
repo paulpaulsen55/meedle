@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ExternalLink, CarFront, Bike, Footprints, HelpCircle, X } from 'lucide-svelte';
+	import { ExternalLink, CarFront, Bike, Footprints, ArrowLeftRight, X } from 'lucide-svelte';
 	import { getTravelTimes } from './helpers/mapbox';
 	import { locations } from '../store';
 	import Loader from './Loader.svelte';
@@ -52,7 +52,7 @@
 		<h3 class="text-center text-white text-lg font-semibold flex items-center gap-2">
 			<span>{travelTimes.distance} km zum Zielort</span>
 			<button use:melt={$trigger}>
-				<HelpCircle class="text-neutral-500 h-5 hover:text-neutral-600 transition"/>
+				<ArrowLeftRight class="text-neutral-500 h-5 hover:text-neutral-600 transition"/>
 			</button>
 		</h3>
 		<div class="flex text-white gap-2 justify-between items-center">

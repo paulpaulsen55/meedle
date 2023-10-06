@@ -15,14 +15,14 @@
 <form class="text-black space-y-2">
     <p class="text-center">ausgehend von:</p>
     <div class="grid grid-flow-col gap-2">
-        <span class="truncate">{locations.location1.title}</span>
+        <span class="truncate" title={locations.location1.title} >{locations.location1.title}</span>
         <button
             use:melt={$root}
             class="switch w-11 relative h-6 cursor-default rounded-full bg-magnum-800 transition-colors"
         >
             <span class="thumb block rounded-full bg-white transition" />
         </button>
-        <span class="truncate">{locations.location2.title}</span>
+        <span class="truncate" title={locations.location2.title}>{locations.location2.title}</span>
         <input use:melt={$input} />
     </div>
     <div class="text-center">
