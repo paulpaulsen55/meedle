@@ -46,10 +46,11 @@
 		on:click={() => {
 			box.scrollLeft -= scrollAmount;
 		}}
-		class="absolute top-0 h-full pr-4 bg-gradient-to-r from-neutral-900 via-neutral-900 to-transparent hidden"
+		class="absolute top-0 h-full pr-4 bg-gradient-to-r from-neutral-100 via-neutral-100
+		dark:from-neutral-900 dark:via-neutral-900 to-transparent hidden"
 		style={`left: -${arrowSize * 3}px`}
 	>
-		<ChevronLeft class={`h-${arrowSize} w-${arrowSize} text-white`} />
+		<ChevronLeft class={`h-${arrowSize} w-${arrowSize} text-black dark:text-white`} />
 	</button>
 	<div
 		bind:this={box}
@@ -63,9 +64,10 @@
 		on:click={() => {
 			box.scrollLeft += scrollAmount;
 		}}
-		class="absolute top-0 h-full pl-4 bg-gradient-to-l from-neutral-900 via-neutral-900 to-transparent"
+		class="absolute top-0 h-full pl-4 bg-gradient-to-l from-neutral-100 via-neutral-100
+		dark:from-neutral-900 dark:via-neutral-900 to-transparent"
 		style={`right: -${arrowSize * 3}px`}
 	>
-		<ChevronRight class={`h-${arrowSize} w-${arrowSize} text-white`} />
+		<ChevronRight class={`h-${arrowSize} w-${arrowSize} text-black dark:text-white`} />
 	</button>
 </div>

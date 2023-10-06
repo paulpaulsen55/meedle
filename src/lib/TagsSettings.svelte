@@ -101,7 +101,7 @@
 	{#if $open}
 		<div class="fixed inset-0 z-10 backdrop-blur" />
 		<div class="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[90vw]
-              max-w-[340px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-900
+              max-w-[340px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-100 dark:bg-neutral-900
               p-6 shadow-lg"
 			use:melt={$content}
 		>

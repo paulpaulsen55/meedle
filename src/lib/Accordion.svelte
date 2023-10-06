@@ -64,7 +64,9 @@
 			<h2>
 				<button
 					on:click={() => preUpdateHoverdPoint(id)}
-					class="w-full cursor-pointer flex items-start gap-2 flex-col bg-neutral-100 dark:bg-neutral-800 px-5 py-8 text-base font-medium leading-none transition hover:bg-neutral-700
+					class="w-full cursor-pointer flex items-start gap-2 flex-col bg-neutral-100 dark:bg-neutral-800 
+					px-5 py-8 text-base font-medium leading-none transition hover:bg-neutral-50 dark:hover:bg-neutral-700
+					text-black dark:text-white
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
 					<p class="truncate w-full text-start">{title}</p>
@@ -73,7 +75,7 @@
 			</h2>
 			{#if $isSelected(id)}
 				<div
-					class="content overflow-hidden bg-neutral-50 dark:bg-[rgb(50,50,50)] text-sm text-neutral-400"
+					class="content overflow-hidden bg-white  dark:bg-[rgb(50,50,50)] text-sm text-neutral-400"
 					use:melt={$content(id)}
 					transition:slide
 				>
