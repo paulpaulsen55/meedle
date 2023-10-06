@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="overflow-auto rounded-xl bg-neutral-800 shadow-lg z-10 mt-10">
+<div class="overflow-auto rounded-xl bg-neutral-800 shadow-lg z-10 mt-10 mb-24">
 	{#each response as { id, name, address, categories, isMatch }, i}
 		<div
 			use:melt={$item(id)}
