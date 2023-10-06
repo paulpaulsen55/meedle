@@ -7,6 +7,7 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import type { Address } from '../app';
+	import { Italic } from 'lucide-svelte';
 
 	export let location: Address = { title: '', address: '' };
 	export let sessionToken: string = '';
@@ -17,7 +18,7 @@
 
 	const {
 		elements: { menu, input, option },
-		states: { open, inputValue, selected }
+		states: { open, inputValue, selected, highlighted }
 	} = createCombobox({
 		forceVisible: true
 	});
@@ -57,13 +58,15 @@
 	$ : {
 		if ($inputValue.length <= 2) {
 			results = [];
+		} else if($highlighted){
+			location.title = $inputValue;
+			location.address = results[($highlighted.value as number)].address;
 		}
-		location.title = $inputValue;
-		location.address = results.find((result) => result.title == $inputValue)?.address ?? location.address;
 	}
 </script>
 
 <div class="relative">
+
 	<input
 		use:melt={$input}
 		on:input={() => searchAutofill()}
@@ -79,9 +82,9 @@
 	>
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div class="flex max-h-full flex-col overflow-y-auto bg-white p-2 text-black" tabindex="0">
-			{#each results as address}
+			{#each results as address, i}
 				<li
-					use:melt={$option({ value: address.address, label: address.title })}
+					use:melt={$option({ value: i, label: address.title })}
 					class="cursor-pointer scroll-my-2 rounded-md py-2 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
 				>
 					<div class="pl-4">
