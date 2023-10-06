@@ -415,7 +415,7 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 	left: 0;
 	pointer-events: none;
 	position: absolute;
-	top: 0;
+	top: -20px;
 	will-change: transform;
 }
 .mapboxgl-popup-anchor-top,
