@@ -11,6 +11,7 @@
 	import type { Address } from '../../app';
 	import type { Tag } from '@melt-ui/svelte';
 	import AdressSettings from '$lib/AdressSettings.svelte';
+	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 	import { radius as r } from '../../store';
 	import { poi as p } from '../../store';
 	import TagsSettings from '$lib/TagsSettings.svelte';
@@ -73,7 +74,6 @@
 
 </script>
 
-
 <div class="flex">
 	<aside class="flex flex-col w-96 p-6 h-screen">
 		<a href="/">
@@ -106,10 +106,13 @@
 		{#if features}
 			<Accordion response={features} bind:hoverdPointId={hoverdPointId}/>
 		{/if}
-		<div class="w-96 h-64 dotted-bg -ml-6 -mb-4 p-2" />
+		<div class="w-96 h-64 bg-dotted -ml-6 -mb-4 p-2" />
 	</aside>
 	<div class="absolute ml-96 z-10 p-1">
 		<TagsSettings on:updateTags={handleTagsSetting}/>
 	</div>
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId={hoverdPointId}/>
+</div>
+<div class="absolute top-0 right-0">
+	<ThemeSwitch />
 </div>

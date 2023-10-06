@@ -9,7 +9,6 @@
 	let mapElement: HTMLElement;
 	let map: mapboxgl.Map | null = null;
 	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-	let mapStyle = 'mapbox://styles/mapbox/dark-v9';
 	let viewState = {
 		zoom: 3,
 		pitch: 0,
@@ -18,6 +17,9 @@
 	let locationMarkers: mapboxgl.Marker[] = [];
 
 	let markers = new Map<string, mapboxgl.Marker>();
+	const getStyle = () => {
+		return `mapbox://styles/mapbox/${localStorage.theme === 'dark' ? 'dark' : 'light'}-v9`;
+	};
 
 	$: if (map != null && middle && locations) {
 		map.setCenter(middle);
@@ -75,7 +77,7 @@
 			accessToken: accessToken,
 			container: mapElement,
 			interactive: true,
-			style: mapStyle,
+			style: getStyle(),
 			center: { lng: 10, lat: 51 },
 			zoom: viewState.zoom,
 			pitch: viewState.pitch,
