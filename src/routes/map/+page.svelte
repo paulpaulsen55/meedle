@@ -34,9 +34,6 @@
 		features: Feature[],
 		edit = true;
 
-		console.log(loc);
-		
-
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
 
