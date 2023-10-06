@@ -111,7 +111,6 @@ export async function getTravelTimes(from: Coordinate, to: Coordinate): Promise<
 		}?access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`
 	);
 	const drivingData = await drivingRes.json();
-	console.log(drivingData);
 
 	durations.driving = Math.floor(drivingData.routes[0].duration / 60);
 	durations.distance = Math.floor(drivingData.routes[0].distance / 1000);
@@ -131,8 +130,6 @@ export async function getTravelTimes(from: Coordinate, to: Coordinate): Promise<
 	);
 	const walkingData = await walkingRes.json();
 	durations.walking = Math.floor(walkingData.routes[0].duration / 60);
-
-	console.log('calculated travel times', durations, from, to);
 
 	return durations;
 }
