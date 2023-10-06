@@ -5,7 +5,19 @@
 	import Scroller from '$lib/Scroller.svelte';
 	import { afterUpdate, createEventDispatcher } from 'svelte';
 
-    const dispatch = createEventDispatcher();
+	import { createToaster } from '@melt-ui/svelte';
+  	import { flip } from 'svelte/animate';
+  	import Toast from '$lib/AlertPopUp.svelte';
+	import type { ToastData } from '$lib/AlertPopUp.svelte';
+
+	const dispatch = createEventDispatcher();
+ 
+  	const {
+  	  elements,
+  	  helpers: { addToast },
+  	  states: { toasts },
+  	  actions: { portal },
+  	} = createToaster<ToastData>();
 
 	const {
 		elements: { trigger, title, content, portalled, close },
@@ -33,8 +45,14 @@
 				tags = tempTags;
 				dispatch('updateTags', tags);
 			}
+		} else {
+			addPopUp();
 		}
 	}
+
+	function addPopUp() {
+		addToast({data: {title: 'Info', description: 'Es muss mindestens ein Tag ausgewählt sein!', color: 'bg-green-500'}})
+  	}
 
 	let searchTags = (map: Map<string, string>) => {
 		if (searchTerm.length == 0) return map;
@@ -117,16 +135,27 @@
 					</div>
 				</Scroller>
 			</div>
-			<div class="mt-6 flex justify-end gap-4">
-				<button use:melt={$close} class="inline-flex h-8 items-center justify-center rounded-[4px] bg-zinc-100 px-4 font-medium leading-none text-zinc-600">
-					Cancel
+			<div class="mt-6 grid grid-cols-2 gap-2">
+				<button use:melt={$close} class="h-8 items-center justify-center rounded-[4px] bg-magnum-200 px-4 font-medium text-magnum-900 hover:bg-magnum-300">
+					Abbrechen
 				</button>
 				<button on:click={() => {tags = tempTags; dispatch('updateTags', tags)}} use:melt={$close}
-					class="inline-flex h-8 items-center justify-center rounded-[4px] bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
+					class="h-8 items-center justify-center rounded-[4px] bg-magnum-300 px-4 font-bold text-magnum-900 hover:bg-magnum-400"
 				>
-					Continue
+					Speichern
 				</button>
 			</div>
 		</div>
 	{/if}
+</div>
+
+<div
+  class="fixed right-0 top-0 z-50 m-4 flex flex-col items-end gap-2 md:bottom-0 md:top-auto"
+  use:portal
+>
+  {#each $toasts as toast (toast.id)}
+    <div animate:flip={{ duration: 500 }}>
+      <Toast {elements} {toast} />
+    </div>
+  {/each}
 </div>
