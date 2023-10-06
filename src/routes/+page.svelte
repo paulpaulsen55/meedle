@@ -191,25 +191,21 @@
 	</section>
 	<section class="grid sm:grid-cols-2 sm:grid-rows-2 gap-10 w-3/5 mb-5 place-items-center" id="about">
 		<div>
-			<h2 class="text-2xl font-semibold mb-5">Wer wir sind?</h2>
+			<h2 class="text-2xl font-semibold mb-5">Wer sind wir?</h2>
 			<p>
 				Wir sind eine Gruppe engagierter Studenten, die sich zum Ziel gesetzt haben, die Suche nach Orten für Treffen zu vereinfachen.<br>
 				Nach vielen, scheinbar endlosen Diskussionen über den richtigen Ort für das nächste Treffen haben wir beschlossen, Meedle zu gründen.
 				
 			</p>
 		</div>
-		<img src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4" alt="img" class="h-4/5">
-		<img src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4" alt="img" class="h-4/5">
+		<img src="https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="img" class="h-4/5">
+		<img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="img" class="h-4/5">
 		<div>
-			<h2 class="text-2xl font-semibold mb-5">wer wir sind?</h2>
+			<h2 class="text-2xl font-semibold mb-5">Entwicklung</h2>
 			<p>
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-				invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-				et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-				Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-				diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-				voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-				gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+				Der Entwicklungsprozess drehte sich nach der Konzeption des Produktes darum, ein individuelles Design mit hohem Wiedererkennungswert
+				zu schaffen. Nach der Implementierung aller definierten Funktionen wurde großen Wert darauf gelegt, die Website durch eine
+				vielfältige Gruppe testen zu lassen.<br>Wir finden: Das Endprodukt spricht für sich!
 			</p>
 		</div>
 	</section>
