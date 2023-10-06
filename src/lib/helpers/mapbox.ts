@@ -62,12 +62,20 @@ function filterFeatures(reponses: any, categories: string[]) {
 }
 
 export async function pointToCoordinates(location: Address): Promise<Coordinate> {
+	console.log(location);
+	
 	const response = await fetch(
 		`https://api.mapbox.com/geocoding/v5/mapbox.places/${location.address}.json?access_token=${
 			import.meta.env.VITE_MAPBOX_TOKEN
 		}`
 	);
 	const data = await response.json();
+
+	console.log(data);
+	
+
+	console.log(data.features[0].center[0], data.features[0].center[1]);
+	
 
 	return { lng: data.features[0].center[0], lat: data.features[0].center[1] };
 }
