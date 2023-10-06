@@ -1,32 +1,31 @@
 <script lang="ts">
     import { createSwitch, melt } from '@melt-ui/svelte';
+    import { travelFrom } from '../store';
 
     export let locations: any;
-    export let check: boolean = false;
 
     const {
         elements: { root, input },
         states: { checked }
     } = createSwitch();
 
-    checked.set(check);
-  </script>
+    $ : {
+        travelFrom.set($checked ? locations.location2.coordinate : locations.location1.coordinate);
+    } 
+</script>
    
-<form class="text-black space-y-2">
-    <p class="text-center">ausgehend von:</p>
-    <div class="grid grid-flow-col gap-2">
-        <span class="truncate" title={locations.location1.title} >{locations.location1.title}</span>
+<form class="space-y-2">
+    <p class="">Navigation von:</p>
+    <div class="flex gap-2">
+        <span class="truncate" title={locations.location1.address} >{locations.location1.title}</span>
         <button
             use:melt={$root}
-            class="switch w-11 relative h-6 cursor-default rounded-full bg-magnum-800 transition-colors"
+            class="switch w-11 relative h-6 cursor-default rounded-full bg-neutral-500 transition-colors"
         >
             <span class="thumb block rounded-full bg-white transition" />
         </button>
-        <span class="truncate" title={locations.location2.title}>{locations.location2.title}</span>
+        <span class="truncate" title={locations.location2.address}>{locations.location2.title}</span>
         <input use:melt={$input} />
-    </div>
-    <div class="text-center">
-        <button class="button-magnum text-center" on:click={() => check = $checked}>anwenden</button>
     </div>
 </form>
   

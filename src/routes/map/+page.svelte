@@ -11,6 +11,7 @@
 	import type { Unsubscriber } from 'svelte/store';
 	import type { Tag } from '@melt-ui/svelte';
 	import type { Coordinate, Feature, Address } from '../../app';
+	import LocationSwitch from '$lib/LocationSwitch.svelte';
 
 	export let data;
 	let hoverdPointId: string | null;
@@ -98,13 +99,8 @@
 				</div>
 			</div>
 		{:else}
-			<div class="flex justify-between items-end w-full gap-2">
-				<div class="w-[85%]">
-					<p class="w-fit">Zwischen</p>
-					<p class="truncate">{location1.address}</p>
-					<p class="w-fit">und</p>
-					<p class="truncate">{location2.address}</p>
-				</div>
+			<div class="flex gap-5 mt-5 items-end justify-between">
+				<LocationSwitch locations={loc} />
 				<button type="button" on:click={() => (edit = true)} class="">
 					<FileEdit />
 				</button>
