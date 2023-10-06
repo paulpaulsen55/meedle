@@ -15,9 +15,9 @@
 
 <div class="p-4 grid gap-4 place-items-center">
 	<div class="flex">
-		<span class="inline-block text-neutral-500 mx-2">#{tags[0]}</span>
-		<span class="inline-block text-neutral-500 mx-2">#{tags[1]}</span>
-		<span class="inline-block text-neutral-500 mx-2">#{tags[2]}</span>
+		{#each tags.length < 3 ? Array(tags.length) : Array(3) as _, i}
+			<span class="inline-block truncate text-neutral-500 mx-2">#{tags[i]}</span>
+		{/each}
 	</div>
 	{#await getTravelTimes(from, feature.coordinate)}
 		<Loader />
