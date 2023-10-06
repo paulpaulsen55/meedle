@@ -92,9 +92,8 @@
 		el.style.width = '45px';
 		el.style.height = '45px';
 
-		let img = document.createElement('object');
-		img.setAttribute("data", '/icons/' + feature.maki + '.svg');
-		img.setAttribute("type", 'image/svg+xml');
+		let img = document.createElement('img');
+		img.setAttribute("src", '/icons/' + feature.maki + '.svg');
 		img.style.margin = 'auto';
 		img.style.marginTop = '17%'
 		img.style.width = '33%';
