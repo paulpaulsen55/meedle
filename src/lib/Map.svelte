@@ -40,7 +40,9 @@
 			markers.forEach((marker) => marker.remove());
 			markers.clear();
 			response.forEach((feature: Feature) => {
-				let m = new mapboxgl.Marker({ color: '#F38D1C' }).setLngLat(feature.coordinate);
+				let el = createCustomMarker(feature)
+
+				let m = new mapboxgl.Marker(el).setLngLat(feature.coordinate);
 				m.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
 				m.getElement().addEventListener('click',()=>onMarkerClick(feature.id))
 				markers.set(feature.id, m);
@@ -81,6 +83,25 @@
 		});
 		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
 		map.setCenter(middle);
+	}
+
+	function createCustomMarker(feature: Feature) {
+		let el = document.createElement('div');
+		el.style.background =  'url(/marker.svg) center center no-repeat'; // Replace with the path to your Maki icon
+		el.style.backgroundSize = '25px';
+		el.style.width = '45px';
+		el.style.height = '45px';
+
+		let img = document.createElement('img');
+		img.setAttribute("src", '/icons/' + feature.maki + '.svg');
+		img.style.margin = 'auto';
+		img.style.marginTop = '17%'
+		img.style.width = '33%';
+		img.style.height = '33%';
+		
+		el.appendChild(img)
+
+		return el	
 	}
 </script>
 
