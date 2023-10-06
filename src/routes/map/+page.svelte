@@ -102,7 +102,7 @@
 			<div class="flex gap-5 mt-5 items-end justify-between">
 				<LocationSwitch locations={loc} />
 				<button type="button" on:click={() => (edit = true)} class="">
-					<FileEdit />
+					<FileEdit class="h-6 mb-1"/>
 				</button>
 			</div>
 		{/if}

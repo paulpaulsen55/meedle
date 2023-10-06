@@ -14,7 +14,7 @@
     } 
 </script>
    
-<form class="space-y-2 w-5/6">
+<form class="space-y-4 w-5/6 text-lg">
     <p class="">Navigation von:</p>
     <div class="flex gap-2">
         <span class="truncate" title={locations.location1.address} >{locations.location1.title}</span>
