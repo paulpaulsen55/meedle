@@ -194,8 +194,8 @@
 			<h2 class="text-2xl font-semibold mb-5">Wer sind wir?</h2>
 			<p>
 				Wir sind eine Gruppe engagierter Studenten, die sich zum Ziel gesetzt haben, die Suche nach Orten für Treffen zu vereinfachen.<br>
-				Nach vielen, scheinbar endlosen Diskussionen über den richtigen Ort für das nächste Treffen haben wir beschlossen, Meedle zu gründen.
-				
+				Nach vielen, scheinbar endlosen Diskussionen über den richtigen Ort für das nächste Treffen haben wir beschlossen, eine Innovation in diesem Bereich loszutreten.
+				Aus diesem Grund war es die einzig richtige Schlussfolgerung, Meedle zu gründen: Die perfekte Plattform, um deeinen nächsten Treffpunkt zu ermitteln.
 			</p>
 		</div>
 		<img src="https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="img" class="h-4/5">
