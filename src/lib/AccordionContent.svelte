@@ -11,17 +11,13 @@
 
 	let  from: Coordinate;
 	const unsubscribeFrom: Unsubscriber = travelFrom.subscribe((value) => (from = value));
-
-	if (tags.length > 3) {
-		tags = tags.slice(0, 3);
-	}
 </script>
 
 <div class="p-4 grid gap-4 place-items-center">
 	<div class="flex">
-		{#each tags as tag}
-			<span class="inline-block text-neutral-500 mx-2">#{tag}</span>
-		{/each}
+		<span class="inline-block text-neutral-500 mx-2">#{tags[0]}</span>
+		<span class="inline-block text-neutral-500 mx-2">#{tags[1]}</span>
+		<span class="inline-block text-neutral-500 mx-2">#{tags[2]}</span>
 	</div>
 	{#await getTravelTimes(from, feature.coordinate)}
 		<Loader />
