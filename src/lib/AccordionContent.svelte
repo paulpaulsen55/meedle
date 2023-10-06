@@ -14,10 +14,10 @@
 </script>
 
 <div class="p-4 grid gap-4 place-items-center">
-	<div class="flex">
-		<span class="inline-block text-neutral-500 mx-2">#{tags[0]}</span>
-		<span class="inline-block text-neutral-500 mx-2">#{tags[1]}</span>
-		<span class="inline-block text-neutral-500 mx-2">#{tags[2]}</span>
+	<div class="flex gap-2 justify-center w-64">
+		{#each tags.length < 3 ? Array(tags.length) : Array(3) as _, i}
+			<p class="truncate text-neutral-500" title={tags[i]}>#{tags[i]}</p>
+		{/each}
 	</div>
 	{#await getTravelTimes(from, feature.coordinate)}
 		<Loader />
@@ -42,7 +42,7 @@
 		<a
 			href="https://www.google.de/maps/search/?api=1&query={feature.name}, {feature.address}"
 			target="_blank"
-			class="w-full bg-neutral-500 text-white relative text-base py-2 rounded-md text-center hover:bg-neutral-600 transition"
+			class="w-64 bg-neutral-500 text-white relative text-base py-2 rounded-md text-center hover:bg-neutral-600 transition"
 		>
 			<ExternalLink class="absolute top-0 left-5 h-full w-6 text-white" />
 			<span>Google Maps</span>

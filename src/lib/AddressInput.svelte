@@ -7,6 +7,7 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import type { Address } from '../app';
+	import { Italic } from 'lucide-svelte';
 
 	export let location: Address = { title: '', address: '' };
 	export let sessionToken: string = '';
@@ -17,7 +18,7 @@
 
 	const {
 		elements: { menu, input, option },
-		states: { open, inputValue, selected }
+		states: { open, inputValue, selected, highlighted }
 	} = createCombobox({
 		forceVisible: true
 	});
@@ -57,8 +58,10 @@
 	$ : {
 		if ($inputValue.length <= 2) {
 			results = [];
+		} else if($highlighted){
+			location.title = $inputValue;
+			location.address = results[($highlighted.value as number)].address;
 		}
-		location.title = $inputValue;
 	}
 </script>
 
@@ -72,7 +75,6 @@
 	/>
 </div>
 {#if $open}
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<ul
 		class="z-10 flex max-h-[250px] flex-col overflow-hidden rounded-md"
 		use:melt={$menu}
@@ -80,10 +82,9 @@
 	>
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div class="flex max-h-full flex-col overflow-y-auto bg-white p-2 text-black" tabindex="0">
-			{#each results as address}
+			{#each results as address, i}
 				<li
-					on:click={() => location.address = address.address}
-					use:melt={$option({ value: address.address, label: address.title })}
+					use:melt={$option({ value: i, label: address.title })}
 					class="cursor-pointer scroll-my-2 rounded-md py-2 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
 				>
 					<div class="pl-4">
