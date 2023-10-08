@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="overflow-auto rounded-xl bg-neutral-800 shadow-lg z-10 mt-10 mb-24">
+<div class="overflow-auto rounded-xl bg-slate-50 dark:bg-neutral-800 shadow-lg z-10 mt-10 mb-24">
 	{#each response as { id, name, address, categories, isMatch }, i}
 		<div
 			use:melt={$item(id)}
@@ -41,7 +41,7 @@
 			<h2>
 				<button
 					on:click={() => preUpdateHoverdPoint(id)}
-					class="w-full cursor-pointer bg-neutral-800 px-5 py-7 text-base font-medium transition hover:bg-neutral-700 text-start
+					class="w-full cursor-pointer bg-slate-50 dark:bg-neutral-800 px-5 py-7 text-base font-medium transition hover:bg-white dark:hover:bg-neutral-700 text-start
                     {i == 0 ? '' : 'border-t border-t-neutral-600'}"
 				>
 					{#if isMatch}
@@ -50,7 +50,7 @@
 							<Star class="text-magnum-300 h-5 my-0.5" />
 						</button>
 					{/if}
-					<p class="truncate inline-block w-5/6">{name}</p>
+					<p class="text-black dark:text-white truncate inline-block w-5/6">{name}</p>
 					<br>
 					<span class="text-neutral-600 text-sm truncate w-full"
 						>{address.slice(0, address.lastIndexOf(','))}</span
@@ -59,7 +59,7 @@
 			</h2>
 			{#if $isSelected(id)}
 				<div
-					class="content overflow-hidden bg-[rgb(50,50,50)] text-sm text-neutral-400"
+					class="content overflow-hidden bg-white dark:bg-[rgb(50,50,50)] text-sm text-neutral-400"
 					use:melt={$content(id)}
 					transition:slide
 				>

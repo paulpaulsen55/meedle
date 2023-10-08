@@ -101,13 +101,13 @@
 	{#if $open}
 		<div class="fixed inset-0 z-10 backdrop-blur" />
 		<div class="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[90vw]
-              max-w-[340px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-900
+              max-w-[340px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-slate-100 dark:bg-neutral-900
               p-6 shadow-lg"
 			use:melt={$content}
 		>
-			<input type="text" placeholder="Enter Tag" class="input w-3/4" bind:value={searchTerm}/>
+			<input type="text" placeholder="Enter Tag" class="input w-3/4 bg-white dark:bg-neutral-700" bind:value={searchTerm}/>
 			{#each Object.entries(tagsList) as filter, i}
-				<h2 use:melt={$title} class="m-1 text-lg font-medium text-white">{filter[0]}</h2>
+				<h2 use:melt={$title} class="m-1 text-lg font-medium text-black dark:text-white">{filter[0]}</h2>
 				<Scroller style="height: 4.5rem">
 					{#each results[i].entries() as [k, v], j}
 						<button id={k} on:click={() => addTag(k, v)}

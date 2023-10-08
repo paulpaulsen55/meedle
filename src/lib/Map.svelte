@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 	import mapboxgl from 'mapbox-gl';
 	import type { Coordinate, Feature } from '../app';
+	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 
 	export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
 	export let hoverdPointId:string|null;
@@ -9,7 +10,6 @@
 	let mapElement: HTMLElement;
 	let map: mapboxgl.Map | null = null;
 	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-	let mapStyle = 'mapbox://styles/mapbox/dark-v9';
 	let viewState = {
 		zoom: 3,
 		pitch: 0,
@@ -75,7 +75,7 @@
 			accessToken: accessToken,
 			container: mapElement,
 			interactive: true,
-			style: mapStyle,
+			style: getStyle(),
 			center: { lng: 10, lat: 51 },
 			zoom: viewState.zoom,
 			pitch: viewState.pitch,
@@ -84,6 +84,14 @@
 		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
 		map.setCenter(middle);
 	}
+	
+	function changeStyle() {
+		if(map != null) map.setStyle(getStyle());
+  	};
+	
+	const getStyle = () => {
+		return `mapbox://styles/mapbox/${localStorage.theme === 'dark' ? 'dark' : 'light'}-v9`;
+	};
 
 	function createCustomMarker(feature: Feature) {
 		let el = document.createElement('div');
@@ -106,6 +114,9 @@
 </script>
 
 <div id="map" bind:this={mapElement} />
+<button on:click={() => changeStyle()} class="absolute top-1-5 right-0">
+	<ThemeSwitch />
+</button>
 
 <style>
 	#map {

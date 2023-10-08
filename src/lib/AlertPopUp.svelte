@@ -44,11 +44,11 @@
     use:melt={$content(id)}
     in:fly={{ duration: 150, x: '100%' }}
     out:fly={{ duration: 150, x: '100%' }}
-    class="relative rounded-lg bg-neutral-900 text-white shadow-md"
+    class="relative rounded-lg bg-slate-100 dark:bg-neutral-900 text-black dark:text-white shadow-md"
   >
     <div
       use:melt={$progress}
-      class="absolute left-5 top-2 h-1 w-[10%] overflow-hidden rounded-full bg-black/40"
+      class="absolute left-5 top-2 h-1 w-[10%] overflow-hidden rounded-full bg-white/40 dark:bg-black/40"
     >
       <div
         class="h-full w-full bg-magnum-400"
