@@ -12,6 +12,7 @@
 	import type { Tag } from '@melt-ui/svelte';
 	import type { Coordinate, Feature, Address } from '../../app';
 	import LocationSwitch from '$lib/LocationSwitch.svelte';
+	import AsideWrapper from '$lib/AsideWrapper.svelte';
 
 	export let data;
 	let hoverdPointId: string | null;
@@ -78,10 +79,7 @@
 </script>
 
 <div class="flex">
-	<aside class="flex flex-col w-96 p-6 h-screen">
-		<a href="/">
-			<ArrowLeftIcon class="w-12 h-12" />
-		</a>
+	<AsideWrapper>
 		{#if edit}
 			<div class="mt-10">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
@@ -111,7 +109,7 @@
 			<Accordion response={features} bind:hoverdPointId />
 		{/if}
 		<div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
-	</aside>
+	</AsideWrapper>
 	<div class="absolute ml-96 z-10 p-1">
 		<TagsSettings on:updateTags={handleTagsSetting} />
 	</div>
