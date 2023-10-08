@@ -11,7 +11,7 @@
 		>
 		<div class="flex items-center justify-center">
 			<div class="space-x-2 sm:space-x-5">
-				<a href="#top">Home</a>
+				<a class="hidden sm:inline-flex" href="#top">Home</a>
 				<a href="#functions">Funktionen</a>
 				<a href="#about">Über</a>
 			</div>
