@@ -65,7 +65,7 @@
         <a href="/" class="hidden md:inline-flex">
             <ArrowLeftIcon class="w-12 h-12" />
         </a>
-        <hr class="inline-flex md:hidden">
+        <div class="inline-flex md:hidden w-1/2 self-center h-1 bg-neutral-500 rounded-md" />
         <slot />
     </div>
 </aside>
