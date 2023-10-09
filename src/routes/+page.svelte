@@ -79,7 +79,7 @@
 			<ChevronDown class="animate-bounce mb-5 cursor-pointer" />
 		</a>
 	</section>
-	<section class="h-screen grid place-items-center mt-32 sm:mt-0" id="functions">
+	<section class="sm:h-screen grid place-items-center" id="functions">
 		<div class="grid self-start place-items-center overflow-hidden h-32">
 			<svg xmlns="http://www.w3.org/2000/svg" width="1438" height="68" fill="none"
 				><path
