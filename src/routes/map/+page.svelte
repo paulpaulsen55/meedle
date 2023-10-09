@@ -110,7 +110,7 @@
 		{/if}
 		<div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
 	</AsideWrapper>
-	<div class="absolute ml-96 z-10 p-1">
+	<div class="absolute md:ml-96 z-10 p-1">
 		<TagsSettings on:updateTags={handleTagsSetting} />
 	</div>
 

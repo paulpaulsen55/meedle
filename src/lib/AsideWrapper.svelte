@@ -56,11 +56,11 @@
 <aside 
     on:mousedown={() => onDown()}
     on:touchstart={() => onDown()}
-    class={isMobile ? 'absolute z-10 flex justify-center w-full ' : ''}
+    class={isMobile ? 'absolute z-10 flex justify-center w-full backdrop-blur' : ''}
     style="top: {$y}px;"
 >
     <div 
-    class="flex flex-col p-6 h-screen w-96 bg-neutral-900"
+    class="flex flex-col p-6 h-screen w-96 bg-neutral-900 rounded-md"
     >
         <a href="/" class="hidden md:inline-flex">
             <ArrowLeftIcon class="w-12 h-12" />
