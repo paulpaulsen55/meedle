@@ -17,7 +17,6 @@
         positions.push(height - 100)
     })
     
-    // TODO: replace with tailwind breakpoints css
     $ : if (width <= 768) { // tailwind breakpoint md
             isMobile = true;
         } else {
@@ -25,10 +24,12 @@
         }
 
     function onDown() {
+        if (!isMobile) return; 
         moving = true;
     }
 
     function onMove(e: MouseEvent | TouchEvent) {
+        if (!isMobile) return; 
         if(e instanceof MouseEvent) {
             if (moving && $y + e.movementY >= 50 && $y + e.movementY <= height - 100) {
                 y.set($y + e.movementY, { duration: 0 , easing: linear})
@@ -43,6 +44,7 @@
 	}
 	
 	function onUp() {
+        if (!isMobile) return; 
         moving = false;
         y.set(positions.reduce((prev, curr) => {
             return (Math.abs(curr - $y) < Math.abs(prev - $y) ? curr : prev);
