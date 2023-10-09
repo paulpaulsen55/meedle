@@ -1,18 +1,18 @@
 <script lang="ts">
-	import Map from '$lib/Map.svelte';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import Accordion from '$lib/Accordion.svelte';
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
-	import { ArrowLeftIcon, FileEdit } from 'lucide-svelte';
-	import AdressSettings from '$lib/AdressSettings.svelte';
+	import { FileEdit } from 'lucide-svelte';
 	import { locations as lol, poi as p, radius as r } from '../../store';
+	import Map from '$lib/Map.svelte';
+	import AdressSettings from '$lib/AdressSettings.svelte';
 	import TagsSettings from '$lib/TagsSettings.svelte';
-	import type { Unsubscriber } from 'svelte/store';
-	import type { Tag } from '@melt-ui/svelte';
-	import type { Coordinate, Feature, Address } from '../../app';
 	import LocationSwitch from '$lib/LocationSwitch.svelte';
 	import AsideWrapper from '$lib/AsideWrapper.svelte';
+	import type { Tag } from '@melt-ui/svelte';
+	import type { Coordinate, Feature, Address } from '../../app';
+	import type { Unsubscriber } from 'svelte/store';
 
 	export let data;
 	let hoverdPointId: string | null;
@@ -78,7 +78,7 @@
 	});
 </script>
 
-<div class="flex">
+<div class="flex relative overflow-hidden touch-none">
 	<AsideWrapper>
 		{#if edit}
 			<div class="mt-10">
@@ -113,5 +113,6 @@
 	<div class="absolute ml-96 z-10 p-1">
 		<TagsSettings on:updateTags={handleTagsSetting} />
 	</div>
+
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
 </div>

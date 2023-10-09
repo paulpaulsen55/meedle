@@ -105,11 +105,4 @@
 	}
 </script>
 
-<div id="map" bind:this={mapElement} />
-
-<style>
-	#map {
-		height: 100vh;
-		width: calc(100vw - 24rem);
-	}
-</style>
+<div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement} />
