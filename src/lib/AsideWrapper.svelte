@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { ArrowLeftIcon, Mouse } from "lucide-svelte";
+	import { ArrowLeftIcon } from "lucide-svelte";
 	import { onMount } from "svelte";
 	import { circInOut, linear } from "svelte/easing";
 	import { tweened } from "svelte/motion";
 
-    const styles = ['', '']
     let isMobile = false;
     let width = 0, height = 0;
     let prevTouchY = 0;
@@ -14,7 +13,9 @@
 
     onMount(()  => {
         // add the height of the aside to the positions array | onMount, because the height of the aside is not known before
-        positions.push(height - 100)
+        const min = height - 100;
+        positions.push(min);
+        y.set(min);
     })
     
     $ : if (width <= 768) { // tailwind breakpoint md
@@ -32,12 +33,12 @@
         if (!isMobile) return; 
         if(e instanceof MouseEvent) {
             if (moving && $y + e.movementY >= 50 && $y + e.movementY <= height - 100) {
-                y.set($y + e.movementY, { duration: 0 , easing: linear})
+                y.set($y + e.movementY, { duration: 0 , easing: linear});
             }
         } else if (e instanceof TouchEvent){
             const t = e.touches[0].pageY - prevTouchY;
             if (moving && $y + t >= 50 && $y + t <= height - 100) {
-                y.set($y + t, { duration: 0 , easing: linear})
+                y.set($y + t, { duration: 0 , easing: linear});
             }
             prevTouchY = e.touches[0].pageY;
         }
