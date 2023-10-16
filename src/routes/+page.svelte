@@ -208,8 +208,8 @@
 				Aus diesem Grund war es die einzig richtige Schlussfolgerung, Meedle zu gründen: Die perfekte Plattform, um deeinen nächsten Treffpunkt zu ermitteln.
 			</p>
 		</div>
-		<img src="https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="img" class="h-4/5">
-		<img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="img" class="h-4/5">
+		<img src="/team.jpeg" alt="team" class="h-[auto] max-w-[450px]">
+		<img src="/software.jpeg" alt="entwicklung" class="h-[auto] max-w-[450px]">
 		<div>
 			<h2 class="text-2xl font-semibold mb-5">Entwicklung</h2>
 			<p>
