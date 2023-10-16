@@ -33,7 +33,8 @@
 		points: Coordinate[] = [],
 		category = ['food_and_drink'],
 		features: Feature[],
-		edit = true;
+		edit = true,
+		asideWrapper: AsideWrapper;
 
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
@@ -76,10 +77,14 @@
 			edit = true;
 		}
 	});
+
+	$ : if (hoverdPointId != null) {
+			asideWrapper.setOpen(true);
+		}
 </script>
 
 <div class="flex relative overflow-hidden touch-none">
-	<AsideWrapper>
+	<AsideWrapper bind:this={asideWrapper}>
 		{#if edit}
 			<div class="mt-10">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />

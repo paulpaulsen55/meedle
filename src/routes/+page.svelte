@@ -64,7 +64,7 @@
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 			</div>
-			<div class="z-10 flex w-full px-2 w-full sm:px-0 sm:w-96 mt-5 gap-2">
+			<div class="z-10 flex px-2 w-full sm:px-0 sm:w-96 mt-5 gap-2">
 				<AdressSettings bind:radius bind:poi />
 				<button
 					on:click={() => startClick()}

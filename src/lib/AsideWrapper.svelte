@@ -11,6 +11,13 @@
     let y = tweened(50, { duration: 150, easing: circInOut });
     let positions = [50]
 
+    export function setOpen(open: boolean) {
+        if (!isMobile) return;
+        
+        if (open) y.set(50);
+        else y.set(height - 100);
+    }
+
     onMount(()  => {
         // add the height of the aside to the positions array | onMount, because the height of the aside is not known before
         const min = height - 100;
@@ -56,7 +63,7 @@
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} on:mouseup={onUp} on:mousemove={onMove} on:touchmove={onMove} on:touchend={onUp} />
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<aside 
+<aside
     on:mousedown={() => onDown()}
     on:touchstart={() => onDown()}
     class={isMobile ? 'absolute z-10 flex justify-center w-full backdrop-blur' : ''}
