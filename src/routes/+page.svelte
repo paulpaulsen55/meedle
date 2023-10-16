@@ -52,7 +52,7 @@
 	<section class="h-screen flex flex-col relative">
 		<div class="grid place-items-center mt-10">
 			<img src="/logo.svg" alt="logo" class="w-[60%] spx-2 sm:px-0" />
-			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed">
+			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed px-2">
 				Meedle ist die App, die dir hilft, den perfekten Ort für ein Treffen zu finden. Gib einfach
 				zwei Orte ein und lass Meedle den Rest erledigen. Probiere es direkt aus:
 			</p>
@@ -60,11 +60,11 @@
 		<div
 			class="flex flex-col items-center relative bg-dotted radial bg-animate-pulse p-1 md:px-40 lg:px-64 py-20"
 		>
-			<div class="space-y-3 flex flex-col w-full sm:w-96">
+			<div class="space-y-3 flex flex-col px-2 w-full sm:px-0 sm:w-96">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 			</div>
-			<div class="z-10 flex w-full sm:w-96 mt-5 gap-2">
+			<div class="z-10 flex w-full px-2 w-full sm:px-0 sm:w-96 mt-5 gap-2">
 				<AdressSettings bind:radius bind:poi />
 				<button
 					on:click={() => startClick()}
