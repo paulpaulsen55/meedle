@@ -101,13 +101,13 @@
 	{#if $open}
 		<div class="fixed inset-0 z-10 backdrop-blur" />
 		<div class="fixed left-1/2 top-1/2 z-50 max-h-[85vh] w-[90vw]
-              max-w-[340px] translate-x-[-50%] translate-y-[-50%] rounded-md bg-neutral-900
+              max-w-[340px] translate-x-[-50%] translate-y-[-50%] rounded-md dark:bg-slate-50 bg-neutral-900
               p-6 shadow-lg"
 			use:melt={$content}
 		>
-			<input type="text" placeholder="Enter Tag" class="input w-3/4" bind:value={searchTerm}/>
+			<input type="text" placeholder="Enter Tag" class="input w-3/4 dark:bg-white bg-neutral-700" bind:value={searchTerm}/>
 			{#each Object.entries(tagsList) as filter, i}
-				<h2 use:melt={$title} class="m-1 text-lg font-medium text-white">{filter[0]}</h2>
+				<h2 use:melt={$title} class="m-1 text-lg font-medium dark:text-black text-white">{filter[0]}</h2>
 				<Scroller style="height: 4.5rem">
 					{#each results[i].entries() as [k, v], j}
 						<button id={k} on:click={() => addTag(k, v)}
@@ -136,7 +136,7 @@
 				</Scroller>
 			</div>
 			<div class="mt-6 grid grid-cols-2 gap-2">
-				<button use:melt={$close} class="h-8 items-center justify-center rounded-[4px] bg-magnum-200 px-4 font-medium text-magnum-900 hover:bg-magnum-300">
+				<button use:melt={$close} class="h-8 items-center justify-center rounded-[4px] dark:bg-slate-200 bg-neutral-100 px-4 font-medium text-neutral-700 dark:hover:bg-slate-300 hover:bg-neutral-200">
 					Abbrechen
 				</button>
 				<button on:click={() => {tags = tempTags; dispatch('updateTags', tags)}} use:melt={$close}

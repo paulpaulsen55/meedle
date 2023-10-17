@@ -38,7 +38,7 @@
 	}
 
 	.bg-dotted {
-		background-image: radial-gradient(circle, #fce0ac40 1px, #00000000 1px);
+		background-image: radial-gradient(circle, #7c643840 1px, #00000000 1px);
 		background-size: 1.5rem 1.5rem;
 		background-repeat: repeat;
 	}
@@ -50,11 +50,32 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
+		background: linear-gradient(180deg, #f1f5f9 0%, transparent 50%, #f1f5f9 100%),
+			linear-gradient(90deg, #f1f5f9 0%, transparent 50%, #f1f5f9 100%);
+	}
+
+	.bg-dotted.linear::after {
+		position: absolute;
+		content: '';
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: linear-gradient(to bottom, #f1f5f9 0%, transparent 80%);
+	}
+
+	.bg-dotted-dark.radial::before {
+		position: absolute;
+		content: '';
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
 		background: linear-gradient(180deg, #171717 0%, transparent 50%, #171717 100%),
 			linear-gradient(90deg, #171717 0%, transparent 50%, #171717 100%);
 	}
 
-	.bg-dotted.linear::after {
+	.bg-dotted-dark.linear::after {
 		position: absolute;
 		content: '';
 		top: 0;
