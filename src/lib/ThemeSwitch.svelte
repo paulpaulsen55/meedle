@@ -1,15 +1,22 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 
-    let darkMode = true;
+    let darkMode = false;
 
     function handleSwitchDarkMode() {
         darkMode = !darkMode;
         localStorage.setItem('theme', darkMode ? 'dark' : 'light');
         darkMode
-            ? document.documentElement.classList.remove('dark')
-            : document.documentElement.classList.add('dark');
+            ? document.documentElement.classList.add('dark')
+            : document.documentElement.classList.remove('dark');
     }
+    onMount(()=> {
+        darkMode = localStorage.theme == 'dark' ? true : false;
+        localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+        darkMode
+            ? document.documentElement.classList.add('dark')
+            : document.documentElement.classList.remove('dark');
+    })
 </script>
 
 <div>
@@ -26,11 +33,11 @@
         @apply inline-block cursor-pointer h-12 w-12 absolute top-6 right-24 rounded-full duration-300 content-[''];
     }
 
-    #theme-toggle:not(:checked) + label {
+    #theme-toggle:checked + label {
         @apply bg-yellow-300;
     }
 
-    #theme-toggle:checked + label {
+    #theme-toggle:not(:checked) + label {
         @apply bg-transparent;
         box-shadow: inset -18px -16px 1px 1px #ddd;
     }

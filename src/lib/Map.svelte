@@ -90,7 +90,7 @@
   	};
 	
 	const getStyle = () => {
-		return `mapbox://styles/mapbox/${localStorage.theme === 'dark' ? 'dark' : 'light'}-v9`;
+		return `mapbox://styles/mapbox/${localStorage.theme === 'dark' ? 'light' : 'dark'}-v9`;
 	};
 
 	function createCustomMarker(feature: Feature) {
