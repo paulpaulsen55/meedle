@@ -1,27 +1,14 @@
 <script lang="ts">
-    import { browser } from '$app/environment';
+	import { onMount } from "svelte";
 
-    let darkMode = false;
+    let darkMode = true;
 
     function handleSwitchDarkMode() {
         darkMode = !darkMode;
         localStorage.setItem('theme', darkMode ? 'dark' : 'light');
         darkMode
-            ? document.documentElement.classList.add('dark')
-            : document.documentElement.classList.remove('dark');
-    }
-
-    if (browser) {
-        if (
-            localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-            document.documentElement.classList.add('dark');
-            darkMode = true;
-        } else {
-            document.documentElement.classList.remove('dark');
-            darkMode = false;
-        }
+            ? document.documentElement.classList.remove('dark')
+            : document.documentElement.classList.add('dark');
     }
 </script>
 

@@ -14,13 +14,13 @@
     } 
 </script>
    
-<form class="space-y-4 w-5/6 text-lg text-black dark:text-white">
+<form class="space-y-4 w-5/6 text-lg dark:text-black text-white">
     <p class="">Navigation von:</p>
     <div class="flex gap-2">
         <span class="truncate" title={locations.location1.address} >{locations.location1.title}</span>
         <button
             use:melt={$root}
-            class="switch w-11 relative h-6 cursor-default rounded-full bg-slate-400 dark:bg-neutral-500 transition-colors"
+            class="switch w-11 relative h-6 cursor-default rounded-full dark:bg-slate-400 bg-neutral-500 transition-colors"
         >
             <span class="thumb block rounded-full bg-white transition" />
         </button>

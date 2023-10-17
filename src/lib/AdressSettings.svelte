@@ -21,7 +21,7 @@
 
 <button
     type="button"
-    class={"p-2 rounded transition text-black dark:text-white bg-slate-200 hover:bg-[rgb(235,238,246)] dark:bg-neutral-800 dark:hover:bg-neutral-700" + $$props.class}
+    class={"p-2 rounded transition dark:text-black text-white dark:bg-slate-200 dark:hover:bg-[rgb(235,238,246)] bg-neutral-800 hover:bg-neutral-700" + $$props.class}
     use:melt={$trigger}
 >
     <SlidersHorizontal />
