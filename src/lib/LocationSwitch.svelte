@@ -20,7 +20,7 @@
         <span class="truncate" title={locations.location1.address} >{locations.location1.title}</span>
         <button
             use:melt={$root}
-            class="switch w-11 relative h-6 cursor-default rounded-full dark:bg-slate-400 bg-neutral-500 transition-colors"
+            class="w-[44px] relative h-6 cursor-default rounded-full dark:bg-slate-400 bg-neutral-500 transition-colors"
         >
             <span class="thumb block rounded-full bg-white transition" />
         </button>
