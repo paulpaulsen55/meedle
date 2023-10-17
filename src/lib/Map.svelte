@@ -113,14 +113,7 @@
 	}
 </script>
 
-<div id="map" bind:this={mapElement} />
-<button on:click={() => changeStyle()} class="absolute top-1-5 right-0">
+<div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement} />
+<button on:click={() => changeStyle()} class="absolute top-2 right-12 z-20">
 	<ThemeSwitch />
 </button>
-
-<style>
-	#map {
-		height: 100vh;
-		width: calc(100vw - 24rem);
-	}
-</style>

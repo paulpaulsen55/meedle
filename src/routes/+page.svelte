@@ -51,21 +51,21 @@
 	<NavBar />
 	<section class="h-screen flex flex-col relative">
 		<div class="grid place-items-center mt-10">
-			<img src="/logo.svg" alt="logo" class="hidden dark:block w-[60%] spx-2 sm:px-0" />
+      <img src="/logo.svg" alt="logo" class="hidden dark:block w-[60%] spx-2 sm:px-0" />
 			<img src="/logo-dark.svg" alt="logo" class="block dark:hidden w-[60%] spx-2 sm:px-0" />
-			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed">
+			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed px-2">
 				Meedle ist die App, die dir hilft, den perfekten Ort für ein Treffen zu finden. Gib einfach
 				zwei Orte ein und lass Meedle den Rest erledigen. Probiere es direkt aus:
 			</p>
 		</div>
 		<div
-			class="self-start flex flex-col items-center relative dark:bg-dotted bg-dotted-dark radial bg-animate-pulse sm:px-64 py-20"
+			class="flex flex-col items-center relative dark:bg-dotted bg-dotted-dark radial bg-animate-pulse p-1 md:px-40 lg:px-64 py-20"
 		>
-			<div class="space-y-3 flex flex-col w-96">
+			<div class="space-y-3 flex flex-col px-2 w-full sm:px-0 sm:w-96">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 			</div>
-			<div class="z-10 flex w-full mt-5 gap-2">
+			<div class="z-10 flex px-2 w-full sm:px-0 sm:w-96 mt-5 gap-2">
 				<AdressSettings bind:radius bind:poi />
 				<button
 					on:click={() => startClick()}
@@ -80,8 +80,8 @@
 			<ChevronDown class="animate-bounce mb-5 cursor-pointer" />
 		</a>
 	</section>
-	<section class="h-screen grid place-items-center" id="functions">
-		<div class="w-full grid place-items-center">
+	<section class="sm:h-screen grid place-items-center" id="functions">
+		<div class="grid self-start place-items-center overflow-hidden h-32">
 			<svg xmlns="http://www.w3.org/2000/svg" width="1438" height="68" fill="none"
 				><path
 					stroke="#F7B155"
@@ -115,7 +115,7 @@
 				</p>
 			</div>
 			<div class="absolute left-1/3 grid place-items-center top-0 h-full">
-				<div use:melt={$vertical} class="h-4/5 w-[2px] dark:bg-slate-50 bg-neutral-700" />
+				<div use:melt={$vertical} class="h-4/5 w-[2px] dark:bg-slate-50 bg-neutral-700 hidden lg:block" />
 			</div>
 			<div
 				class="h-full space-y-4 dark:hover:bg-slate-50 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
@@ -130,7 +130,7 @@
 				</p>
 			</div>
 			<div class="absolute left-2/3 grid place-items-center top-0 h-full">
-				<div use:melt={$vertical} class="h-4/5 w-[2px] dark:bg-slate-50 bg-neutral-700" />
+				<div use:melt={$vertical} class="h-4/5 w-[2px] dark:bg-slate-50 bg-neutral-700 hidden lg:block" />
 			</div>
 			<div
 				class="h-full space-y-4 dark:hover:bg-slate-50 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
@@ -146,7 +146,7 @@
 			</div>
 		</div>
 	</section>
-	<section class="h-screen grid sm:grid-cols-2 place-items-center w-full lg:w-4/5 xl:w-[70%]">
+	<section class="h-screen grid sm:grid-cols-2 place-items-center w-full lg:w-4/5 xl:w-[70%] mt-32 sm:mt-0">
 		<div class="space-y-5 self-end sm:self-auto sm:block mb-5 sm:mb-0">
 			<button
 				class="w-full flex items-center gap-5 dark:hover:bg-slate-200 hover:bg-neutral-800 p-2 rounded-md transition 
@@ -201,7 +201,7 @@
 		</div>
 	</section>
 	<section
-		class="grid sm:grid-cols-2 sm:grid-rows-2 gap-10 w-3/5 mb-5 place-items-center"
+		class="grid sm:grid-cols-2 sm:grid-rows-2 gap-10 w-3/5 mb-5 place-items-center mt-32 sm:mt-0"
 		id="about"
 	>
 		<div>
@@ -212,8 +212,8 @@
 				Aus diesem Grund war es die einzig richtige Schlussfolgerung, Meedle zu gründen: Die perfekte Plattform, um deeinen nächsten Treffpunkt zu ermitteln.
 			</p>
 		</div>
-		<img src="/team.jpeg" alt="team" class="h-[auto] max-w-[450px]">
-		<img src="/software.jpeg" alt="entwicklung" class="h-[auto] max-w-[450px]">
+		<img src="/team.jpeg" alt="team" class="h-[auto] w-full">
+		<img src="/software.jpeg" alt="entwicklung" class="h-[auto] w-full">
 		<div>
 			<h2 class="text-2xl font-semibold mb-5 dark:text-black text-white">wer wir sind?</h2>
 			<p class="dark:text-black text-white">

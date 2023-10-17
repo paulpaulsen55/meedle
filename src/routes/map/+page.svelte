@@ -1,17 +1,18 @@
 <script lang="ts">
-	import Map from '$lib/Map.svelte';
 	import AddressInput from '$lib/AddressInput.svelte';
 	import Accordion from '$lib/Accordion.svelte';
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
-	import { ArrowLeftIcon, FileEdit } from 'lucide-svelte';
-	import AdressSettings from '$lib/AdressSettings.svelte';
+	import { FileEdit } from 'lucide-svelte';
 	import { locations as lol, poi as p, radius as r } from '../../store';
+	import Map from '$lib/Map.svelte';
+	import AdressSettings from '$lib/AdressSettings.svelte';
 	import TagsSettings from '$lib/TagsSettings.svelte';
-	import type { Unsubscriber } from 'svelte/store';
+	import LocationSwitch from '$lib/LocationSwitch.svelte';
+	import AsideWrapper from '$lib/AsideWrapper.svelte';
 	import type { Tag } from '@melt-ui/svelte';
 	import type { Coordinate, Feature, Address } from '../../app';
-	import LocationSwitch from '$lib/LocationSwitch.svelte';
+	import type { Unsubscriber } from 'svelte/store';
 
 	export let data;
 	let hoverdPointId: string | null;
@@ -32,7 +33,8 @@
 		points: Coordinate[] = [],
 		category = ['food_and_drink'],
 		features: Feature[],
-		edit = true;
+		edit = true,
+		asideWrapper: AsideWrapper;
 
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
@@ -75,13 +77,14 @@
 			edit = true;
 		}
 	});
+
+	$ : if (hoverdPointId != null) {
+			asideWrapper.setOpen(true);
+		}
 </script>
 
-<div class="flex">
-	<aside class="flex flex-col w-96 p-6 h-screen">
-		<a href="/">
-			<ArrowLeftIcon class="w-12 h-12 dark:text-black text-white" />
-		</a>
+<div class="flex relative overflow-hidden touch-none">
+	<AsideWrapper bind:this={asideWrapper}>
 		{#if edit}
 			<div class="mt-10">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
@@ -99,7 +102,7 @@
 				</div>
 			</div>
 		{:else}
-			<div class="flex gap-5 mt-5 items-end justify-between">
+			<div class="flex gap-5 mt-5 items-end justify-between select-none">
 				<LocationSwitch locations={loc} />
 				<button type="button" on:click={() => (edit = true)} class="">
 					<FileEdit class="h-6 mb-1 dark:text-black text-white"/>
@@ -111,10 +114,11 @@
 			<Accordion response={features} bind:hoverdPointId />
 		{/if}
 		<div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
-	</aside>
-	<div class="absolute ml-96 z-10 p-1">
+	</AsideWrapper>
+	<div class="absolute md:ml-96 z-10 p-1">
 		<TagsSettings on:updateTags={handleTagsSetting} />
 	</div>
+
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
 </div>
 

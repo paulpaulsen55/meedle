@@ -7,7 +7,6 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import type { Address } from '../app';
-	import { Italic } from 'lucide-svelte';
 
 	export let location: Address = { title: '', address: '' };
 	export let sessionToken: string = '';
@@ -18,7 +17,7 @@
 
 	const {
 		elements: { menu, input, option },
-		states: { open, inputValue, selected, highlighted }
+		states: { open, inputValue, selected }
 	} = createCombobox({
 		forceVisible: true
 	});
@@ -36,8 +35,13 @@
 		if (location.address != '') {
 			inputValue.set(location.title);
 			searchAutofill().then(() => {
-				const option = results.find((result) => result.address === location.address);
-				if (option) selected.set({ label: option.title, value: option.address });
+				const option = results.find((result) => result.address == location.address ?? '');
+				for (let i = 0; i < results.length; i++) {
+					if (results[i].address == location.address ?? '') {
+						selected.set({ value: i, label: results[i].title });
+						break;
+					}
+				}
 			});
 		}
 	});
@@ -58,9 +62,9 @@
 	$ : {
 		if ($inputValue.length <= 2) {
 			results = [];
-		} else if($highlighted){
+		} else if($selected && results.length > 2){
 			location.title = $inputValue;
-			location.address = results[($highlighted.value as number)].address;
+			location.address = results[($selected.value as number)].address;
 		}
 	}
 </script>
@@ -84,6 +88,12 @@
 		<div class="flex max-h-full flex-col overflow-y-auto bg-white p-2 text-black" tabindex="0">
 			{#each results as address, i}
 				<li
+					on:m-click={(e) => {
+						e.preventDefault();
+						inputValue.set(address.title);
+						selected.set({ value: i, label: address.title });
+						open.set(false);
+					}}
 					use:melt={$option({ value: i, label: address.title })}
 					class="cursor-pointer scroll-my-2 rounded-md py-2 data-[highlighted]:bg-magnum-200 data-[highlighted]:text-magnum-900"
 				>
