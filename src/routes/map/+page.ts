@@ -26,9 +26,6 @@ export async function load({ url }) {
 			}
 		}
 
-        // TODO: remove console.log
-        console.log(radius, poi, location1, location2, tempTags);
-
         return {
             radius: Number(radius),
             poi: Number(poi),

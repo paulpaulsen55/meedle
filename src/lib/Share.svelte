@@ -26,7 +26,7 @@
     onMount(() => {
         // if the user has not selected a location, the link will not be generated
         if (!$locations.location1 || !$locations.location2 || !$poi || !$radius) return;
-        link = window.location.host + "/map?r=" + $radius + "&e=" + $poi + "&a1=" + $locations.location1.address + "&a2=" + $locations.location2.address + "&c=" + category.join(",");
+        link = window.location.host + "/map?r=" + $radius + "&p=" + $poi + "&a1=" + $locations.location1.address + "&a2=" + $locations.location2.address + "&t=" + category.join(",");
     })
 </script>
 
