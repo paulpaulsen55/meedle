@@ -3,12 +3,13 @@
 	import { tagsList } from '$lib/helpers/tagsList';
 	import { X, Plus } from 'lucide-svelte';
 	import Scroller from '$lib/Scroller.svelte';
-	import { afterUpdate, createEventDispatcher } from 'svelte';
-
+	import { afterUpdate, createEventDispatcher, onMount } from 'svelte';
 	import { createToaster } from '@melt-ui/svelte';
   	import { flip } from 'svelte/animate';
   	import Toast from '$lib/AlertPopUp.svelte';
 	import type { ToastData } from '$lib/AlertPopUp.svelte';
+
+	export let defaultTags: Tag[] = [];
 
 	const dispatch = createEventDispatcher();
  
@@ -62,6 +63,13 @@
 		});
 		return result;
 	};
+
+	onMount(() => {
+		if (defaultTags.length > 0) {
+			tags = defaultTags;
+			tempTags = defaultTags;
+		}
+	})
 
 	$ : {
 		if (searchTerm.length > 0) {
