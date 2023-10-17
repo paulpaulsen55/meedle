@@ -20,7 +20,7 @@
 				<a href="#about">Über</a>
 			</div>
 			<div />
-			<div class="absolute top-1.5 right-0">
+			<div class="absolute top-1.5 right-0 hidden md:block">
 				<ThemeSwitch />
 			</div>
 			<div class="dark:bg-slate-400 bg-neutral-500 w-0.5 h-8 ml-4 sm:ml-12" />
