@@ -10,6 +10,7 @@
 	import TagsSettings from '$lib/TagsSettings.svelte';
 	import LocationSwitch from '$lib/LocationSwitch.svelte';
 	import AsideWrapper from '$lib/AsideWrapper.svelte';
+	import Share from '$lib/Share.svelte';
 	import type { Tag } from '@melt-ui/svelte';
 	import type { Coordinate, Feature, Address } from '../../app';
 	import type { Unsubscriber } from 'svelte/store';
@@ -120,5 +121,8 @@
 	</div>
 
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
+	<div class="absolute md:ml-96 z-10 p-1 top-10">
+		<Share bind:category />
+	</div>
 </div>
 
