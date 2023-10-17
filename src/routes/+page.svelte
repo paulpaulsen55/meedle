@@ -51,14 +51,15 @@
 	<NavBar />
 	<section class="h-screen flex flex-col relative">
 		<div class="grid place-items-center mt-10">
-			<img src="/logo.svg" alt="logo" class="w-[60%] spx-2 sm:px-0" />
+			<img src="/logo.svg" alt="logo" class="hidden dark:block w-[60%] spx-2 sm:px-0" />
+			<img src="/logo-dark.svg" alt="logo" class="block dark:hidden w-[60%] spx-2 sm:px-0" />
 			<p class="text-center text-neutral-400 mt-5 sm:w-[30rem] leading-relaxed">
 				Meedle ist die App, die dir hilft, den perfekten Ort für ein Treffen zu finden. Gib einfach
 				zwei Orte ein und lass Meedle den Rest erledigen. Probiere es direkt aus:
 			</p>
 		</div>
 		<div
-			class="self-start flex flex-col items-center relative bg-dotted radial bg-animate-pulse sm:px-64 py-20"
+			class="self-start flex flex-col items-center relative dark:bg-dotted bg-dotted-dark radial bg-animate-pulse sm:px-64 py-20"
 		>
 			<div class="space-y-3 flex flex-col w-96">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
@@ -102,10 +103,10 @@
 			class="w-full lg:w-4/5 xl:w-[70%] grid place-items-center md:place-items-start grid-cols-1 lg:grid-cols-3 relative"
 		>
 			<div
-				class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
+				class="h-full space-y-4 dark:hover:bg-slate-50 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
 			>
 				<FastForward class="w-14 h-14 text-magnum-900" />
-				<h2 class="text-3xl font-bold text-neutral-100">Geschwindigkeit</h2>
+				<h2 class="text-3xl font-bold dark:text-neutral-900 text-neutral-100">Geschwindigkeit</h2>
 				<p class="text-neutral-400">
 					Meedle ist eine smarte Plattform, die dir dabei hilft, den idealen Ort für dein nächstes Treffen zu
 					finden. Meedle schlägt mithilfe leistungsstarker Algorithmen und einer intuitiven
@@ -114,13 +115,13 @@
 				</p>
 			</div>
 			<div class="absolute left-1/3 grid place-items-center top-0 h-full">
-				<div use:melt={$vertical} class="h-4/5 w-[2px] bg-neutral-700" />
+				<div use:melt={$vertical} class="h-4/5 w-[2px] dark:bg-slate-50 bg-neutral-700" />
 			</div>
 			<div
-				class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
+				class="h-full space-y-4 dark:hover:bg-slate-50 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
 			>
 				<Users class="w-14 h-14 text-magnum-500" />
-				<h2 class="text-3xl font-bold text-neutral-100">Treffen</h2>
+				<h2 class="text-3xl font-bold dark:text-neutral-900 text-neutral-100">Treffen</h2>
 				<p class="text-neutral-400">
 					Ob Geschäftsbesprechung, Date oder Treffen mit Freunden - Meedle findet den passenden
 					Ort für euer Treffen! Die intelligente Suche berücksichtigt deine individuellen Vorlieben und
@@ -129,13 +130,13 @@
 				</p>
 			</div>
 			<div class="absolute left-2/3 grid place-items-center top-0 h-full">
-				<div use:melt={$vertical} class="h-4/5 w-[2px] bg-neutral-700" />
+				<div use:melt={$vertical} class="h-4/5 w-[2px] dark:bg-slate-50 bg-neutral-700" />
 			</div>
 			<div
-				class="h-full space-y-4 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
+				class="h-full space-y-4 dark:hover:bg-slate-50 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
 			>
 				<Sparkles class="w-14 h-14 text-magnum-300" />
-				<h2 class="text-3xl font-bold text-neutral-100">Wunderschön</h2>
+				<h2 class="text-3xl font-bold dark:text-neutral-900 text-neutral-100">Wunderschön</h2>
 				<p class="text-neutral-400">
 					Meedle legt großen Wert auf gutes Design und Benutzerfreundlichkeit. Die Website ist
 					übersichtlich und modern gestaltet und dabei leicht zu navigieren. Farben, Schriften und Layout wurden
@@ -148,40 +149,43 @@
 	<section class="h-screen grid sm:grid-cols-2 place-items-center w-full lg:w-4/5 xl:w-[70%]">
 		<div class="space-y-5 self-end sm:self-auto sm:block mb-5 sm:mb-0">
 			<button
-				class="w-full flex items-center gap-5 hover:bg-neutral-800 p-2 rounded-md transition cursor-pointer focus:scale-105 focus:bg-neutral-800"
+				class="w-full flex items-center gap-5 dark:hover:bg-slate-200 hover:bg-neutral-800 p-2 rounded-md transition 
+				cursor-pointer focus:scale-105 dark:focus:bg-slate-200 focus:bg-neutral-800"
 				on:click={() => (imgIndex = 0)}
 			>
 				<div class="bg-magnum-400 p-4 rounded-md">
 					<Filter class="w-10 h-10 text-neutral-900" />
 				</div>
-				<h3 class="flex items-center w-full text-xl font-semibold">
+				<h3 class="flex items-center w-full text-xl font-semibold dark:text-black text-white">
 					Endlose Filtermöglichkeiten <ChevronRight class="mr-0 ml-auto" />
 				</h3>
 			</button>
 			<button
-				class="w-full flex items-center gap-5 hover:bg-neutral-800 p-2 rounded-md transition cursor-pointer focus:scale-105 focus:bg-neutral-800"
+				class="w-full flex items-center gap-5 dark:hover:bg-slate-200 hover:bg-neutral-800 p-2 rounded-md transition 
+				cursor-pointer focus:scale-105 dark:focus:bg-slate-200 focus:bg-neutral-800"
 				on:click={() => (imgIndex = 1)}
 			>
 				<div class="bg-magnum-400 p-4 rounded-md">
 					<Share2 class="w-10 h-10 text-neutral-900" />
 				</div>
-				<h3 class="flex items-center w-full text-xl font-semibold">
+				<h3 class="flex items-center w-full text-xl font-semibold dark:text-black text-white">
 					Direkt teilen mit Freunden <ChevronRight class="mr-0 ml-auto" />
 				</h3>
 			</button>
 			<button
-				class="w-full flex items-center gap-5 hover:bg-neutral-800 p-2 rounded-md transition cursor-pointer focus:scale-105 focus:bg-neutral-800"
+				class="w-full flex items-center gap-5 dark:hover:bg-slate-200 hover:bg-neutral-800 p-2 rounded-md transition 
+				cursor-pointer focus:scale-105 dark:focus:bg-slate-200 focus:bg-neutral-800"
 				on:click={() => (imgIndex = 2)}
 			>
 				<div class="bg-magnum-400 p-4 rounded-md">
 					<Map class="w-10 h-10 text-neutral-900" />
 				</div>
-				<h3 class="flex items-center w-full text-xl font-semibold">
+				<h3 class="flex items-center w-full text-xl font-semibold dark:text-black text-white">
 					Detailreiche Anzeige <ChevronRight class="mr-0 ml-auto" />
 				</h3>
 			</button>
 		</div>
-		<div class="bg-neutral-800 p-2 rounded-md w-full h-full sm:h-1/2 flex justify-center relative">
+		<div class="dark:bg-slate-50 bg-neutral-800 p-2 rounded-md w-full h-full sm:h-1/2 flex justify-center relative">
 			{#each selectImages as img, i}
 				{#if i == imgIndex}
 					<img
@@ -201,8 +205,8 @@
 		id="about"
 	>
 		<div>
-			<h2 class="text-2xl font-semibold mb-5">Wer sind wir?</h2>
-			<p>
+			<h2 class="text-2xl font-semibold mb-5 dark:text-black text-white">Wer wir sind?</h2>
+			<p class="dark:text-black text-white">
 				Wir sind eine Gruppe engagierter Studenten, die sich zum Ziel gesetzt haben, die Suche nach Orten für Treffen zu vereinfachen.<br>
 				Nach vielen, scheinbar endlosen Diskussionen über den richtigen Ort für das nächste Treffen haben wir beschlossen, eine Innovation in diesem Bereich loszutreten.
 				Aus diesem Grund war es die einzig richtige Schlussfolgerung, Meedle zu gründen: Die perfekte Plattform, um deeinen nächsten Treffpunkt zu ermitteln.
@@ -211,8 +215,8 @@
 		<img src="/team.jpeg" alt="team" class="h-[auto] max-w-[450px]">
 		<img src="/software.jpeg" alt="entwicklung" class="h-[auto] max-w-[450px]">
 		<div>
-			<h2 class="text-2xl font-semibold mb-5">Entwicklung</h2>
-			<p>
+			<h2 class="text-2xl font-semibold mb-5 dark:text-black text-white">wer wir sind?</h2>
+			<p class="dark:text-black text-white">
 				Der Entwicklungsprozess drehte sich nach der Konzeption des Produktes darum, ein individuelles Design mit hohem Wiedererkennungswert
 				zu schaffen. Nach der Implementierung aller definierten Funktionen wurde großen Wert darauf gelegt, die Website durch eine
 				vielfältige Gruppe testen zu lassen.<br>Wir finden: Das Endprodukt spricht für sich!

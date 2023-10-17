@@ -80,12 +80,12 @@
 <div class="flex">
 	<aside class="flex flex-col w-96 p-6 h-screen">
 		<a href="/">
-			<ArrowLeftIcon class="w-12 h-12" />
+			<ArrowLeftIcon class="w-12 h-12 dark:text-black text-white" />
 		</a>
 		{#if edit}
 			<div class="mt-10">
 				<AddressInput bind:location={location1} sessionToken={data.sessionToken} />
-				<p>between</p>
+				<p class="dark:text-black text-white">between</p>
 				<AddressInput bind:location={location2} sessionToken={data.sessionToken} />
 				<div class="space-x-3 flex mt-5">
 					<AdressSettings bind:radius bind:poi />
@@ -102,7 +102,7 @@
 			<div class="flex gap-5 mt-5 items-end justify-between">
 				<LocationSwitch locations={loc} />
 				<button type="button" on:click={() => (edit = true)} class="">
-					<FileEdit class="h-6 mb-1"/>
+					<FileEdit class="h-6 mb-1 dark:text-black text-white"/>
 				</button>
 			</div>
 		{/if}
@@ -117,3 +117,4 @@
 	</div>
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
 </div>
+
