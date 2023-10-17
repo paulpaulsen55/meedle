@@ -70,7 +70,7 @@
     style="top: {$y}px;"
 >
     <div 
-    class="flex flex-col p-6 h-screen w-96 bg-neutral-900 rounded-md"
+    class="flex flex-col p-6 h-screen w-96 dark:bg-slate-100 bg-neutral-900 rounded-md"
     >
         <a href="/" class="hidden md:inline-flex">
             <ArrowLeftIcon class="w-12 h-12" />
