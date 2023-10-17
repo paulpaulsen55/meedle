@@ -10,7 +10,6 @@
 	import TagsSettings from '$lib/TagsSettings.svelte';
 	import LocationSwitch from '$lib/LocationSwitch.svelte';
 	import AsideWrapper from '$lib/AsideWrapper.svelte';
-	import Share from '$lib/Share.svelte';
 	import type { Tag } from '@melt-ui/svelte';
 	import type { Coordinate, Feature, Address } from '../../app';
 	import type { Unsubscriber } from 'svelte/store';
@@ -32,7 +31,7 @@
 		location2 = loc.location2,
 		average: Coordinate,
 		points: Coordinate[] = [],
-		category: string[] = ['food_and_drink'],
+		category = ['food_and_drink'],
 		features: Feature[],
 		edit = true,
 		asideWrapper: AsideWrapper;
@@ -68,18 +67,8 @@
 
 	// loads data only when both locations are set through the store - prevents unnecessary api calls
 	onMount(() => {
-		if (data.location1 != undefined){
-			p.set(data.poi);
-			r.set(data.radius);
-			location1 = {title: data.location1.split(',')[0], address: data.location1};
-			location2 = {title: data.location2.split(',')[0], address: data.location2};
-			for (let i = 0; i < data.tags.length; i++) {
-				category.push(data.tags[i].id);
-			}
-		} else {
-			location1 = loc.location1;
-			location2 = loc.location2;
-		}
+		location1 = loc.location1;
+		location2 = loc.location2;
 
 		if (location1.title != '' && location2.title != '') {
 			handleSubmit();
@@ -127,14 +116,9 @@
 		<div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
 	</AsideWrapper>
 	<div class="absolute md:ml-96 z-10 p-1">
-		<TagsSettings on:updateTags={handleTagsSetting} defaultTags={data.tags} />
+		<TagsSettings on:updateTags={handleTagsSetting} />
 	</div>
 
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
-	{#if location1.address != ''}
-		 <div class="absolute md:ml-96 z-10 p-1 top-10">
-			 <Share bind:category />
-		 </div>
-	{/if}
 </div>
 
