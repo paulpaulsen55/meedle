@@ -106,11 +106,11 @@
 				class="h-full space-y-4 dark:hover:bg-slate-50 hover:bg-neutral-800 p-5 rounded-md cursor-pointer transition hover:-translate-y-1 mx-5"
 			>
 				<FastForward class="w-14 h-14 text-magnum-900" />
-				<h2 class="text-3xl font-bold dark:text-neutral-900 text-neutral-100">Schnelligkeit</h2>
+				<h2 class="text-3xl font-bold dark:text-neutral-900 text-neutral-100">Geschwindigkeit</h2>
 				<p class="text-neutral-400">
-					Meedle ist eine smarte Plattform, die dir dabei hilft, den idealen Ort für ein Treffen zu
+					Meedle ist eine smarte Plattform, die dir dabei hilft, den idealen Ort für dein nächstes Treffen zu
 					finden. Meedle schlägt mithilfe leistungsstarker Algorithmen und einer intuitiven
-					Benutzeroberfläche schnell Treffpunkte vor, die genau in der Mitte zwischen Dir und
+					Benutzeroberfläche schnell Treffpunkte vor, die genau in der Mitte zwischen dir und
 					anderen Personen liegen. So sparst Du Zeit und Mühe bei der Suche nach dem idealen Ort.
 				</p>
 			</div>
@@ -123,10 +123,10 @@
 				<Users class="w-14 h-14 text-magnum-500" />
 				<h2 class="text-3xl font-bold dark:text-neutral-900 text-neutral-100">Treffen</h2>
 				<p class="text-neutral-400">
-					Ob Geschäftsbesprechung, Date oder informelles Treffen mit Freunden - Meedle hat das
-					Richtige für Dich. Die intelligente Suche berücksichtigt die individuellen Vorlieben und
-					schlägt passendes vor. Endlose Diskussionen über den Ort des Treffens sind damit
-					Geschichte. Mit Meedle ist der perfekte Ort nur wenige Klicks entfernt.
+					Ob Geschäftsbesprechung, Date oder Treffen mit Freunden - Meedle findet den passenden
+					Ort für euer Treffen! Die intelligente Suche berücksichtigt deine individuellen Vorlieben und
+					ermittelt den perfekten Treffpunkt. Endlose Diskussionen über den Ort des Treffens gehören
+					damit der Vergangenheit an. <br> Mit Meedle ist der perfekte Ort nur wenige Klicks entfernt.
 				</p>
 			</div>
 			<div class="absolute left-2/3 grid place-items-center top-0 h-full">
@@ -139,9 +139,9 @@
 				<h2 class="text-3xl font-bold dark:text-neutral-900 text-neutral-100">Wunderschön</h2>
 				<p class="text-neutral-400">
 					Meedle legt großen Wert auf gutes Design und Benutzerfreundlichkeit. Die Website ist
-					übersichtlich, modern und leicht zu navigieren. Farben, Schriften und Layout wurden
-					sorgfältig ausgewählt. Schau dir selbst die Website von Meedle und überzeugen Sie sich
-					selbst von der Einfachheit und Eleganz.
+					übersichtlich und modern gestaltet und dabei leicht zu navigieren. Farben, Schriften und Layout wurden
+					sorgfältig ausgewählt. <br> Schau dich auf unserer Website um und überzeuge dich
+					von der Einfachheit und Eleganz.
 				</p>
 			</div>
 		</div>
@@ -207,35 +207,19 @@
 		<div>
 			<h2 class="text-2xl font-semibold mb-5 dark:text-black text-white">Wer wir sind?</h2>
 			<p class="dark:text-black text-white">
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-				invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-				et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-				Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-				diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-				voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-				gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+				Wir sind eine Gruppe engagierter Studenten, die sich zum Ziel gesetzt haben, die Suche nach Orten für Treffen zu vereinfachen.<br>
+				Nach vielen, scheinbar endlosen Diskussionen über den richtigen Ort für das nächste Treffen haben wir beschlossen, eine Innovation in diesem Bereich loszutreten.
+				Aus diesem Grund war es die einzig richtige Schlussfolgerung, Meedle zu gründen: Die perfekte Plattform, um deeinen nächsten Treffpunkt zu ermitteln.
 			</p>
 		</div>
-		<img
-			src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4"
-			alt="img"
-			class="h-4/5"
-		/>
-		<img
-			src="https://images.unsplash.com/photo-1518335935020-cfd6580c1ab4"
-			alt="img"
-			class="h-4/5"
-		/>
+		<img src="/team.jpeg" alt="team" class="h-[auto] max-w-[450px]">
+		<img src="/software.jpeg" alt="entwicklung" class="h-[auto] max-w-[450px]">
 		<div>
 			<h2 class="text-2xl font-semibold mb-5 dark:text-black text-white">wer wir sind?</h2>
 			<p class="dark:text-black text-white">
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-				invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-				et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-				Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-				diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-				voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-				gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+				Der Entwicklungsprozess drehte sich nach der Konzeption des Produktes darum, ein individuelles Design mit hohem Wiedererkennungswert
+				zu schaffen. Nach der Implementierung aller definierten Funktionen wurde großen Wert darauf gelegt, die Website durch eine
+				vielfältige Gruppe testen zu lassen.<br>Wir finden: Das Endprodukt spricht für sich!
 			</p>
 		</div>
 	</section>
