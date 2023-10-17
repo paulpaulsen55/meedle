@@ -72,7 +72,7 @@
     <div 
     class="flex flex-col p-6 h-screen w-96 dark:bg-slate-100 bg-neutral-900 rounded-md"
     >
-        <a href="/" class="hidden md:inline-flex">
+        <a href="/" class="hidden md:inline-flex dark:text-black">
             <ArrowLeftIcon class="w-12 h-12" />
         </a>
         <div class="inline-flex md:hidden w-1/2 self-center h-1 bg-neutral-500 rounded-md" />

@@ -15,12 +15,12 @@
 				<a href="#top" class="text-neutral-600">Home</a>
 				<a href="#about" class="text-neutral-600">Team</a>
 			</div>
-			<div class="flex flex-col">
+			<div class="flex flex-col items-center sm:items-start">
 				<h3 class="mb-5 dark:text-black text-white">Produkt</h3>
 				<a href="#functions" class="text-neutral-600">Funktionen</a>
 			</div>
 			<div class="flex flex-col items-center sm:items-start">
-				<h3 class="mb-5">Weiteres</h3>
+				<h3 class="mb-5 dark:text-black text-white">Weiteres</h3>
 				<a href="https://github.com/paulpaulsen55/meedle" class="text-neutral-600">Github</a>
 				<a href="/imprint" class="text-neutral-600">Impressum</a>
 				<a href="/terms" class="text-neutral-600">Nutzungsbedigungen</a>

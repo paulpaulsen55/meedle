@@ -19,7 +19,7 @@
     })
 </script>
 
-<div class="absolute mt-20 md:mt-0">
+<div class="z-30">
     <input checked={darkMode} on:click={handleSwitchDarkMode} type="checkbox" id="theme-toggle" />
     <label for="theme-toggle" />
 </div>
@@ -30,7 +30,7 @@
     }
 
     #theme-toggle + label {
-        @apply inline-block cursor-pointer h-12 w-12 absolute top-6 right-6 md:right-24 rounded-full duration-300 content-[''];
+        @apply inline-block cursor-pointer h-9 w-9 rounded-full duration-300 content-[''];
     }
 
     #theme-toggle:checked + label {
