@@ -215,7 +215,7 @@
 		<img src="/team.jpeg" alt="team" class="h-[auto] w-full">
 		<img src="/software.jpeg" alt="entwicklung" class="h-[auto] w-full">
 		<div>
-			<h2 class="text-2xl font-semibold mb-5 dark:text-black text-white">wer wir sind?</h2>
+			<h2 class="text-2xl font-semibold mb-5 dark:text-black text-white">Entwicklung</h2>
 			<p class="dark:text-black text-white">
 				Der Entwicklungsprozess drehte sich nach der Konzeption des Produktes darum, ein individuelles Design mit hohem Wiedererkennungswert
 				zu schaffen. Nach der Implementierung aller definierten Funktionen wurde großen Wert darauf gelegt, die Website durch eine
