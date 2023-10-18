@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createDialog, melt } from "@melt-ui/svelte";
-    import { Share2, Copy, Check } from "lucide-svelte";
+    import { Share2, Copy, Check, PartyPopper } from "lucide-svelte";
+    import { Confetti } from "svelte-confetti"
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
     import { locations, poi, radius } from "../store";
@@ -42,10 +43,14 @@
               p-6 shadow-lg"
 			use:melt={$content}
 		>
-            <div>
-                <p>Teile diesen Scheiß link mit deiner Mudda</p>
+            <div class="flex justify-between items-center gap-2">
+                <Confetti colorArray={['#F7B155', '#FCE0AC', '#793A15']} cone x={[0, -1.25]} y={[0.25, 0.75]} />
+                <PartyPopper class="h-8 w-8 text-magnum-300 -rotate-90" />
+                <p class="whitespace-nowrap">Teil den Link mit deiner Mutter</p>
+                <PartyPopper class="h-8 w-8 text-magnum-300" />
+                <Confetti colorArray={['#F7B155', '#FCE0AC', '#793A15']} cone x={[0, 1.25]} y={[0.25, 0.75]} />
             </div>
-            <div class="flex justify-between">
+            <div class="flex justify-between mt-5">
                 <input type="text" class="input bg-white" bind:value={link}/>
                 <button class="relative" on:click={() => copyLink()}>
                         <div transition:fade={{duration: 100}} class="bg-neutral-800 p-2 rounded-md" >
