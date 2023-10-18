@@ -30,8 +30,8 @@
     })
 </script>
 
-<button class="bg-magnum-300 text-magnum-900 p-4 rounded-md" use:melt={$trigger}>
-    <Share2 class="w-5 h-5" />     
+<button class="bg-magnum-300 text-magnum-900 p-3 rounded-md" use:melt={$trigger}>
+    <Share2 class="h-8 w-8" />     
 </button>
 
 <div use:melt={$portalled}>

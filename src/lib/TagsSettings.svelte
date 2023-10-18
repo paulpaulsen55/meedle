@@ -87,7 +87,7 @@
 	});
 </script>
 
-<div class="flex space-x-2 h-6">
+<div class="flex space-x-2 h-6 w-[calc(100vw-120px)] md:w-[calc(100vw-24rem-120px)] overflow-scroll rounded-md">
 	<button on:click={() => tempTags = tags} use:melt={$trigger}
 		class="bg-magnum-300 rounded-md text-magnum-900 p-0.5"
 	>
@@ -97,7 +97,7 @@
 		{#each tags as t}
 			<div class="flex py-2 rounded-md bg-magnum-300 text-magnum-900 hover:bg-magnum-400" >
 				<button on:click={() => removeTag(t, true)} class="flex items-center rounded m-0.5">
-					<span class="px-1">{t.value}</span>
+					<span class="px-1 truncate">{t.value}</span>
 					<X class="h-5 w-5" />
 				</button>
 			</div>

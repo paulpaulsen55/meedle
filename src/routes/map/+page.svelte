@@ -132,9 +132,9 @@
 
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
 	{#if location1.address != ''}
-		 <div class="absolute md:ml-96 z-10 p-1 top-10">
-			 <Share bind:category />
-		 </div>
+		<div class="absolute top-2 right-12">
+			<Share bind:category />
+		</div>
 	{/if}
 </div>
 
