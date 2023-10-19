@@ -87,7 +87,7 @@
 	});
 </script>
 
-<div class="flex space-x-2 h-6 w-[calc(100vw-120px)] md:w-[calc(100vw-24rem-120px)] overflow-scroll rounded-md">
+<div class="flex space-x-2 h-6 w-[calc(100vw-120px)] md:w-[calc(100vw-24rem-120px)] overflow-auto rounded-md">
 	<button on:click={() => tempTags = tags} use:melt={$trigger}
 		class="bg-magnum-300 rounded-md text-magnum-900 p-0.5"
 	>
