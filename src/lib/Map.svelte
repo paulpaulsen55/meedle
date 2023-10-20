@@ -1,57 +1,61 @@
 <script lang="ts">
-	import { onMount, afterUpdate } from 'svelte';
-	import mapboxgl from 'mapbox-gl';
-	import type { Coordinate, Feature } from '../app';
-	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
+    import {onMount, afterUpdate} from 'svelte';
+    import mapboxgl from 'mapbox-gl';
+    import type {GeoJSONSourceRaw} from 'mapbox-gl';
+    import type {Coordinate, Feature} from '../app';
+    import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 
-	export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
-	export let hoverdPointId:string|null;
+    export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
+    export let hoverdPointId: string | null;
 
-	let mapElement: HTMLElement;
-	let map: mapboxgl.Map | null = null;
-	let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-	let viewState = {
-		zoom: 3,
-		pitch: 0,
-		bearing: 0
-	};
-	let locationMarkers: mapboxgl.Marker[] = [];
+    let mapElement: HTMLElement;
+    let map: mapboxgl.Map | null = null;
+    let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+    let viewState = {
+        zoom: 3,
+        pitch: 0,
+        bearing: 0
+    };
+    let locationMarkers: mapboxgl.Marker[] = [];
 
-	let markers = new Map<string, mapboxgl.Marker>();
+    let markers = new Map<string, mapboxgl.Marker>();
 
-	$: if (map != null && middle && locations) {
-		map.setCenter(middle);
+    const canvas = map!.getCanvasContainer();
 
-		// add all peoples locations to the map
-		locationMarkers.forEach((marker) => marker.remove());
-		locationMarkers = [];
-		locations.forEach((location) => {
-			locationMarkers.push(new mapboxgl.Marker({ color: '#003DD0' }).setLngLat(location));
-		});
-		locationMarkers.forEach((marker) => marker.addTo(map!));
-		const factor = 0.01;
-		map.fitBounds([
-			[locations[0].lng + factor, locations[0].lat - factor],
-			[locations[1].lng - factor, locations[1].lat + factor]
-		]);
+    $: if (map != null && middle && locations) {
+        map.setCenter(middle);
 
-		// add the features to the map
-		if (response) {
-			markers.forEach((marker) => marker.remove());
-			markers.clear();
-			response.forEach((feature: Feature) => {
-				let el = createCustomMarker(feature)
+        // add all peoples locations to the map
+        locationMarkers.forEach((marker) => marker.remove());
+        locationMarkers = [];
+        locations.forEach((location) => {
+            locationMarkers.push(new mapboxgl.Marker({color: '#003DD0'}).setLngLat(location));
+        });
+        locationMarkers.forEach((marker) => marker.addTo(map!));
+        const factor = 0.01;
 
-				let m = new mapboxgl.Marker(el).setLngLat(feature.coordinate);
-				m.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
-				m.getElement().addEventListener('click',()=>onMarkerClick(feature.id))
-				markers.set(feature.id, m);
-			});
-			markers.forEach((marker) => marker.addTo(map!));
-		}
-	}
+        map.fitBounds([
+            [locations[0].lng + factor, locations[0].lat - factor],
+            [locations[1].lng - factor, locations[1].lat + factor]
+        ]);
 
-    function onMarkerClick(id:string){
+
+        // add the features to the map
+        if (response) {
+            markers.forEach((marker) => marker.remove());
+            markers.clear();
+            response.forEach((feature: Feature) => {
+                let el = createCustomMarker(feature)
+                let m = new mapboxgl.Marker(el).setLngLat(feature.coordinate);
+                m.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
+                m.getElement().addEventListener('click', () => onMarkerClick(feature.id))
+                markers.set(feature.id, m);
+            });
+            markers.forEach((marker) => marker.addTo(map!));
+        }
+    }
+
+    function onMarkerClick(id: string) {
         hoverdPointId = id;
     }
 
@@ -61,59 +65,134 @@
                 value.togglePopup();
             }
         });
-        if (hoverdPointId != null){
+        if (hoverdPointId != null) {
             markers.get(hoverdPointId)?.togglePopup();
         }
     }
 
-	onMount(() => {
-		createMap();
-	});
+    onMount(() => {
+        createMap();
+    });
 
-	function createMap() {
-		map = new mapboxgl.Map({
-			accessToken: accessToken,
-			container: mapElement,
-			interactive: true,
-			style: getStyle(),
-			center: { lng: 10, lat: 51 },
-			zoom: viewState.zoom,
-			pitch: viewState.pitch,
-			bearing: viewState.bearing
-		});
-		map.addControl(new mapboxgl.NavigationControl({ showZoom: true }));
-		map.setCenter(middle);
-	}
-	
-	function changeStyle() {
-		if(map != null) map.setStyle(getStyle());
-  	};
-	
-	const getStyle = () => {
-		return `mapbox://styles/mapbox/${localStorage.theme === 'dark' ? 'light' : 'dark'}-v9`;
-	};
+    function createMap() {
+        map = new mapboxgl.Map({
+            accessToken: accessToken,
+            container: mapElement,
+            interactive: true,
+            style: getStyle(),
+            center: {lng: 10, lat: 51},
+            zoom: viewState.zoom,
+            pitch: viewState.pitch,
+            bearing: viewState.bearing
+        });
+        map.addControl(new mapboxgl.NavigationControl({showZoom: true}));
+        map.setCenter(middle);
 
-	function createCustomMarker(feature: Feature) {
-		let el = document.createElement('div');
-		el.style.background =  'url(/marker.svg) center center no-repeat'; // Replace with the path to your Maki icon
-		el.style.backgroundSize = '25px';
-		el.style.width = '45px';
-		el.style.height = '45px';
+        const geojson = {
+            type: 'geojson',
+            data: {
+              type: "LineString",
+            }
+        };
 
-		let img = document.createElement('img');
-		img.setAttribute("src", '/icons/' + feature.maki + '.svg');
-		img.style.margin = 'auto';
-		img.style.marginTop = '17%'
-		img.style.width = '33%';
-		img.style.height = '33%';
-		
-		el.appendChild(img)
+        map.addSource('point', {
+            type: 'geojson',
+            data: geojson
+        });
 
-		return el	
-	}
+        map.addLayer({
+            'id': 'point',
+            'type': 'circle',
+            'source': 'point',
+            'paint': {
+                'circle-radius': 10,
+                'circle-color': '#F84C4C' // red color
+            }
+        });
+
+        map!.on('mouseenter', 'point', () => {
+            map!.setPaintProperty('point', 'circle-color', '#3bb2d0');
+            canvas.style.cursor = 'move';
+        });
+
+        map!.on('mouseleave', 'point', () => {
+            map!.setPaintProperty('point', 'circle-color', '#3887be');
+            canvas.style.cursor = '';
+        });
+
+        map!.on('mousedown', 'point', (e) => {
+            e.preventDefault();
+
+            canvas.style.cursor = 'grab';
+
+            map!.on('mousemove', onMove);
+            map!.once('mouseup', onUp);
+        });
+
+        map!.on('touchstart', 'point', (e) => {
+            if (e.points.length !== 1) return;
+
+            e.preventDefault();
+
+            map!.on('touchmove', onMove);
+            map!.once('touchend', onUp);
+        });
+    }
+
+    function changeStyle() {
+        if (map != null) map.setStyle(getStyle());
+    };
+
+    function onMove(e: any) {
+
+        const coords = e.lngLat;
+
+        canvas.style.cursor = 'grabbing';
+
+        geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
+
+        map!.getSource('point').setData(geojson);
+    }
+
+    const coordinates = document.getElementById('coordinates');
+
+    function onUp(e: any) {
+        const coords = e.lngLat;
+
+
+        coordinates!.style.display = 'block';
+        coordinates!.innerHTML = `Longitude: ${coords.lng}<br />Latitude: ${coords.lat}`;
+        canvas.style.cursor = '';
+
+        map!.off('mousemove', onMove);
+        map!.off('touchmove', onMove);
+    }
+
+    const getStyle = () => {
+        return `mapbox://styles/mapbox/${localStorage.theme === 'dark' ? 'light' : 'dark'}-v9`;
+    };
+
+    function createCustomMarker(feature: Feature) {
+        let el = document.createElement('div');
+        el.style.background = 'url(/marker.svg) center center no-repeat'; // Replace with the path to your Maki icon
+        el.style.backgroundSize = '25px';
+        el.style.width = '45px';
+        el.style.height = '45px';
+
+        let img = document.createElement('img');
+        img.setAttribute("src", '/icons/' + feature.maki + '.svg');
+        img.style.margin = 'auto';
+        img.style.marginTop = '17%'
+        img.style.width = '33%';
+        img.style.height = '33%';
+
+        el.appendChild(img)
+
+        return el
+    }
 </script>
 
-<div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement} />
+<div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement}/>
 <button on:click={() => changeStyle()} class="absolute top-2 right-12 z-20">
-	<ThemeSwitch />
+    <ThemeSwitch/>
 </button>
