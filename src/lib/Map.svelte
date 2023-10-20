@@ -1,7 +1,6 @@
 <script lang="ts">
-    import {onMount, afterUpdate} from 'svelte';
-    import mapboxgl from 'mapbox-gl';
-    import type {GeoJSONSourceRaw} from 'mapbox-gl';
+    import {onMount} from 'svelte';
+    import mapboxgl, {GeoJSONSource, MapMouseEvent} from 'mapbox-gl';
     import type {Coordinate, Feature} from '../app';
     import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 
@@ -20,7 +19,56 @@
 
     let markers = new Map<string, mapboxgl.Marker>();
 
-    const canvas = map!.getCanvasContainer();
+    let canvas: any;
+
+    let geojson: any = {
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [0, 0]
+                }
+            }
+        ]
+    };
+
+    let changeZone : boolean;
+    changeZone = true;
+
+    function initChangeZone(){
+        if (map != null){
+            console.log("Hals maul");
+
+            canvas = map.getCanvasContainer();
+
+            geojson.features[0].geometry.coordinates = [middle.lng,middle.lat];
+
+            if (map.getLayer('point') != undefined) {
+                map.removeLayer('point');
+            }
+
+            if (map.getSource('point') != undefined) {
+                map.removeSource('point');
+            }
+
+            map.addSource('point', {
+                type: 'geojson',
+                data: geojson,
+            });
+
+            map.addLayer({
+                'id': 'point',
+                'type': 'circle',
+                'source': 'point',
+                'paint': {
+                    'circle-radius': 10,
+                    'circle-color': '#F84C4C' // red color
+                }
+            });
+        }
+    }
 
     $: if (map != null && middle && locations) {
         map.setCenter(middle);
@@ -85,65 +133,46 @@
             pitch: viewState.pitch,
             bearing: viewState.bearing
         });
+
         map.addControl(new mapboxgl.NavigationControl({showZoom: true}));
+
         map.setCenter(middle);
 
-        const geojson = {
-            type: 'geojson',
-            data: {
-              type: "LineString",
-            }
-        };
-
-        map.addSource('point', {
-            type: 'geojson',
-            data: geojson
-        });
-
-        map.addLayer({
-            'id': 'point',
-            'type': 'circle',
-            'source': 'point',
-            'paint': {
-                'circle-radius': 10,
-                'circle-color': '#F84C4C' // red color
-            }
-        });
-
-        map!.on('mouseenter', 'point', () => {
-            map!.setPaintProperty('point', 'circle-color', '#3bb2d0');
+        map.on('mouseenter', 'point', () => {
+            map?.setPaintProperty('point', 'circle-color', '#3bb2d0');
             canvas.style.cursor = 'move';
         });
 
-        map!.on('mouseleave', 'point', () => {
-            map!.setPaintProperty('point', 'circle-color', '#3887be');
+        map.on('mouseleave', 'point', () => {
+            map?.setPaintProperty('point', 'circle-color', '#3887be');
             canvas.style.cursor = '';
         });
 
-        map!.on('mousedown', 'point', (e) => {
+        map.on('mousedown', 'point', (e) => {
             e.preventDefault();
 
             canvas.style.cursor = 'grab';
 
-            map!.on('mousemove', onMove);
-            map!.once('mouseup', onUp);
+            map?.on('mousemove', onMove);
+            map?.once('mouseup', onUp);
         });
 
-        map!.on('touchstart', 'point', (e) => {
+        map.on('touchstart', 'point', (e) => {
             if (e.points.length !== 1) return;
 
             e.preventDefault();
 
-            map!.on('touchmove', onMove);
-            map!.once('touchend', onUp);
+            map?.on('touchmove', onMove);
+            map?.once('touchend', onUp);
         });
+        initChangeZone();
     }
 
     function changeStyle() {
         if (map != null) map.setStyle(getStyle());
-    };
+    }
 
-    function onMove(e: any) {
+    function onMove(e: MapMouseEvent) {
 
         const coords = e.lngLat;
 
@@ -151,21 +180,23 @@
 
         geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
 
-        map!.getSource('point').setData(geojson);
+        if (map != null){
+            let tmp : GeoJSONSource = <GeoJSONSource> map.getSource('point');
+            tmp.setData(geojson);
+        }
     }
 
-    const coordinates = document.getElementById('coordinates');
-
-    function onUp(e: any) {
+    function onUp(e: MapMouseEvent) {
         const coords = e.lngLat;
 
+        console.log(coords.lng + coords.lat);
 
-        coordinates!.style.display = 'block';
-        coordinates!.innerHTML = `Longitude: ${coords.lng}<br />Latitude: ${coords.lat}`;
+        //Request an Mapbox
+
         canvas.style.cursor = '';
 
-        map!.off('mousemove', onMove);
-        map!.off('touchmove', onMove);
+        map?.off('mousemove', onMove);
+        map?.off('touchmove', onMove);
     }
 
     const getStyle = () => {
