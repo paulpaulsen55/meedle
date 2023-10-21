@@ -37,6 +37,9 @@
     let changeZone: boolean;
     changeZone = true;
 
+    $: changeZone, toggleZone();
+
+
     function toggleZone() {
         if (map != null) {
             if (map.getLayer('point') != undefined) {
@@ -72,7 +75,17 @@
                     'type': 'circle',
                     'source': 'point',
                     'paint': {
-                        'circle-radius': 10,
+                        'circle-radius': [
+                            'interpolate',
+                            ['exponential', 2],
+                            ['zoom'],
+                            0, 0,
+                            20, [
+                                '/',
+                                ['/', 5000, 0.075],
+                                ['cos', ['*', ['get', 'lat'], ['/', Math.PI, 180]]],
+                            ],
+                        ],
                         'circle-color': '#F84C4C' // red color
                     }
                 });
