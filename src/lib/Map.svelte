@@ -34,17 +34,11 @@
         ]
     };
 
-    let changeZone : boolean;
+    let changeZone: boolean;
     changeZone = true;
 
-    function initChangeZone(){
-        if (map != null){
-            console.log("Hals maul");
-
-            canvas = map.getCanvasContainer();
-
-            geojson.features[0].geometry.coordinates = [middle.lng,middle.lat];
-
+    function toggleZone() {
+        if (map != null) {
             if (map.getLayer('point') != undefined) {
                 map.removeLayer('point');
             }
@@ -53,25 +47,43 @@
                 map.removeSource('point');
             }
 
-            map.addSource('point', {
-                type: 'geojson',
-                data: geojson,
-            });
+            if (changeZone) {
+                console.log("Hals maul");
 
-            map.addLayer({
-                'id': 'point',
-                'type': 'circle',
-                'source': 'point',
-                'paint': {
-                    'circle-radius': 10,
-                    'circle-color': '#F84C4C' // red color
+                canvas = map.getCanvasContainer();
+
+                geojson.features[0].geometry.coordinates = [middle.lng, middle.lat];
+
+                if (map.getLayer('point') != undefined) {
+                    map.removeLayer('point');
                 }
-            });
+
+                if (map.getSource('point') != undefined) {
+                    map.removeSource('point');
+                }
+
+                map.addSource('point', {
+                    type: 'geojson',
+                    data: geojson,
+                });
+
+                map.addLayer({
+                    'id': 'point',
+                    'type': 'circle',
+                    'source': 'point',
+                    'paint': {
+                        'circle-radius': 10,
+                        'circle-color': '#F84C4C' // red color
+                    }
+                });
+            }
         }
     }
 
     $: if (map != null && middle && locations) {
         map.setCenter(middle);
+
+        toggleZone();
 
         // add all peoples locations to the map
         locationMarkers.forEach((marker) => marker.remove());
@@ -87,17 +99,16 @@
             [locations[1].lng - factor, locations[1].lat + factor]
         ]);
 
-
         // add the features to the map
         if (response) {
             markers.forEach((marker) => marker.remove());
             markers.clear();
             response.forEach((feature: Feature) => {
-                let el = createCustomMarker(feature)
-                let m = new mapboxgl.Marker(el).setLngLat(feature.coordinate);
-                m.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
-                m.getElement().addEventListener('click', () => onMarkerClick(feature.id))
-                markers.set(feature.id, m);
+                let customMarker = createCustomMarker(feature)
+                let marker = new mapboxgl.Marker(customMarker).setLngLat(feature.coordinate);
+                marker.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
+                marker.getElement().addEventListener('click', () => onMarkerClick(feature.id))
+                markers.set(feature.id, marker);
             });
             markers.forEach((marker) => marker.addTo(map!));
         }
@@ -136,8 +147,6 @@
 
         map.addControl(new mapboxgl.NavigationControl({showZoom: true}));
 
-        map.setCenter(middle);
-
         map.on('mouseenter', 'point', () => {
             map?.setPaintProperty('point', 'circle-color', '#3bb2d0');
             canvas.style.cursor = 'move';
@@ -165,7 +174,6 @@
             map?.on('touchmove', onMove);
             map?.once('touchend', onUp);
         });
-        initChangeZone();
     }
 
     function changeStyle() {
@@ -180,8 +188,8 @@
 
         geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
 
-        if (map != null){
-            let tmp : GeoJSONSource = <GeoJSONSource> map.getSource('point');
+        if (map != null) {
+            let tmp: GeoJSONSource = <GeoJSONSource>map.getSource('point');
             tmp.setData(geojson);
         }
     }
