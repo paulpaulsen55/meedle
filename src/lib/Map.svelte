@@ -3,6 +3,9 @@
     import mapboxgl, {GeoJSONSource, MapMouseEvent} from 'mapbox-gl';
     import type {Coordinate, Feature} from '../app';
     import ThemeSwitch from '$lib/ThemeSwitch.svelte';
+    import {createEventDispatcher} from 'svelte'
+
+    const dispatch = createEventDispatcher();
 
     export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
     export let hoverdPointId: string | null;
@@ -34,11 +37,25 @@
         ]
     };
 
-    let changeZone: boolean;
-    changeZone = true;
+    export let changeZone: boolean = false;
+
 
     $: changeZone, toggleZone();
 
+
+    function getCircleRadius(meters: number, lat: number) {
+        const metersToPixelsAtMaxZoom = (meters: number, latitude: number) =>
+            meters / 0.019 / Math.cos(latitude * Math.PI / 180);
+
+        return {
+                stops: [
+                    [0, 0],
+                    [22, metersToPixelsAtMaxZoom(meters, lat)]
+                ],
+                base: 2
+
+        };
+    }
 
     function toggleZone() {
         if (map != null) {
@@ -46,10 +63,14 @@
                 map.removeLayer('point');
             }
 
-            if (map.getSource('point') != undefined) {
-                map.removeSource('point');
+            if (map.getLayer('visualiseRadius') != undefined) {
+                map.removeLayer('visualiseRadius');
             }
 
+            if (map.getSource('point') != undefined) {
+                map.removeSource('point');
+
+            }
             if (changeZone) {
                 console.log("Hals maul");
 
@@ -57,17 +78,21 @@
 
                 geojson.features[0].geometry.coordinates = [middle.lng, middle.lat];
 
-                if (map.getLayer('point') != undefined) {
-                    map.removeLayer('point');
-                }
-
-                if (map.getSource('point') != undefined) {
-                    map.removeSource('point');
-                }
-
                 map.addSource('point', {
                     type: 'geojson',
                     data: geojson,
+                });
+
+
+                map.addLayer({
+                    'id': 'visualiseRadius',
+                    'type': 'circle',
+                    'source': 'point',
+                    'paint': {
+                        "circle-radius": getCircleRadius(5000, middle.lat),
+                        'circle-color': '#F84C4C', // red color
+                        "circle-opacity": 0.50
+                    }
                 });
 
                 map.addLayer({
@@ -75,18 +100,9 @@
                     'type': 'circle',
                     'source': 'point',
                     'paint': {
-                        'circle-radius': [
-                            'interpolate',
-                            ['exponential', 2],
-                            ['zoom'],
-                            0, 0,
-                            20, [
-                                '/',
-                                ['/', 5000, 0.075],
-                                ['cos', ['*', ['get', 'lat'], ['/', Math.PI, 180]]],
-                            ],
-                        ],
-                        'circle-color': '#F84C4C' // red color
+                        "circle-radius": getCircleRadius(100, middle.lat),
+                        'circle-color': '#3cd025', // red color
+                        "circle-opacity": 0.50
                     }
                 });
             }
@@ -208,11 +224,12 @@
     }
 
     function onUp(e: MapMouseEvent) {
-        const coords = e.lngLat;
+        const coords: Coordinate = e.lngLat;
 
-        console.log(coords.lng + coords.lat);
+        //console.log(coords.lng + coords.lat);
 
         //Request an Mapbox
+        dispatch('newMiddle', coords);
 
         canvas.style.cursor = '';
 

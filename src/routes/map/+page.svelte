@@ -13,9 +13,15 @@
 	import type { Tag } from '@melt-ui/svelte';
 	import type { Coordinate, Feature, Address } from '../../app';
 	import type { Unsubscriber } from 'svelte/store';
+	import {createSwitch,melt} from "@melt-ui/svelte";
+	import ShowRadiusSwitch from "../../ShowRadiusSwitch.svelte";
 
 	export let data;
 	let hoverdPointId: string | null;
+
+	const {
+		elements: { root, input },
+	} = createSwitch();
 
 	const sus: Address = { title: '', address: '' };
 	let loc = { location1: sus, location2: sus },
@@ -35,6 +41,13 @@
 		features: Feature[],
 		edit = true,
 		asideWrapper: AsideWrapper;
+
+	async function handleNewMiddle(event:CustomEvent<Coordinate>) {
+		console.log(event.detail.lng);
+
+		average = event.detail;
+		features = await pointToFeatures(category, event.detail);
+	}
 
 	async function handleSubmit() {
 		if (!location1 || !location2) return;
@@ -113,12 +126,12 @@
 		{#if features}
 			<Accordion response={features} bind:hoverdPointId />
 		{/if}
-		<div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
+		<ShowRadiusSwitch/>
 	</AsideWrapper>
 	<div class="absolute md:ml-96 z-10 p-1">
 		<TagsSettings on:updateTags={handleTagsSetting} />
 	</div>
 
-	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
+	<Map middle={average} response={features} locations={points} bind:hoverdPointId on:newMiddle={handleNewMiddle} />
 </div>
 
