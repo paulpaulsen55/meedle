@@ -97,8 +97,6 @@
 					<AdressSettings bind:radius bind:poi />
 					<button
 						on:click={() => {
-							console.log(location1, location2, "aa");
-							
 							handleSubmit();
 							edit = false;
 						}}
