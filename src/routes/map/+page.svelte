@@ -125,7 +125,7 @@
 	</div>
 
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
-	{#if location1.address != '' && location2.address != ''}
+	{#if location1.address != '' && location2.address != '' && !edit}
 		<div class="absolute top-2 right-12">
 			<Share bind:category />
 		</div>
