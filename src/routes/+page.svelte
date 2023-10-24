@@ -212,8 +212,8 @@
 				Aus diesem Grund war es die einzig richtige Schlussfolgerung, Meedle zu gründen: Die perfekte Plattform, um deeinen nächsten Treffpunkt zu ermitteln.
 			</p>
 		</div>
-		<img src="/team.jpeg" alt="team" class="h-[auto] w-full">
-		<img src="/software.jpeg" alt="entwicklung" class="h-[auto] w-full">
+		<img src="/team.jpeg" alt="team" class="h-[auto] w-full rounded-md">
+		<img src="/software.jpeg" alt="entwicklung" class="h-[auto] w-full rounded-md">
 		<div>
 			<h2 class="text-2xl font-semibold mb-5 dark:text-black text-white">Entwicklung</h2>
 			<p class="dark:text-black text-white">

@@ -4,34 +4,29 @@
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
 	import { FileEdit } from 'lucide-svelte';
-	import { locations as lol, poi as p, radius as r } from '../../store';
+	import { locations, poi as p, radius as r } from '../../store';
 	import Map from '$lib/Map.svelte';
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import TagsSettings from '$lib/TagsSettings.svelte';
 	import LocationSwitch from '$lib/LocationSwitch.svelte';
 	import AsideWrapper from '$lib/AsideWrapper.svelte';
+	import Share from '$lib/Share.svelte';
 	import type { Tag } from '@melt-ui/svelte';
 	import type { Coordinate, Feature, Address } from '../../app';
 	import type { Unsubscriber } from 'svelte/store';
 
 	export let data;
-	let hoverdPointId: string | null;
-
-	const sus: Address = { title: '', address: '' };
-	let loc = { location1: sus, location2: sus },
+	let hoverdPointId: string | null,
 		radius = 0,
 		poi = 0;
-	const unsubscribe: Unsubscriber = lol.subscribe((value) => {
-		loc = value;
-	});
 	const unsubscribeRad: Unsubscriber = r.subscribe((value) => (radius = value));
 	const unsubscribePoi: Unsubscriber = p.subscribe((value) => (poi = value));
 
-	let location1 = loc.location1,
-		location2 = loc.location2,
+	let location1: Address = { title: '', address: '' },
+		location2: Address = { title: '', address: '' },
 		average: Coordinate,
 		points: Coordinate[] = [],
-		category = ['food_and_drink'],
+		category: string[] = ['food_and_drink'],
 		features: Feature[],
 		edit = true,
 		asideWrapper: AsideWrapper;
@@ -41,7 +36,7 @@
 
 		const point1 = await pointToCoordinates(location1);
 		const point2 = await pointToCoordinates(location2);
-		lol.set({
+		locations.set({
 			location1: { title: location1.title, address: location1.address, coordinate: point1 },
 			location2: { title: location2.title, address: location2.address, coordinate: point2 }
 		});
@@ -67,14 +62,22 @@
 
 	// loads data only when both locations are set through the store - prevents unnecessary api calls
 	onMount(() => {
-		location1 = loc.location1;
-		location2 = loc.location2;
+		if (data.location1 != undefined){
+			p.set(data.poi);
+			r.set(data.radius);
+			location1 = {title: data.location1.split(',')[0], address: data.location1};
+			location2 = {title: data.location2.split(',')[0], address: data.location2};
+			for (let i = 0; i < data.tags.length; i++) {
+				category.push(data.tags[i].id);
+			}
+		} else {
+			location1 = $locations.location1.title != '' ? $locations.location1 : { title: '', address: '' };
+			location2 = $locations.location2.title != '' ? $locations.location2 : { title: '', address: '' };
+		}
 
 		if (location1.title != '' && location2.title != '') {
 			handleSubmit();
 			edit = false;
-		} else {
-			edit = true;
 		}
 	});
 
@@ -103,7 +106,7 @@
 			</div>
 		{:else}
 			<div class="flex gap-5 mt-5 items-end justify-between select-none">
-				<LocationSwitch locations={loc} />
+				<LocationSwitch locations={$locations} />
 				<button type="button" on:click={() => (edit = true)} class="">
 					<FileEdit class="h-6 mb-1 dark:text-black text-white"/>
 				</button>
@@ -116,9 +119,14 @@
 		<div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
 	</AsideWrapper>
 	<div class="absolute md:ml-96 z-10 p-1">
-		<TagsSettings on:updateTags={handleTagsSetting} />
+		<TagsSettings on:updateTags={handleTagsSetting} defaultTags={data.tags} />
 	</div>
 
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
+	{#if location1.address != '' && location2.address != '' && !edit}
+		<div class="absolute top-2 right-12">
+			<Share bind:category />
+		</div>
+	{/if}
 </div>
 
