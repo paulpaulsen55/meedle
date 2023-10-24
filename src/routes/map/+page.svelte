@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import { pointToCoordinates, pointToFeatures } from '$lib/helpers/mapbox';
 	import { FileEdit } from 'lucide-svelte';
-	import { locations as lol, poi as p, radius as r } from '../../store';
+	import { locations, poi as p, radius as r } from '../../store';
 	import Map from '$lib/Map.svelte';
 	import AdressSettings from '$lib/AdressSettings.svelte';
 	import TagsSettings from '$lib/TagsSettings.svelte';
@@ -16,20 +16,14 @@
 	import type { Unsubscriber } from 'svelte/store';
 
 	export let data;
-	let hoverdPointId: string | null;
-
-	const sus: Address = { title: '', address: '' };
-	let loc = { location1: sus, location2: sus },
+	let hoverdPointId: string | null,
 		radius = 0,
 		poi = 0;
-	const unsubscribe: Unsubscriber = lol.subscribe((value) => {
-		loc = value;
-	});
 	const unsubscribeRad: Unsubscriber = r.subscribe((value) => (radius = value));
 	const unsubscribePoi: Unsubscriber = p.subscribe((value) => (poi = value));
 
-	let location1 = loc.location1,
-		location2 = loc.location2,
+	let location1: Address = { title: '', address: '' },
+		location2: Address = { title: '', address: '' },
 		average: Coordinate,
 		points: Coordinate[] = [],
 		category: string[] = ['food_and_drink'],
@@ -42,7 +36,7 @@
 
 		const point1 = await pointToCoordinates(location1);
 		const point2 = await pointToCoordinates(location2);
-		lol.set({
+		locations.set({
 			location1: { title: location1.title, address: location1.address, coordinate: point1 },
 			location2: { title: location2.title, address: location2.address, coordinate: point2 }
 		});
@@ -77,15 +71,13 @@
 				category.push(data.tags[i].id);
 			}
 		} else {
-			location1 = loc.location1;
-			location2 = loc.location2;
+			location1 = $locations.location1.title != '' ? $locations.location1 : { title: '', address: '' };
+			location2 = $locations.location2.title != '' ? $locations.location2 : { title: '', address: '' };
 		}
 
 		if (location1.title != '' && location2.title != '') {
 			handleSubmit();
 			edit = false;
-		} else {
-			edit = true;
 		}
 	});
 
@@ -105,6 +97,8 @@
 					<AdressSettings bind:radius bind:poi />
 					<button
 						on:click={() => {
+							console.log(location1, location2, "aa");
+							
 							handleSubmit();
 							edit = false;
 						}}
@@ -114,7 +108,7 @@
 			</div>
 		{:else}
 			<div class="flex gap-5 mt-5 items-end justify-between select-none">
-				<LocationSwitch locations={loc} />
+				<LocationSwitch locations={$locations} />
 				<button type="button" on:click={() => (edit = true)} class="">
 					<FileEdit class="h-6 mb-1 dark:text-black text-white"/>
 				</button>
@@ -131,7 +125,7 @@
 	</div>
 
 	<Map middle={average} response={features} locations={points} bind:hoverdPointId />
-	{#if location1.address != ''}
+	{#if location1.address != '' && location2.address != ''}
 		<div class="absolute top-2 right-12">
 			<Share bind:category />
 		</div>

@@ -2,7 +2,6 @@
 	import { createDialog, melt } from "@melt-ui/svelte";
     import { Share2, Copy, Check, PartyPopper } from "lucide-svelte";
     import { Confetti } from "svelte-confetti"
-	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
     import { locations, poi, radius } from "../store";
 
@@ -24,11 +23,10 @@
         }, 500);
     }
 
-    onMount(() => {
-        // if the user has not selected a location, the link will not be generated
-        if (!$locations.location1 || !$locations.location2 || !$poi || !$radius) return;
-        link = window.location.host + "/map?r=" + $radius + "&p=" + $poi + "&a1=" + $locations.location1.address + "&a2=" + $locations.location2.address + "&t=" + category.join(",");
-    })
+    $ : {
+            if ($locations.location1 && $locations.location2 && $poi && $radius)
+                link = window.location.host + "/map?r=" + $radius + "&p=" + $poi + "&a1=" + $locations.location1.address + "&a2=" + $locations.location2.address + "&t=" + category.join(",");
+        }
 </script>
 
 <button class="bg-magnum-300 text-magnum-900 p-3 rounded-md" use:melt={$trigger}>
