@@ -3,6 +3,7 @@
     import mapboxgl, {GeoJSONSource, MapMouseEvent} from 'mapbox-gl';
     import type {Coordinate, Feature} from '../app';
     import ThemeSwitch from '$lib/ThemeSwitch.svelte';
+    import {radius as r} from '../store';
     import {createEventDispatcher} from 'svelte'
 
     const dispatch = createEventDispatcher();
@@ -14,7 +15,7 @@
     let map: mapboxgl.Map | null = null;
     let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
     let viewState = {
-        zoom: 3,
+        zoom: 5,
         pitch: 0,
         bearing: 0
     };
@@ -86,7 +87,7 @@
                     'type': 'circle',
                     'source': 'point',
                     'paint': {
-                        "circle-radius": getCircleRadius(5000, middle.lat),
+                        "circle-radius": getCircleRadius($r*1000, middle.lat),
                         'circle-color': '#F84C4C', // red color
                         "circle-opacity": 0.50
                     }
@@ -107,7 +108,6 @@
     }
 
     $: if (map != null && middle && locations) {
-        map.setCenter(middle);
 
         toggleZone();
 

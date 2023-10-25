@@ -1,40 +1,35 @@
 <script lang="ts">
-    import { createSwitch, melt } from '@melt-ui/svelte';
-    import {createEventDispatcher} from 'svelte'
+    import {createSwitch, melt} from '@melt-ui/svelte';
 
-    const dispatch = createEventDispatcher();
+    export let changeZone: boolean;
 
     const {
-        elements: { root, input},
-        states: { checked }
+        elements: {root, input},
+        states: {checked}
     } = createSwitch();
 
-    $: dispatch('zoneChanged', checked);
+    checked.subscribe(value => changeZone = value);
 
-    checked.subscribe(value => dispatch('zoneChanged', value));
+    $:checked.set(changeZone);
 
 </script>
-
-<form>
+<div class="flex justify-center">
     <div class="flex items-center">
-        <label
-                class="pr-4 leading-none text-magnum-900"
-                for="airplane-mode"
-                id="airplane-mode-label"
+        <span
+                class="pr-4 leading-none dark:text-black text-white"
         >
-            Show Radius
-        </label>
+            Radius Anzeigen
+        </span>
         <button
                 use:melt={$root}
-                class="relative h-6 cursor-default rounded-full bg-magnum-800 transition-colors data-[state=checked]:bg-magnum-950"
-                id="airplane-mode"
-                aria-labelledby="airplane-mode-label"
+                class="relative h-6 cursor-default rounded-full dark:bg-slate-400 bg-neutral-500 transition-colors data-[state=checked]:bg-magnum-400 dark:data-[state=checked]:bg-magnum-400"
+
         >
-            <span class="thumb block rounded-full bg-white transition" />
+            <span class="thumb block rounded-full bg-white transition"/>
         </button>
-        <input use:melt={$input} />
+        <input use:melt={$input}/>
     </div>
-</form>
+</div>
 
 <style>
     button {
