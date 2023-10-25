@@ -88,8 +88,9 @@
                     'source': 'point',
                     'paint': {
                         "circle-radius": getCircleRadius($r*1000, middle.lat),
-                        'circle-color': '#F84C4C', // red color
-                        "circle-opacity": 0.50
+                        "circle-opacity": 0,
+                        "circle-stroke-width": 1,
+                        "circle-stroke-color": '#F84C4C',
                     }
                 });
 
@@ -99,8 +100,9 @@
                     'source': 'point',
                     'paint': {
                         "circle-radius": getCircleRadius(100, middle.lat),
-                        'circle-color': '#3cd025', // red color
-                        "circle-opacity": 0.50
+                        'circle-color': '#f9c978', // red color
+                        "circle-opacity": 0.50,
+
                     }
                 });
             }
@@ -174,12 +176,12 @@
         map.addControl(new mapboxgl.NavigationControl({showZoom: true}));
 
         map.on('mouseenter', 'point', () => {
-            map?.setPaintProperty('point', 'circle-color', '#3bb2d0');
+            map?.setPaintProperty('point', 'circle-color', '#fce0ac');
             canvas.style.cursor = 'move';
         });
 
         map.on('mouseleave', 'point', () => {
-            map?.setPaintProperty('point', 'circle-color', '#3887be');
+            map?.setPaintProperty('point', 'circle-color', '#f9c978');
             canvas.style.cursor = '';
         });
 
