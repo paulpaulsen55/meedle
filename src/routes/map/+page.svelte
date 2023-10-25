@@ -94,6 +94,7 @@
     $ : if (hoverdPointId != null) {
         asideWrapper.setOpen(true);
     }
+
 </script>
 
 <div class="flex relative overflow-hidden touch-none">
@@ -128,7 +129,7 @@
             <Accordion response={features} bind:hoverdPointId/>
             <ShowRadiusSwitch bind:changeZone/>
         {/if}
-
+      <div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
     </AsideWrapper>
     <div class="absolute md:ml-96 z-10 p-1">
         <TagsSettings on:updateTags={handleTagsSetting}/>
@@ -136,5 +137,6 @@
 
     <Map middle={average} response={features} locations={points} bind:hoverdPointId on:newMiddle={handleNewMiddle}
          bind:changeZone/>
+
 </div>
 
