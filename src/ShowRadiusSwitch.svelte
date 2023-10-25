@@ -13,7 +13,7 @@
     $:checked.set(changeZone);
 
 </script>
-<div class="flex justify-center">
+<div class="flex justify-center relative z-20">
     <div class="flex items-center">
         <span
                 class="pr-4 leading-none dark:text-black text-white"
