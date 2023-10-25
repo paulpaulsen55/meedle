@@ -1,11 +1,17 @@
 <script lang="ts">
     import { createSwitch, melt } from '@melt-ui/svelte';
+    import {createEventDispatcher} from 'svelte'
+
+    const dispatch = createEventDispatcher();
 
     const {
         elements: { root, input},
         states: { checked }
     } = createSwitch();
 
+    $: dispatch('zoneChanged', checked);
+
+    checked.subscribe(value => dispatch('zoneChanged', value));
 
 </script>
 

@@ -7,7 +7,7 @@
 
     const dispatch = createEventDispatcher();
 
-    export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>;
+    export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>,changeZone:boolean;
     export let hoverdPointId: string | null;
 
     let mapElement: HTMLElement;
@@ -36,9 +36,6 @@
             }
         ]
     };
-
-    export let changeZone: boolean = false;
-
 
     $: changeZone, toggleZone();
 

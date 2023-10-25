@@ -40,13 +40,18 @@
 		category = ['food_and_drink'],
 		features: Feature[],
 		edit = true,
-		asideWrapper: AsideWrapper;
+		asideWrapper: AsideWrapper,
+		changeZone:boolean;
 
 	async function handleNewMiddle(event:CustomEvent<Coordinate>) {
 		console.log(event.detail.lng);
 
 		average = event.detail;
 		features = await pointToFeatures(category, event.detail);
+	}
+
+	function handleZoneChange(event:CustomEvent<boolean>){
+		changeZone = event.detail;
 	}
 
 	async function handleSubmit() {
@@ -126,12 +131,12 @@
 		{#if features}
 			<Accordion response={features} bind:hoverdPointId />
 		{/if}
-		<ShowRadiusSwitch/>
+		<ShowRadiusSwitch on:zoneChanged={handleZoneChange}/>
 	</AsideWrapper>
 	<div class="absolute md:ml-96 z-10 p-1">
 		<TagsSettings on:updateTags={handleTagsSetting} />
 	</div>
 
-	<Map middle={average} response={features} locations={points} bind:hoverdPointId on:newMiddle={handleNewMiddle} />
+	<Map middle={average} response={features} locations={points} bind:hoverdPointId on:newMiddle={handleNewMiddle} bind:changeZone  />
 </div>
 
