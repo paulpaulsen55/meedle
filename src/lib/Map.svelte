@@ -263,11 +263,11 @@
 </script>
 
 <div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement} />
-<div class="svg-container bottom-60 right-2 z-0 h-8 w-8 " on:click={()=> changeZone = !changeZone}>
+<div class="svg-container absolute bottom-16 right-2 z-0  " on:click={()=> changeZone = !changeZone}>
 	{#if changeZone}
-			<CircleDotDashed/>
+			<CircleDotDashed class="h-8 w-8"/>
 	{:else}
-			<CircleDot/>
+			<CircleDot class="h-8 w-8"/>
 	{/if}
 </div>
 <button on:click={() => changeStyle()} class="absolute bottom-28 md:bottom-6 right-2 z-0">

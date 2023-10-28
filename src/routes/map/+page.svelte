@@ -8,12 +8,11 @@
     import Map from '$lib/Map.svelte';
     import AdressSettings from '$lib/AdressSettings.svelte';
     import TagsSettings from '$lib/TagsSettings.svelte';
-    import LocationSwitch from '$lib/LocationSwitch.svelte';
     import AsideWrapper from '$lib/AsideWrapper.svelte';
     import type {Tag} from '@melt-ui/svelte';
     import type {Coordinate, Feature, Address} from '../../app';
     import type {Unsubscriber} from 'svelte/store';
-    import ShowRadiusSwitch from "../../ShowRadiusSwitch.svelte";
+    import LocationSwitch from "$lib/LocationSwitch.svelte";
 
     export let data;
     let hoverdPointId: string | null;
@@ -126,7 +125,6 @@
 
         {#if features}
             <Accordion response={features} bind:hoverdPointId/>
-            <ShowRadiusSwitch bind:changeZone/>
         {/if}
       <div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
     </AsideWrapper>
