@@ -39,7 +39,6 @@
         changeZone: boolean;
 
     async function handleNewMiddle(event: CustomEvent<Coordinate>) {
-        console.log(event.detail.lng);
 
         average = event.detail;
         features = await pointToFeatures(category, event.detail);

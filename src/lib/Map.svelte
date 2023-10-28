@@ -4,7 +4,9 @@
     import type {Coordinate, Feature} from '../app';
     import ThemeSwitch from '$lib/ThemeSwitch.svelte';
     import {radius as r} from '../store';
-    import {createEventDispatcher} from 'svelte'
+    import {createEventDispatcher} from 'svelte';
+	import { CircleDotDashed } from 'lucide-svelte';
+	import { CircleDot } from 'lucide-svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -70,8 +72,6 @@
 
             }
             if (changeZone) {
-                console.log("Hals maul");
-
                 canvas = map.getCanvasContainer();
 
                 geojson.features[0].geometry.coordinates = [middle.lng, middle.lat];
@@ -205,7 +205,11 @@
     }
 
     function changeStyle() {
-        if (map != null) map.setStyle(getStyle());
+        if (map != null) {
+			changeZone = false;
+			toggleZone();
+			map.setStyle(getStyle());
+		}
     }
 
     function onMove(e: MapMouseEvent) {
@@ -224,8 +228,6 @@
 
     function onUp(e: MapMouseEvent) {
         const coords: Coordinate = e.lngLat;
-
-        //console.log(coords.lng + coords.lat);
 
         //Request an Mapbox
         dispatch('newMiddle', coords);
@@ -261,6 +263,19 @@
 </script>
 
 <div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement} />
+<div class="svg-container bottom-60 right-2 z-0 h-8 w-8 " on:click={()=> changeZone = !changeZone}>
+	{#if changeZone}
+			<CircleDotDashed/>
+	{:else}
+			<CircleDot/>
+	{/if}
+</div>
 <button on:click={() => changeStyle()} class="absolute bottom-28 md:bottom-6 right-2 z-0">
 	<ThemeSwitch />
 </button>
+
+<style>
+	.svg-container {
+		@apply cursor-pointer;
+	}
+</style>
