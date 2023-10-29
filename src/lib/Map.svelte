@@ -282,7 +282,7 @@
         <CircleDot class="h-8 w-8 dark:text-black"/>
     {/if}
 </div>
-<button on:click={() => changeStyle()} class="absolute bottom-36 md:bottom-6 right-2 z-0">
+<button on:click={() => changeStyle()} class="absolute bottom-40 md:bottom-6 right-2 z-0">
     <ThemeSwitch/>
 </button>
 
