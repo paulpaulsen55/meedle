@@ -46,7 +46,7 @@
 				>
 					{#if isMatch}
 						<button class="relative group inline-block">
-							<span class="-top-6 absolute hidden group-hover:block text-neutral-400 whitespace-nowrap text-sm font-extralight">übereinstimmende Filter</span>
+							<span class="-top-6 absolute hidden group-hover:block text-neutral-400 whitespace-nowrap text-sm font-extralight">1:1 Ergebnis</span>
 							<Star class="text-magnum-300 h-5 my-0.5" />
 						</button>
 					{/if}

@@ -43,6 +43,12 @@
 		background-repeat: repeat;
 	}
 
+	.bg-dotted-dark {
+		background-image: radial-gradient(circle, #7c643840 1px, #00000000 1px);
+		background-size: 1.5rem 1.5rem;
+		background-repeat: repeat;
+	}
+
 	.bg-dotted.radial::before {
 		position: absolute;
 		content: '';
