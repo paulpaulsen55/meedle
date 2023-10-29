@@ -13,6 +13,7 @@
     import type {Coordinate, Feature, Address} from '../../app';
     import type {Unsubscriber} from 'svelte/store';
     import LocationSwitch from "$lib/LocationSwitch.svelte";
+	import Share from '$lib/Share.svelte';
 
     export let data;
     let hoverdPointId: string | null;
@@ -129,6 +130,10 @@
     </div>
 
     <Map locations={locationCoordinates} middle={middleCoordinate} response={response} bind:hoverdPointId on:newMiddle={handleNewMiddle}/>
-
+	{#if !edit}
+	<div class="absolute top-2 right-12">
+		<Share bind:category />
+	</div>
+{/if}
 </div>
 
