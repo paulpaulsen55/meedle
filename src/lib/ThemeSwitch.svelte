@@ -11,7 +11,7 @@
             : document.documentElement.classList.remove('dark');
     }
     onMount(()=> {
-        darkMode = localStorage.theme == 'dark' ? true : false;
+        darkMode = localStorage.theme == 'dark';
         localStorage.setItem('theme', darkMode ? 'dark' : 'light');
         darkMode
             ? document.documentElement.classList.add('dark')

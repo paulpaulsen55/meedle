@@ -22,8 +22,8 @@
 			<div class="flex flex-col items-center sm:items-start">
 				<h3 class="mb-5 dark:text-black text-white">Weiteres</h3>
 				<a href="https://github.com/paulpaulsen55/meedle" class="text-neutral-600">Github</a>
-				<a href="/imprint" class="text-neutral-600">Impressum</a>
-				<a href="/terms" class="text-neutral-600">Nutzungsbedigungen</a>
+				<a href="#" class="text-neutral-600" aria-disabled="true">Impressum</a>
+				<a href="#" class="text-neutral-600" aria-disabled="true">Nutzungsbedigungen</a>
 			</div>
 		</div>
 		<div class="flex flex-col items-center sm:items-start mt-10 sm:mt-0">

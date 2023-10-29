@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { Feature } from '../app';
 	import { createAccordion, melt } from '@melt-ui/svelte';
-	import { fade, slide } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import AccordionContent from './AccordionContent.svelte';
-	import { Star, Triangle } from 'lucide-svelte';
+	import { Star } from 'lucide-svelte';
 
 	export let response: Feature[];
 	export let hoverdPointId: string | null;
@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="overflow-auto rounded-xl dark:bg-slate-50 bg-neutral-800 shadow-lg z-10 mt-10 mb-24">
+<div class="overflow-auto rounded-xl dark:bg-slate-50 bg-neutral-800 shadow-lg z-10 mt-10 mb-10">
 	{#each response as { id, name, address, categories, isMatch }, i}
 		<div
 			use:melt={$item(id)}
