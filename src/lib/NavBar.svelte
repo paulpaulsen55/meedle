@@ -2,7 +2,7 @@
 	import ThemeSwitch from '$lib/ThemeSwitch.svelte';
 </script>
 
-<nav class="z-20 backdrop-blur pt-5 sticky grid place-items-center top-0 left-0 w-full">
+<nav class="z-20 backdrop-blur pt-5 sticky grid place-items-center top-0 left-0 w-full select-none">
 	<div class="dark:bg-slate-200 bg-neutral-800 flex justify-between p-3 rounded-md w-full lg:w-4/5 xl:w-[70%]">
 		<svg xmlns="http://www.w3.org/2000/svg" width="114" height="43" fill="none"
 			><path
