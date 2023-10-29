@@ -11,7 +11,7 @@
         moving = false,
         y = tweened(50, {duration: 150, easing: circInOut}),
         bottomOffset = 100,
-        topOffset = 50;
+        topOffset = 75;
 
 
     export function setOpen(open: boolean) {
