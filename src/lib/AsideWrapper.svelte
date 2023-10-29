@@ -74,9 +74,7 @@
             </div>
     </aside>
 {:else}
-    <aside
-            style="top: {$y}px;"
-    >
+    <aside style="top: 100px;">
         <div class="flex flex-col h-screen w-96 dark:bg-slate-100 bg-neutral-900 rounded-md p-6">
             <a href="/" class="hidden md:inline-flex dark:text-black w-fit">
                 <ArrowLeftIcon class="w-12 h-12"/>
