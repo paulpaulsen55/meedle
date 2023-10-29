@@ -20,7 +20,7 @@
     let map: mapboxgl.Map | undefined = undefined;
     let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
     let viewState = {
-        zoom: 5,
+        zoom: 14,
         pitch: 0,
         bearing: 0,
     };
@@ -175,7 +175,7 @@
             container: mapElement,
             interactive: true,
             style: getStyle(),
-            center: {lng: 10, lat: 51},
+            center: {lat:54.00496795053566,   lng: 10.722615376824443},
             zoom: viewState.zoom,
             pitch: viewState.pitch,
             bearing: viewState.bearing,
