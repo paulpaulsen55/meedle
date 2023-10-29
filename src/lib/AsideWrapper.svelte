@@ -1,23 +1,15 @@
 <script lang="ts">
-    import {ArrowLeftIcon} from "lucide-svelte";
-    import {onMount, SvelteComponent} from "svelte";
-    import {circInOut, linear} from "svelte/easing";
-    import {tweened} from "svelte/motion";
-    import type {CupertinoSettings} from 'cupertino-pane';
-    import {CupertinoPane} from 'cupertino-pane';
+    import { ArrowLeftIcon } from "lucide-svelte";
+    import { onMount } from "svelte";
+    import { circInOut, linear } from "svelte/easing";
+    import { tweened } from "svelte/motion";
 
-
-    let isMobile = false,
-        width = 0,
-        height = 0,
-        prevTouchY = 0,
-        moving = false,
-        y = tweened(50, {duration: 150, easing: circInOut}),
-        positions = [50],
-        mobilePane: CupertinoPane | undefined = undefined,
-        paneDiv: SvelteComponent | null;
-
-    $:console.log(paneDiv);
+    let isMobile = false;
+    let width = 0, height = 0;
+    let prevTouchY = 0;
+    let moving = false;
+    let y = tweened(50, { duration: 150, easing: circInOut });
+    let positions = [50]
 
     export function setOpen(open: boolean) {
         if (!isMobile) return;
@@ -26,59 +18,62 @@
         else y.set(height - 100);
     }
 
+    onMount(()  => {
+        // add the height of the aside to the positions array | onMount, because the height of the aside is not known before
+        const min = height - 100;
+        positions.push(min);
+        y.set(min);
+    })
 
-    $: width, handleWith()
+    $ : if (width <= 768) { // tailwind breakpoint md
+        isMobile = true;
+    } else {
+        isMobile = false;
+    }
 
-    function handleWith() {
-        console.log(width);
+    function onDown() {
+        if (!isMobile) return;
+        moving = true;
+    }
 
-        if (width > 0) {
-            isMobile = width <= 768;
-        }
-
-        if (isMobile) {
-            showPane();
-        } else {
-            if (mobilePane != undefined) {
-                mobilePane.destroy();
-                mobilePane = undefined;
+    function onMove(e: MouseEvent | TouchEvent) {
+        if (!isMobile) return;
+        if(e instanceof MouseEvent) {
+            if (moving && $y + e.movementY >= 50 && $y + e.movementY <= height - 100) {
+                y.set($y + e.movementY, { duration: 0 , easing: linear});
             }
+        } else if (e instanceof TouchEvent){
+            const t = e.touches[0].pageY - prevTouchY;
+            if (moving && $y + t >= 50 && $y + t <= height - 100) {
+                y.set($y + t, { duration: 0 , easing: linear});
+            }
+            prevTouchY = e.touches[0].pageY;
         }
     }
 
-
-    async function showPane() {
-        await (paneDiv != null);
-
-        let paneSettings: CupertinoSettings = {
-            buttonDestroy: false,
-            backdrop: true
-        };
-
-        mobilePane = new CupertinoPane('.cupertino-pane', paneSettings);
-
-        await mobilePane.present({animate: true});
+    function onUp() {
+        if (!isMobile) return;
+        moving = false;
+        y.set(positions.reduce((prev, curr) => {
+            return (Math.abs(curr - $y) < Math.abs(prev - $y) ? curr : prev);
+        }));
     }
-
-
 </script>
 
-<svelte:window bind:innerWidth={width} bind:innerHeight={height}/>
+<svelte:window bind:innerWidth={width} bind:innerHeight={height} on:mouseup={onUp} on:mousemove={onMove} on:touchmove={onMove} on:touchend={onUp} />
 
-
-{#if isMobile}
-    <div class="cupertino-pane flex flex-col p-6 h-screen w-96 dark:bg-slate-100 bg-neutral-900 rounded-md"
-         bind:this={paneDiv}>
-            <a href="/" class="hidden md:inline-flex dark:text-black w-fit">
-                <ArrowLeftIcon class="w-12 h-12"/>
-            </a>
-            <slot/>
-        </div>
-{:else}
-    <div class="content flex flex-col p-6 h-screen w-96 dark:bg-slate-100 bg-neutral-900 rounded-md">
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<aside
+        on:mousedown={() => onDown()}
+        on:touchstart={() => onDown()}
+        class={isMobile ? 'absolute z-10 flex justify-center w-full backdrop-blur' : ''}
+        style="top: {$y}px;"
+>
+    <div class="flex flex-col p-6 h-screen w-96 dark:bg-slate-100 bg-neutral-900 rounded-md">
         <a href="/" class="hidden md:inline-flex dark:text-black w-fit">
-            <ArrowLeftIcon class="w-12 h-12"/>
+            <ArrowLeftIcon class="w-12 h-12" />
         </a>
-        <slot/>
+        <div class="inline-flex md:hidden w-1/2 self-center h-1 bg-neutral-500 rounded-md" />
+        <slot />
     </div>
-{/if}
+</aside>

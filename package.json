@@ -43,7 +43,6 @@
 		"@mapbox/maki": "^8.0.1",
 		"@mapbox/search-js-core": "^1.0.0-beta.17",
 		"@melt-ui/svelte": "^0.50.0",
-		"cupertino-pane": "^1.4.2",
 		"lucide-svelte": "^0.279.0",
 		"mapbox-gl": "^3.0.0-beta.3"
 	}
