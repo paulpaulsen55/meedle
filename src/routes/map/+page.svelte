@@ -13,7 +13,7 @@
     import type {Coordinate, Feature, Address} from '../../app';
     import type {Unsubscriber} from 'svelte/store';
     import LocationSwitch from "$lib/LocationSwitch.svelte";
-	import Share from '$lib/Share.svelte';
+    import Share from '$lib/Share.svelte';
 
     export let data;
     let hoverdPointId: string | null;
@@ -32,7 +32,7 @@
     let userLocationInput1 = loc.location1,
         userLocationInput2 = loc.location2,
         locationCoordinates: Coordinate[] | undefined = undefined,
-        middleCoordinate: Coordinate |undefined = undefined,
+        middleCoordinate: Coordinate | undefined = undefined,
         category = ['food_and_drink'],
         response: Feature[] | undefined = undefined,
         edit = true,
@@ -123,17 +123,17 @@
         {#if response}
             <Accordion response={response} bind:hoverdPointId/>
         {/if}
-      <div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
+        <div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2"/>
     </AsideWrapper>
     <div class="absolute md:ml-96 z-10 p-1">
         <TagsSettings on:updateTags={handleTagsSetting}/>
     </div>
-
-    <Map locations={locationCoordinates} middle={middleCoordinate} response={response} bind:hoverdPointId on:newMiddle={handleNewMiddle}/>
-	{#if !edit}
-	<div class="absolute top-2 right-12">
-		<Share bind:category />
-	</div>
-{/if}
+    <Map locations={locationCoordinates} middle={middleCoordinate} response={response} bind:hoverdPointId
+         on:newMiddle={handleNewMiddle}/>
+    {#if !edit}
+        <div class="absolute top-2 right-12">
+            <Share bind:category/>
+        </div>
+    {/if}
 </div>
 
