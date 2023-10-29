@@ -97,7 +97,7 @@
         {#if edit}
             <div class="mt-10">
                 <AddressInput bind:location={userLocationInput1} sessionToken={data.sessionToken}/>
-                <p class="dark:text-black text-white">between</p>
+                <div class="mt-3"></div>
                 <AddressInput bind:location={userLocationInput2} sessionToken={data.sessionToken}/>
                 <div class="space-x-3 flex mt-5">
                     <AdressSettings bind:radius bind:poi/>
