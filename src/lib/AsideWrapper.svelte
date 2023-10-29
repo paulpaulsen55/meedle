@@ -10,8 +10,8 @@
         prevTouchY = 0,
         moving = false,
         y = tweened(50, {duration: 150, easing: circInOut}),
-        topOffset = 100,
-        bottomOffset = 50;
+        bottomOffset = 100,
+        topOffset = 50;
 
 
     export function setOpen(open: boolean) {
@@ -23,13 +23,15 @@
 
     onMount(() => {
         // add the height of the aside to the positions array | onMount, because the height of the aside is not known before
-        topOffset =  height - 100;
-        y.set(bottomOffset);
+        bottomOffset = height - 40;
+        y.set(topOffset);
     })
 
-    $:console.log(height);
+    $: {
+        bottomOffset = height - 40;
+    }
 
-    $ : isMobile = width <= 768;
+    $: isMobile = width <= 768;
 
     function onDown() {
         if (!isMobile) return;
@@ -55,10 +57,10 @@
         if (!isMobile) return;
         moving = false;
 
-        if (Math.abs(bottomOffset - $y) < Math.abs(topOffset - $y)){
-            y.set(bottomOffset);
-        }else {
+        if (Math.abs(topOffset - $y) < Math.abs(bottomOffset - $y)){
             y.set(topOffset);
+        }else {
+            y.set(bottomOffset);
         }
     }
 
