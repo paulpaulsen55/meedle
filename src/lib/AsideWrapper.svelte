@@ -23,12 +23,12 @@
 
     onMount(() => {
         // add the height of the aside to the positions array | onMount, because the height of the aside is not known before
-        bottomOffset = height - 40;
+        bottomOffset = height - 50;
         y.set(topOffset);
     })
 
     $: {
-        bottomOffset = height - 40;
+        bottomOffset = height - 50;
     }
 
     $: isMobile = width <= 768;
