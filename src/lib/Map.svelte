@@ -20,7 +20,7 @@
     let map: mapboxgl.Map | undefined = undefined;
     let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
     let viewState = {
-        zoom: 5,
+        zoom: 14,
         pitch: 0,
         bearing: 0,
     };
@@ -175,7 +175,7 @@
             container: mapElement,
             interactive: true,
             style: getStyle(),
-            center: {lng: 10, lat: 51},
+            center: {lat:54.00496795053566,   lng: 10.722615376824443},
             zoom: viewState.zoom,
             pitch: viewState.pitch,
             bearing: viewState.bearing,
@@ -275,14 +275,14 @@
 </script>
 
 <div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement}/>
-<div class="svg-container absolute md:bottom-[4.5rem] bottom-40 right-2 z-0  " on:click={()=> changeZone = !changeZone}>
+<div class="svg-container absolute md:bottom-[4.5rem] bottom-52 right-2 z-0  " on:click={()=> changeZone = !changeZone}>
     {#if changeZone}
         <CircleDotDashed class="h-8 w-8 dark:text-black"/>
     {:else}
         <CircleDot class="h-8 w-8 dark:text-black"/>
     {/if}
 </div>
-<button on:click={() => changeStyle()} class="absolute bottom-28 md:bottom-6 right-2 z-0">
+<button on:click={() => changeStyle()} class="absolute bottom-40 md:bottom-6 right-2 z-0">
     <ThemeSwitch/>
 </button>
 

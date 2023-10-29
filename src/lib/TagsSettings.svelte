@@ -34,8 +34,8 @@
 		const inList = tempTags.filter(e => e.id === k).length > 0;
 		if (tempTags.length < 3 && !inList) {
 			tempTags = [...tempTags, {id: k, value: v}];
-			document.getElementById(k)?.classList.replace("bg-magnum-200", "bg-magnum-300"); 
-		}
+			document.getElementById(k)?.classList.replace("bg-magnum-200", "bg-magnum-300");
+		} else addToast({data: {title: 'Info', description: 'Drei Tags maximal, du Schlawiner!', color: 'bg-green-500'}})
 	}
 
 	function removeTag(tag:Tag, isDisplay:boolean) {
@@ -113,7 +113,7 @@
               p-6 shadow-lg"
 			use:melt={$content}
 		>
-			<input type="text" placeholder="Enter Tag" class="input w-3/4 dark:bg-white bg-neutral-700" bind:value={searchTerm}/>
+			<input type="text" placeholder="Enter Tag" class="input w-3/4 dark:bg-white bg-neutral-700 text-white dark:text-black" bind:value={searchTerm}/>
 			{#each Object.entries(tagsList) as filter, i}
 				<h2 use:melt={$title} class="m-1 text-lg font-medium dark:text-black text-white">{filter[0]}</h2>
 				<Scroller style="height: 4.5rem">
@@ -144,10 +144,10 @@
 				</Scroller>
 			</div>
 			<div class="mt-6 grid grid-cols-2 gap-2">
-				<button use:melt={$close} class="h-8 items-center justify-center rounded-[4px] dark:bg-slate-200 bg-neutral-100 px-4 font-medium text-neutral-700 dark:hover:bg-slate-300 hover:bg-neutral-200">
+				<button on:click={() => {searchTerm = ""}} use:melt={$close} class="h-8 items-center justify-center rounded-[4px] dark:bg-slate-200 bg-neutral-100 px-4 font-medium text-neutral-700 dark:hover:bg-slate-300 hover:bg-neutral-200">
 					Abbrechen
 				</button>
-				<button on:click={() => {tags = tempTags; dispatch('updateTags', tags)}} use:melt={$close}
+				<button on:click={() => {tags = tempTags; dispatch('updateTags', tags); searchTerm = ""}} use:melt={$close}
 					class="h-8 items-center justify-center rounded-[4px] bg-magnum-300 px-4 font-bold text-magnum-900 hover:bg-magnum-400"
 				>
 					Speichern
