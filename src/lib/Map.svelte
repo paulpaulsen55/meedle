@@ -5,24 +5,27 @@
     import ThemeSwitch from '$lib/ThemeSwitch.svelte';
     import {radius as r} from '../store';
     import {createEventDispatcher} from 'svelte';
-	import { CircleDotDashed } from 'lucide-svelte';
-	import { CircleDot } from 'lucide-svelte';
+    import {CircleDotDashed} from 'lucide-svelte';
+    import {CircleDot} from 'lucide-svelte';
 
     const dispatch = createEventDispatcher();
 
-    export let middle: Coordinate, response: Feature[], locations: Array<Coordinate>,changeZone:boolean;
-    export let hoverdPointId: string | null;
+    export let
+        locations: Array<Coordinate> | undefined,
+        middle: Coordinate | undefined,
+        response: Feature[] | undefined,
+        hoverdPointId: string | null;
 
     let mapElement: HTMLElement;
-    let map: mapboxgl.Map | null = null;
+    let map: mapboxgl.Map | undefined = undefined;
     let accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
     let viewState = {
         zoom: 5,
         pitch: 0,
-        bearing: 0
+        bearing: 0,
     };
     let locationMarkers: mapboxgl.Marker[] = [];
-
+    let changeZone: boolean = false;
     let markers = new Map<string, mapboxgl.Marker>();
 
     let canvas: any;
@@ -40,7 +43,7 @@
         ]
     };
 
-    $: changeZone, toggleZone();
+    $: changeZone, zoneHandling();
 
 
     function getCircleRadius(meters: number, lat: number) {
@@ -48,16 +51,16 @@
             meters / 0.019 / Math.cos(latitude * Math.PI / 180);
 
         return {
-                stops: [
-                    [0, 0],
-                    [22, metersToPixelsAtMaxZoom(meters, lat)]
-                ],
-                base: 2
+            stops: [
+                [0, 0],
+                [22, metersToPixelsAtMaxZoom(meters, lat)]
+            ],
+            base: 2
 
         };
     }
 
-    function toggleZone() {
+    function zoneHandling() {
         if (map != null) {
             if (map.getLayer('point') != undefined) {
                 map.removeLayer('point');
@@ -71,7 +74,7 @@
                 map.removeSource('point');
 
             }
-            if (changeZone) {
+            if (changeZone && middle != undefined) {
                 canvas = map.getCanvasContainer();
 
                 geojson.features[0].geometry.coordinates = [middle.lng, middle.lat];
@@ -87,7 +90,7 @@
                     'type': 'circle',
                     'source': 'point',
                     'paint': {
-                        "circle-radius": getCircleRadius($r*1000, middle.lat),
+                        "circle-radius": getCircleRadius($r * 1000, middle.lat),
                         "circle-opacity": 0,
                         "circle-stroke-width": 1,
                         "circle-stroke-color": '#F84C4C',
@@ -109,38 +112,43 @@
         }
     }
 
-    $: if (map != null && middle && locations) {
+    function mapHandling() {
+        if (map != undefined && middle != undefined && locations != undefined) {
 
-        toggleZone();
+            zoneHandling();
 
-        // add all peoples locations to the map
-        locationMarkers.forEach((marker) => marker.remove());
-        locationMarkers = [];
-        locations.forEach((location) => {
-            locationMarkers.push(new mapboxgl.Marker({color: '#003DD0'}).setLngLat(location));
-        });
-        locationMarkers.forEach((marker) => marker.addTo(map!));
-        const factor = 0.01;
-
-        map.fitBounds([
-            [locations[0].lng + factor, locations[0].lat - factor],
-            [locations[1].lng - factor, locations[1].lat + factor]
-        ]);
-
-        // add the features to the map
-        if (response) {
-            markers.forEach((marker) => marker.remove());
-            markers.clear();
-            response.forEach((feature: Feature) => {
-                let customMarker = createCustomMarker(feature)
-                let marker = new mapboxgl.Marker(customMarker).setLngLat(feature.coordinate);
-                marker.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
-                marker.getElement().addEventListener('click', () => onMarkerClick(feature.id))
-                markers.set(feature.id, marker);
+            // add all peoples locations to the map
+            locationMarkers.forEach((marker) => marker.remove());
+            locationMarkers = [];
+            locations.forEach((location) => {
+                locationMarkers.push(new mapboxgl.Marker({color: '#003DD0'}).setLngLat(location));
             });
-            markers.forEach((marker) => marker.addTo(map!));
+            locationMarkers.forEach((marker) => marker.addTo(map!));
+
+            if (!changeZone) {
+                map.fitBounds([
+                    [locations[0].lng, locations[0].lat],
+                    [locations[1].lng, locations[1].lat]
+                ]);
+            }
+
+            // add the features to the map
+            if (response) {
+                markers.forEach((marker) => marker.remove());
+                markers.clear();
+                response.forEach((feature: Feature) => {
+                    let customMarker = createCustomMarker(feature)
+                    let marker = new mapboxgl.Marker(customMarker).setLngLat(feature.coordinate);
+                    marker.setPopup(new mapboxgl.Popup().setHTML(`<p class="text-black">${feature.name}</p>`));
+                    marker.getElement().addEventListener('click', () => onMarkerClick(feature.id))
+                    markers.set(feature.id, marker);
+                });
+                markers.forEach((marker) => marker.addTo(map!));
+            }
         }
     }
+
+    $: middle, locations, response, mapHandling();
 
     function onMarkerClick(id: string) {
         hoverdPointId = id;
@@ -170,7 +178,8 @@
             center: {lng: 10, lat: 51},
             zoom: viewState.zoom,
             pitch: viewState.pitch,
-            bearing: viewState.bearing
+            bearing: viewState.bearing,
+
         });
 
         map.addControl(new mapboxgl.NavigationControl({showZoom: true}));
@@ -202,14 +211,17 @@
             map?.on('touchmove', onMove);
             map?.once('touchend', onUp);
         });
+        if (locations != undefined) {
+
+        }
     }
 
     function changeStyle() {
-        if (map != null) {
-			changeZone = false;
-			toggleZone();
-			map.setStyle(getStyle());
-		}
+        if (map != undefined) {
+            changeZone = false;
+            zoneHandling();
+            map.setStyle(getStyle());
+        }
     }
 
     function onMove(e: MapMouseEvent) {
@@ -262,20 +274,20 @@
     }
 </script>
 
-<div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement} />
+<div class="h-screen w-full md:w-[calc(100vw - 24rem)]" id="map" bind:this={mapElement}/>
 <div class="svg-container absolute bottom-16 right-2 z-0  " on:click={()=> changeZone = !changeZone}>
-	{#if changeZone}
-			<CircleDotDashed class="h-8 w-8"/>
-	{:else}
-			<CircleDot class="h-8 w-8"/>
-	{/if}
+    {#if changeZone}
+        <CircleDotDashed class="h-8 w-8"/>
+    {:else}
+        <CircleDot class="h-8 w-8"/>
+    {/if}
 </div>
 <button on:click={() => changeStyle()} class="absolute bottom-28 md:bottom-6 right-2 z-0">
-	<ThemeSwitch />
+    <ThemeSwitch/>
 </button>
 
 <style>
-	.svg-container {
-		@apply cursor-pointer;
-	}
+    .svg-container {
+        @apply cursor-pointer;
+    }
 </style>

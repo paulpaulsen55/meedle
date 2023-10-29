@@ -21,51 +21,47 @@
     let loc = {location1: sus, location2: sus},
         radius = 0,
         poi = 0;
+
     const unsubscribe: Unsubscriber = lol.subscribe((value) => {
         loc = value;
     });
     const unsubscribeRad: Unsubscriber = r.subscribe((value) => (radius = value));
     const unsubscribePoi: Unsubscriber = p.subscribe((value) => (poi = value));
 
-    let location1 = loc.location1,
-        location2 = loc.location2,
-        average: Coordinate,
-        points: Coordinate[] = [],
+    let userLocationInput1 = loc.location1,
+        userLocationInput2 = loc.location2,
+        locationCoordinates: Coordinate[] | undefined = undefined,
+        middleCoordinate: Coordinate |undefined = undefined,
         category = ['food_and_drink'],
-        features: Feature[],
+        response: Feature[] | undefined = undefined,
         edit = true,
-        asideWrapper: AsideWrapper,
-        changeZone: boolean;
+        asideWrapper: AsideWrapper;
 
     async function handleNewMiddle(event: CustomEvent<Coordinate>) {
+        middleCoordinate = event.detail;
 
-        average = event.detail;
-        features = await pointToFeatures(category, event.detail);
+        response = await pointToFeatures(category, event.detail);
     }
 
-    function handleZoneChange(event: CustomEvent<boolean>) {
-        changeZone = event.detail;
-    }
 
     async function handleSubmit() {
-        if (!location1 || !location2) return;
+        if (!userLocationInput1 || !userLocationInput2) return;
 
-        const point1 = await pointToCoordinates(location1);
-        const point2 = await pointToCoordinates(location2);
+        const point1 = await pointToCoordinates(userLocationInput1);
+        const point2 = await pointToCoordinates(userLocationInput2);
         lol.set({
-            location1: {title: location1.title, address: location1.address, coordinate: point1},
-            location2: {title: location2.title, address: location2.address, coordinate: point2}
+            location1: {title: userLocationInput1.title, address: userLocationInput1.address, coordinate: point1},
+            location2: {title: userLocationInput2.title, address: userLocationInput2.address, coordinate: point2}
         });
-        points = [point1, point2];
-        average = {
+        locationCoordinates = [point1, point2];
+        middleCoordinate = {
             lng: (point1.lng + point2.lng) / 2,
             lat: (point1.lat + point2.lat) / 2
         };
 
         r.set(radius);
         p.set(poi);
-        changeZone = false;
-        features = await pointToFeatures(category, average);
+        response = await pointToFeatures(category, middleCoordinate);
     }
 
     function handleTagsSetting(event: CustomEvent<Tag[]>) {
@@ -78,10 +74,10 @@
 
     // loads data only when both locations are set through the store - prevents unnecessary api calls
     onMount(() => {
-        location1 = loc.location1;
-        location2 = loc.location2;
+        userLocationInput1 = loc.location1;
+        userLocationInput2 = loc.location2;
 
-        if (location1.title != '' && location2.title != '') {
+        if (userLocationInput1.title != '' && userLocationInput2.title != '') {
             handleSubmit();
             edit = false;
         } else {
@@ -99,9 +95,9 @@
     <AsideWrapper bind:this={asideWrapper}>
         {#if edit}
             <div class="mt-10">
-                <AddressInput bind:location={location1} sessionToken={data.sessionToken}/>
+                <AddressInput bind:location={userLocationInput1} sessionToken={data.sessionToken}/>
                 <p class="dark:text-black text-white">between</p>
-                <AddressInput bind:location={location2} sessionToken={data.sessionToken}/>
+                <AddressInput bind:location={userLocationInput2} sessionToken={data.sessionToken}/>
                 <div class="space-x-3 flex mt-5">
                     <AdressSettings bind:radius bind:poi/>
                     <button
@@ -123,8 +119,8 @@
             </div>
         {/if}
 
-        {#if features}
-            <Accordion response={features} bind:hoverdPointId/>
+        {#if response}
+            <Accordion response={response} bind:hoverdPointId/>
         {/if}
       <div class="w-96 h-32 bg-dotted -ml-6 -mb-4 p-2 absolute bottom-2" />
     </AsideWrapper>
@@ -132,8 +128,7 @@
         <TagsSettings on:updateTags={handleTagsSetting}/>
     </div>
 
-    <Map middle={average} response={features} locations={points} bind:hoverdPointId on:newMiddle={handleNewMiddle}
-         bind:changeZone/>
+    <Map locations={locationCoordinates} middle={middleCoordinate} response={response} bind:hoverdPointId on:newMiddle={handleNewMiddle}/>
 
 </div>
 
