@@ -34,8 +34,8 @@
 		const inList = tempTags.filter(e => e.id === k).length > 0;
 		if (tempTags.length < 3 && !inList) {
 			tempTags = [...tempTags, {id: k, value: v}];
-			document.getElementById(k)?.classList.replace("bg-magnum-200", "bg-magnum-300"); 
-		}
+			document.getElementById(k)?.classList.replace("bg-magnum-200", "bg-magnum-300");
+		} else addToast({data: {title: 'Info', description: 'Drei Tags maximal, du Schlawiner!', color: 'bg-green-500'}})
 	}
 
 	function removeTag(tag:Tag, isDisplay:boolean) {
