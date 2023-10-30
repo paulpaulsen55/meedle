@@ -35,7 +35,7 @@
         Impressum? Nein Memes!
     </h1>
 </div>
-<div class="image-gallery flex flex-wrap m-8 justify-center items-center">
+<div class="image-gallery flex flex-wrap m-9 justify-center items-center">
     {#each imageList as image (image)}
         <img src={`memes/${image}`} alt={"alt"} class="max-w-full h-[200px] m-2 transition-transform transform hover:scale-[2.25] hover:z-10"  />
     {/each}
