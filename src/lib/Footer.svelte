@@ -22,7 +22,7 @@
 			<div class="flex flex-col items-center sm:items-start">
 				<h3 class="mb-5 dark:text-black text-white">Weiteres</h3>
 				<a href="https://github.com/paulpaulsen55/meedle" class="text-neutral-600">Github</a>
-				<a href="#" class="text-neutral-600" aria-disabled="true">Impressum</a>
+				<a href="/memes" class="text-neutral-600" aria-disabled="true">Impressum</a>
 				<a href="#" class="text-neutral-600" aria-disabled="true">Nutzungsbedigungen</a>
 			</div>
 		</div>
