@@ -1,5 +1,7 @@
 <!-- Gallery.svelte -->
 <script lang="ts">
+    import {ArrowLeftIcon} from "lucide-svelte";
+
     let imageList: string[] = [
         "img.png",
         "img_1.png",
@@ -24,10 +26,14 @@
     ];
 
 </script>
-
-<h1 class="flex justify-center text-9xl">
-    Impressum? Nein Memes!
-</h1>
+<div class="flex justify-center">
+    <a href="/" class="hidden md:inline-flex dark:text-black self-center w-fit">
+        <ArrowLeftIcon class="w-12 h-12"/>
+    </a>
+    <h1 class="flex justify-center text-9xl dark:text-black">
+        Impressum? Nein Memes!
+    </h1>
+</div>
 <div class="image-gallery flex flex-wrap m-8 justify-center items-center">
     {#each imageList as image (image)}
         <img src={`memes/${image}`} alt={"alt"} class="max-w-full h-[200px] m-2 transition-transform transform hover:scale-[2.25] hover:z-10"  />
