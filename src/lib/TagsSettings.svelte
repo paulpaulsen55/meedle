@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createDialog, melt, type Tag } from '@melt-ui/svelte';
 	import { tagsList } from '$lib/helpers/tagsList';
-	import { X, Plus } from 'lucide-svelte';
+	import { X, Plus, Keyboard } from 'lucide-svelte';
 	import Scroller from '$lib/Scroller.svelte';
 	import { afterUpdate, createEventDispatcher, onMount } from 'svelte';
 	import { createToaster } from '@melt-ui/svelte';
@@ -59,7 +59,7 @@
 		if (searchTerm.length == 0) return map;
 		let result = new Map();
 		map.forEach((key, data) => {
-			if (key.toLowerCase().includes(searchTerm.toLowerCase())) result.set(key, data);
+			if (key.toLowerCase().includes(searchTerm.toLowerCase())) result.set(data, key);
 		});
 		return result;
 	};
