@@ -1,6 +1,7 @@
 import { tagsList } from '$lib/helpers/tagsList';
 import type { Tag } from '@melt-ui/svelte';
 
+// @ts-ignore
 export async function load({ url }) {
     const radius = url.searchParams.get('r');
     const poi = url.searchParams.get('p');
