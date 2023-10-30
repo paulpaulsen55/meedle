@@ -30,7 +30,7 @@
     <a href="/" class="hidden md:inline-flex dark:text-black self-center w-fit">
         <ArrowLeftIcon class="w-12 h-12"/>
     </a>
-    <h1 class="flex justify-center text-9xl dark:text-black">
+    <h1 class="flex justify-center text-4xl md:text-9xl text-center dark:text-black">
         Impressum? Nein Memes!
     </h1>
 </div>
