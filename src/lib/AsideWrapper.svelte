@@ -79,7 +79,7 @@
                  on:touchstart={() => onDown()}>
                 <div class="flex w-1/2 self-center h-1 bg-neutral-500 rounded-lg"/>
             </div>
-            <div class="flex flex-col h-screen  w-96 dark:bg-slate-100 bg-neutral-900 px-6">
+            <div class="flex flex-col h-[calc(100vh-75px)] w-96 dark:bg-slate-100 bg-neutral-900 px-6">
                 <slot/>
             </div>
     </aside>
